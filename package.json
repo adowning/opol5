@@ -48,27 +48,18 @@
     "vue-template-compiler": "^2.5.13"
   },
   "babel": {
-    "presets": [
-      "@vue/app"
-    ]
+    "presets": ["@vue/app"]
   },
   "eslintConfig": {
     "root": true,
-    "extends": [
-      "plugin:vue/essential",
-      "@vue/prettier"
-    ]
+    "extends": ["plugin:vue/essential", "@vue/prettier"]
   },
   "postcss": {
     "plugins": {
       "autoprefixer": {}
     }
   },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not ie <= 8"
-  ],
+  "browserslist": ["> 1%", "last 2 versions", "not ie <= 8"],
   "electronWebpack": {
     "renderer": {
       "sourceDirectory": "src"
@@ -78,10 +69,6 @@
     "directories": {
       "output": "dist_electron"
     },
-    "files": [
-      "dist/**/*",
-      "node_modules/**/*",
-      "package.json"
-    ]
+    "files": ["dist/**/*", "node_modules/**/*", "package.json"]
   }
 }
