@@ -8,7 +8,7 @@
 // Vue.component("v-afooter", AFooter);
 
 export default {
-  name: "Home",
+  name: "Profile",
   data() {
     return {
       // clipped: false,

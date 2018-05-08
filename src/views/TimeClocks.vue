@@ -8,7 +8,7 @@
 // Vue.component("v-afooter", AFooter);
 
 export default {
-  name: "Home",
+  name: "TimeClocks",
   data() {
     return {
       // clipped: false,
