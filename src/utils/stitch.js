@@ -1,7 +1,7 @@
 const stitch = require("mongodb-stitch")
-const clientPromise = stitch.StitchClientFactory.create('opol5-mbqio');
+const clientPromise = stitch.StitchClientFactory.create('opol5-mbqio')
 clientPromise.then(client => {
-  const db = client.service('mongodb', 'mongodb-atlas').db('people');
+  const db = client.service('mongodb', 'mongodb-atlas').db('people')
   client.login().then(() =>
     db.collection('user_profiles').updateOne({owner_id: client.authedId()}, {$set:{number:42}}, {upsert:true})
   ).then(() =>
@@ -11,5 +11,5 @@ clientPromise.then(client => {
     console.log("[MongoDB Stitch] Connected to Stitch")
   }).catch(err => {
     console.error(err)
-  });
-});
+  })
+})

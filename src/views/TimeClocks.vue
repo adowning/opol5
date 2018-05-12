@@ -1,5 +1,5 @@
 <template>
-<v-container>hi</v-container>
+  <v-container>hi</v-container>
 </template>
 
 <script>
@@ -9,7 +9,7 @@
 
 export default {
   name: "TimeClocks",
-  data() {
+  data () {
     return {
       // clipped: false,
       // drawer: true,
@@ -24,8 +24,8 @@ export default {
       // right: true,
       // rightDrawer: false,
       // title: "Vuetify.js"
-    };
+    }
   }
-};
+}
 </script>
 

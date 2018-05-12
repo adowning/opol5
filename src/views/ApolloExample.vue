@@ -1,7 +1,7 @@
 <template>
   <div class="hello">
-    <h1>{{msg}}</h1>
-    <h2>Total {{events.length}}</h2>
+    <h1>{{ msg }}</h1>
+    <h2>Total {{ events.length }}</h2>
   </div>
 </template>
 
@@ -10,11 +10,11 @@
 // import oncreateEvent from "../graphql/oncreateEvent";
 export default {
   name: "Events",
-  data() {
+  data () {
     return {
       msg: "All Events",
       events: []
-    };
+    }
   }
   // apollo: {
   //   events: {
@@ -38,7 +38,7 @@ export default {
   //     ]
   //   }
   // }
-};
+}
 </script>
 
 <style scoped>

@@ -1,0 +1,4 @@
+awsmobilejs/*
+node_modules/*
+temp.js
+src/aws-exports.js

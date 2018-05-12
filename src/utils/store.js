@@ -23,13 +23,13 @@ const store = new Vuex.Store({
     userVerification: []
   },
   mutations: {
-    setUser(state, user) {
+    setUser (state, user) {
       state.user = user
     },
-    setUserId(state, userId) {
+    setUserId (state, userId) {
       state.userId = userId
     },
-    setUserVerification(state, data) {
+    setUserVerification (state, data) {
       state.userVerification = data
     }
   }

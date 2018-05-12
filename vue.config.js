@@ -5,7 +5,7 @@ const CompressionPlugin = require("compression-webpack-plugin");
 module.exports = {
   lintOnSave: true,
   configureWebpack: {
-    devtool: "sourcmaps",
+    devtool: "sourcemaps",
     // Merged into the final Webpack config
     plugins: [
       //   new BundleAnalyzerPlugin(),

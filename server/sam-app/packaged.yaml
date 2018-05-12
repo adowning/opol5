@@ -1,0 +1,52 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Globals:
+  Function:
+    MemorySize: 128
+Outputs:
+  HelloWorldApi:
+    Description: API Gateway endpoint URL for Prod stage for Hello World function
+    Value:
+      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/
+Resources:
+  HelloWorldFunction:
+    Properties:
+      CodeUri: s3://sam-lambdas-learning/50acc65ec7358deaeb19666ad49312ae
+      Environment:
+        Variables:
+          PARAM1: VALUE
+      Events:
+        HelloWorld:
+          Properties:
+            Method: get
+            Path: /hello
+          Type: Api
+      Handler: app.lambda_handler
+      Runtime: nodejs8.10
+    Type: AWS::Serverless::Function
+  audioAnalyze:
+    Properties:
+      CodeUri: s3://sam-lambdas-learning/0ab5640c547f89a3fa03df59449b7fbf
+      Handler: audioAnalyze.handler
+      Runtime: nodejs8.10
+    Type: AWS::Serverless::Function
+  execStepFunction:
+    Properties:
+      CodeUri: s3://sam-lambdas-learning/0ab5640c547f89a3fa03df59449b7fbf
+      Handler: execStepFunction.handler
+      Role: arn:aws:iam::742705829810:role/lambda-admin
+      Runtime: nodejs8.10
+    Type: AWS::Serverless::Function
+  getJob:
+    Properties:
+      CodeUri: s3://sam-lambdas-learning/0ab5640c547f89a3fa03df59449b7fbf
+      Handler: getJob.handler
+      Role: arn:aws:iam::742705829810:role/lambda-admin
+      Runtime: nodejs8.10
+    Type: AWS::Serverless::Function
+  startJob:
+    Properties:
+      CodeUri: s3://sam-lambdas-learning/0ab5640c547f89a3fa03df59449b7fbf
+      Handler: startJob.handler
+      Runtime: nodejs8.10
+    Type: AWS::Serverless::Function
+Transform: AWS::Serverless-2016-10-31

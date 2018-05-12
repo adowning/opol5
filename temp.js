@@ -1,3 +1,95 @@
+"use strict"
+const axios = require("axios")
+
+const getToken = (data) => {
+  return new Promise(resolve =>
+    axios
+      .post("https://www.humanity.com/oauth2/token.php", {
+        client_id: "1de720f9636d0f17d61540fbd9c030c30fae3f1f",
+        client_secret: "33c1bfc4f96d5ca7e68b859af8d58fde36867bbd",
+        grant_type: "password",
+        username: data.username,
+        password: data.password
+      })
+      .catch(error => {
+        resolve("500", error)
+      })
+      .then(response => {
+        resolve(response.data.access_token)
+      })
+  )
+}
+
+const getClockStatus = (data) => {
+  return new Promise(resolve =>
+    axios
+      .get(
+        `https://www.humanity.com/api/v2/timeclocks/status/${
+          data.userId
+        }/0?access_token=${data.token}`
+      )
+      .catch(error => {
+        console.log(error)
+        resolve(error)
+      })
+      .then(response => {
+        resolve(response)
+      })
+  )
+}
+const getMyDetails = (data) => {
+  return new Promise(resolve =>
+
+  axios
+    .get(`https://www.humanity.com/api/v2/me?access_token=${data.token}`)
+    .catch(error => {
+      callback("500", error);
+    })
+    .then(response => {
+      resolve(response)
+    })
+  )
+  };
+
+async function go(data) {
+try {
+// but first, coffee
+console.log(data)
+const token = await getToken(data)
+data.token = token
+// then we grab some data over an Ajax request
+const getClockStatus = (data)
+const  getMyDetails = (data)
+// console.log(info) // mediocre code
+// console.log(token) // ☕
+// console.log(data) // ☕
+const [status, details] = await Promise.all([ getClockStatus, getMyDetails]);
+// // many requests should be concurrent - don't slow things down!
+// // fire off three requests and save their promises
+// const wordPromise = axios('http://www.setgetgo.com/randomword/get.php');
+// const userPromise = axios('https://randomuser.me/api/');
+// const namePromise = axios('https://uinames.com/api/');
+// // await all three promises to come back and destructure the result into their own variables
+// const [word, user, name] = await Promise.all([wordPromise, userPromise, namePromise]);
+// console.log(word.data, user.data, name.data); // cool, {...}, {....}
+} catch (e) {
+console.error(e) // 💩
+}
+}
+
+exports.initUserData = (event, context, callback) => {
+var data = {
+client_id: "1de720f9636d0f17d61540fbd9c030c30fae3f1f",
+client_secret: "33c1bfc4f96d5ca7e68b859af8d58fde36867bbd",
+grant_type: "password",
+username: event.username,
+// password: event.request.userAttributes.sub
+password: event.password,
+userId: event.userId
+}
+go(data)
+}
+
 // {
 //     "status": 1,
 //     "data": {
@@ -118,47 +210,48 @@
 // });
 
 /*eslint-disable */
-var fs = require('fs');
-var parse = require('csv-parse');
-var async = require('async');
 
-var csv_filename = "/home/ash/Documents/result.csv";
+// var fs = require('fs');
+// var parse = require('csv-parse');
+// var async = require('async');
 
-rs = fs.createReadStream(csv_filename);
-parser = parse({
-    columns : true,
-    delimiter : ','
-}, function(err, data) {
+// var csv_filename = "/home/ash/Documents/result.csv";
 
-    var split_arrays = [], size = 25;
+// rs = fs.createReadStream(csv_filename);
+// parser = parse({
+//     columns : true,
+//     delimiter : ','
+// }, function(err, data) {
 
-    while (data.length > 0) {
-        split_arrays.push(data.splice(0, size));
-    }
-    data_imported = false;
-    chunk_no = 1;
+//     var split_arrays = [], size = 25;
 
-    async.each(split_arrays, function(item_data, callback) {
-        ddb.batchWriteItem({
-            "TimeClocks" : item_data
-        }, {}, function(err, res, cap) {
-            console.log('done going next');
-            if (err == null) {
-                console.log('Success chunk #' + chunk_no);
-                data_imported = true;
-            } else {
-                console.log(err);
-                console.log('Fail chunk #' + chunk_no);
-                data_imported = false;
-            }
-            chunk_no++;
-            callback();
-        })
-      }, function() {
-        // run after loops
-        console.log('all data imported....');
+//     while (data.length > 0) {
+//         split_arrays.push(data.splice(0, size));
+//     }
+//     data_imported = false;
+//     chunk_no = 1;
 
-    });
+//     async.each(split_arrays, function(item_data, callback) {
+//         ddb.batchWriteItem({
+//             "TimeClocks" : item_data
+//         }, {}, function(err, res, cap) {
+//             console.log('done going next');
+//             if (err == null) {
+//                 console.log('Success chunk #' + chunk_no);
+//                 data_imported = true;
+//             } else {
+//                 console.log(err);
+//                 console.log('Fail chunk #' + chunk_no);
+//                 data_imported = false;
+//             }
+//             chunk_no++;
+//             callback();
+//         })
+//       }, function() {
+//         // run after loops
+//         console.log('all data imported....');
 
-});
-rs.pipe(parser);
+//     });
+
+// });
+// rs.pipe(parser);

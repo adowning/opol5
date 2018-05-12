@@ -1,11 +1,19 @@
 <template>
-  <v-navigation-drawer :v-model="rightDrawer" temporary fixed app>
+  <v-navigation-drawer 
+    :v-model="rightDrawer" 
+    temporary 
+    fixed 
+    app>
     <v-toolbar-title>Notifications</v-toolbar-title>
     <v-spacer/>
-    <v-btn icon @click.stop="rightDrawer = false">
+    <v-btn 
+      icon 
+      @click.stop="rightDrawer = false">
       <v-icon>close</v-icon>
     </v-btn>
-    <v-list subheader dense>
+    <v-list 
+      subheader 
+      dense>
       <v-subheader>All notifications</v-subheader>
       <v-list-tile>
         <v-list-tile-action>
@@ -30,6 +38,17 @@
 <script>
 export default {
   name: 'ComsPanel',
-  props: ['rightDrawer'],
+  props: {
+  rightDrawer: {
+    type: String,
+    required: true,
+  },
+  },
+  data: function () {
+  return {
+    
+  }
 }
+}
+
 </script>
