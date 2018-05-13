@@ -23,6 +23,8 @@ features:
           sdk-generation-stage-name: dev
         paths:
           /gethumanitydata: !com.amazonaws.mobilehub.v0.Function {}
+          /gethumanitytimeclocks: !com.amazonaws.mobilehub.v0.Function {}
+          /gethumanitytoken: !com.amazonaws.mobilehub.v0.Function {}
       sam-app: !com.amazonaws.mobilehub.v0.API 
         attributes:
           api-arn: 'arn:aws:execute-api:us-east-2:742705829810:18pq91f5ia'
