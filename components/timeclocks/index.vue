@@ -1,7 +1,7 @@
 <template>
-  <v-container grid-list-md>
-    <v-layout row wrap>
-      <v-flex xs5>
+  <v-container>
+    <v-layout class=".pa-5">
+      <v-flex xs4 >
         <v-card>
           <v-toolbar color="primary" dark>
             <v-toolbar-title>{{date}}</v-toolbar-title>
@@ -40,7 +40,7 @@
           </template>
         </v-card>
       </v-flex>
-      <v-flex xs7>
+      <v-flex xs10>
         <v-card>
           <v-toolbar color="primary" dark>
             <v-toolbar-title>Timesheets</v-toolbar-title>
@@ -76,6 +76,7 @@
 <script>
 import moment from 'moment'
 import { API, Cache } from 'aws-amplify'
+import axios from 'axios'
 export default {
   name: 'timeclocks',
   data() {
@@ -83,7 +84,6 @@ export default {
       loading: false,
       timeSheetID: null,
       current_length: {},
-      clockStatus: null,
       timeFigured: false,
       notes: '',
       st: {},
@@ -133,6 +133,9 @@ export default {
     timeClocks: function() {
       return this.$store.state.AuthStore.timeClocks
     },
+    clockStatus: function() {
+      return this.$store.state.AuthStore.humanity_attributes.clockStatus
+    },
     startEndDates: function() {
       return {
         start_date: moment()
@@ -148,6 +151,7 @@ export default {
   },
   created() {
     // this.request(0)
+
   },
   methods: {
     request() {
@@ -188,52 +192,44 @@ export default {
           this.loading = false
         })
     },
-    getClockStatus() {
-      this.$http
-        // eslint-disable-next-line
-        .get(process.env.LAMBDA_API + '/getClockStatus', {
-          params: {
-            // id: this.user.attributes['custom:humanity'],
-            id: localStorage.getItem('humanityToken'),
-            token: localStorage.getItem('humanityToken')
-          }
-        })
-        .then(response => {
-          console.log(response)
-          this.clockStatus = response.data.data
-          this.loading = false
-        })
-        .catch(error => {
-          console.error(error)
-        })
-    },
+    // getClockStatus() {
+    //   this.$http
+    //     .get(this.$getClockStatus, {
+    //       params: {
+    //         id: store.state.AuthStore.humanity_attributes.humanityUserId,
+    //         token: store.state.AuthStore.humanity_attributes.currentToken
+    //       }
+    //     })
+    //     .then(response => {
+    //       console.log(response)
+    //       this.clockStatus = response.data.data
+    //       this.loading = false
+    //     })
+    //     .catch(error => {
+    //       console.error(error)
+    //     })
+    // },
     updateClockStatus() {
       this.timeFigured = true
-      var command = ''
-      if (this.clockStatus === 'in') {
-        command = 'clockout'
-      } else {
-        command = 'clockin'
-      }
-      this.$http
-        .get(process.env.LAMBDA_API + '/createTimeClock', {
-          params: {
-            id: localStorage.getItem('humanityToken'),
-            inOut: command,
-            token: this.$ht
-          }
-        })
-        .then(response => {
-          var data = JSON.parse(response.data)
-          this.timeSheetID = data.data
-
-          this.request()
-        })
-        .catch(error => {
-          console.error(error)
-        })
+      // var command
+      // if (this.clockStatus === 'in') {
+      //   command = 'clockout'
+      // } else {
+      //   command = 'clockin'
+      // }
     },
-
+    async getClockStatus() {
+      var params = {
+        id: this.$store.state.AuthStore.humanity_attributes.humanityUserId,
+        token: this.$store.state.AuthStore.humanity_attributes.currentToken
+      }
+      let { response } = await axios.post(
+        'https://h4d0oqhk00.execute-api.us-east-2.amazonaws.com/dev/createTimeClock',
+        params
+      )
+      this.clockStatus = response.data.data
+      this.loading = false
+    },
     changeWeek(amount) {
       console.log(this.start_date)
       console.log(this.end_date)
