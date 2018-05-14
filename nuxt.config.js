@@ -20,11 +20,16 @@ module.exports = {
   /*
   ** Customize the progress bar color
   */
-  // loading: { color: '#3B8070' },
-  loading: '~/components/loading.vue',
+  loading: { color: '#3B8070' },
+  // loading: '~/components/loading.vue',
+  loadingIndicator: {
+      name: 'circle',
+      color: '#3B8070',
+      background: 'white'
+  },
   css: [
     { src: '~assets/style/app.styl', lang: 'styl' }
-],
+       ],
   /*
   ** Build configuration
   */
@@ -53,7 +58,6 @@ module.exports = {
     { src: '~plugins/AuthStorePersist.js', ssr: false },
     { src: '~plugins/amplify_mixin.js', ssr: true },
     { src: '~plugins/vue-notification' },
-    '@/plugins/vuetify'
-
+    { src: '@/plugins/vuetify', ssr: false }
   ]
 }

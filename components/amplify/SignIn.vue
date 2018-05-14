@@ -96,9 +96,7 @@
                         label="Password"
                         hint="At least 6 characters"
                         required/>
-     <v-btn
-     
-                      color="#9c27b0"
+                <v-btn color="#9c27b0"
                       v-on:click="signIn">
                       Sign In
                     </v-btn>
@@ -134,7 +132,7 @@ import AmplifyTheme from './AmplifyTheme'
 
 export default {
   name: 'Login',
-  data () {
+  data() {
     return {
       username: 'testgroupandrews.com',
       password: 'testgroupandrews.com',
@@ -148,14 +146,17 @@ export default {
     }
   },
   methods: {
-    async signIn (event) {
-       this.$nuxt.$loading.start()
+    async signIn(event) {
+      this.$nuxt.$loading.start()
       try {
         const user = await Auth.signIn(this.username, this.password)
+        const attributes = await Auth.currentUserInfo()
+        user.attributes = attributes.attributes
         this.$store.dispatch('AuthStore/setUser', user)
-         this.$nuxt.$loading.finish()
-        this.$router.push('/secret')
-        if (user.challengeName === 'SMS_MFA') {
+        this.$nuxt.$loading.finish()
+        this.$router.push('/people/Profile')
+        /* eslint-disable-next-line */
+        if (user.challengeNa / me === 'SMS_MFA') {
           this.confirmView = true
           return
         }
@@ -165,14 +166,14 @@ export default {
         this.fireAuthNotify(this.error)
       }
     },
-    async checkUser () {
+    async checkUser() {
       const user = this.user
       if (user) return
       try {
         const data = await Auth.verifiedContact(user)
         this.$store.dispatch('AuthStore/setVerification', data)
         if (!JS.isEmpty(data.verified)) {
-          this.$router.push('/secret')
+          this.$router.push('/people/Profile')
         } else {
           this.$router.push('/Auth/VerifyContact')
         }
@@ -180,22 +181,22 @@ export default {
         console.log(err)
       }
     },
-    async confirm () {
+    async confirm() {
       try {
         await Auth.confirmSignIn(this.user, this.code)
-        this.$router.push('/secret')
+        this.$router.push('/people/Profile')
       } catch (err) {
         this.setError(err)
         this.fireAuthNotify(this.error)
       }
     },
-    forgot () {
+    forgot() {
       this.$router.push('/Auth/forgotPassword')
     },
-    signUp () {
+    signUp() {
       this.$router.push('/Auth/SignUp')
     },
-    setError (err) {
+    setError(err) {
       this.error = err.message || err
     }
   }

@@ -1,73 +1,48 @@
 <template>
-  <v-app dark>
-    <v-navigation-drawer app :mini-variant="miniVariant" :clipped="clipped" v-model="drawer">
-      <v-list>
-        <v-list-tile router v-for="(item, i) in items" :key="i" :to="item.to">
-          <v-list-tile-action>
-            <v-icon v-html="item.icon"></v-icon>
-          </v-list-tile-action>
-          <v-list-tile-content>
-            <v-list-tile-title v-text="item.title"></v-list-tile-title>
-          </v-list-tile-content>
-        </v-list-tile>
-      </v-list>
-    </v-navigation-drawer>
-    <v-toolbar app fixed>
-      <v-toolbar-side-icon @click.native.stop="drawer = !drawer"></v-toolbar-side-icon>
-      <v-btn icon @click.native.stop="miniVariant = !miniVariant">
-        <v-icon v-html="miniVariant ? 'chevron_right' : 'chevron_left'"></v-icon>
-      </v-btn>
-      <v-btn icon @click.native.stop="clipped = !clipped">
-        <v-icon>web</v-icon>
-      </v-btn>
-      <v-btn icon @click.native.stop="fixed = !fixed">
-        <v-icon>remove</v-icon>
-      </v-btn>
-      <v-toolbar-title v-text="title"></v-toolbar-title>
-      <v-spacer></v-spacer>
-      <v-btn icon @click.native.stop="rightDrawer = !rightDrawer">
-        <v-icon>menu</v-icon>
-      </v-btn>
-    </v-toolbar>
-    <main>
+<v-app>
+  <layout
+      v-if="$_isAuthenticated"
+      app/>
+       <!-- <main> -->
       <v-content>
         <v-container fluid>
           <nuxt />
         </v-container>
+          <notifications group="auth" />
       </v-content>
-    </main>
-    <v-navigation-drawer app temporary :right="right" v-model="rightDrawer">
-      <v-list>
-        <v-list-tile @click.native="right = !right">
-          <v-list-tile-action>
-            <v-icon light>compare_arrows</v-icon>
-          </v-list-tile-action>
-          <v-list-tile-title>Switch drawer (click me)</v-list-tile-title>
-        </v-list-tile>
-      </v-list>
-    </v-navigation-drawer>
-    <v-footer app :fixed="fixed">
-      <span>&copy; 2017</span>
-    </v-footer>
-  </v-app>
+    <!-- </main> -->
+ <coms-panel right-drawer="false"/>
+  <a-footer
+      v-if="$_isAuthenticated"
+      app/>
+</v-app>
 </template>
 
 <script>
+import Layout from '../components/Layout'
+import AFooter from '../components/AFooter'
+import ComsPanel from '../components/ComsPanel'
+
 export default {
+  components: {
+    'layout': Layout,
+    'a-footer': AFooter,
+    'coms-panel': ComsPanel
+  },
   data() {
     return {
-      clipped: true,
-      drawer: true,
-      fixed: false,
-      items: [
-        { icon: 'apps', title: 'Welcome', to: '/' },
-        { icon: 'bubble_chart', title: 'Inspire', to: '/inspire' },
-        { icon: 'group', title: 'Users', to: '/users' }
-      ],
-      miniVariant: true,
-      right: true,
-      rightDrawer: false,
-      title: 'Vuetify.js'
+      // clipped: true,
+      // drawer: true,
+      // fixed: false,
+      // items: [
+      //   { icon: 'apps', title: 'Welcome', to: '/' },
+      //   { icon: 'bubble_chart', title: 'Inspire', to: '/inspire' },
+      //   { icon: 'group', title: 'Users', to: '/users' }
+      // ],
+      // miniVariant: true,
+      // right: true,
+      // rightDrawer: false,
+      // title: 'Vuetify.js'
     }
   }
 }
