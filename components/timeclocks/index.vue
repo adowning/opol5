@@ -17,7 +17,7 @@
               <template v-if="clockStatus ==='out'">
                 <v-layout row my-4>
                   <v-flex xs6 offset-xs3>
-                    <v-btn block color="info" dark @click.native="updateClockStatus()">Clock In</v-btn>
+                    <v-btn block color="info" dark @click.native="createTimeClock()">Clock In</v-btn>
                   </v-flex>
                 </v-layout>
               </template>
@@ -151,7 +151,6 @@ export default {
   },
   created() {
     // this.request(0)
-
   },
   methods: {
     request() {
@@ -192,35 +191,36 @@ export default {
           this.loading = false
         })
     },
-    // getClockStatus() {
-    //   this.$http
-    //     .get(this.$getClockStatus, {
-    //       params: {
-    //         id: store.state.AuthStore.humanity_attributes.humanityUserId,
-    //         token: store.state.AuthStore.humanity_attributes.currentToken
-    //       }
-    //     })
-    //     .then(response => {
-    //       console.log(response)
-    //       this.clockStatus = response.data.data
-    //       this.loading = false
-    //     })
-    //     .catch(error => {
-    //       console.error(error)
-    //     })
-    // },
-    updateClockStatus() {
+    async createTimeClock() {
       this.timeFigured = true
-      // var command
-      // if (this.clockStatus === 'in') {
-      //   command = 'clockout'
-      // } else {
-      //   command = 'clockin'
-      // }
+      let params = {
+        userId: this.$store.state.AuthStore.humanity_attributes.humanityUserId,
+        token: this.$store.state.AuthStore.humanity_attributes.currentToken
+      }
+      let { data } = await axios.post(
+        'https://h4d0oqhk00.execute-api.us-east-2.amazonaws.com/dev/createtimeclock',
+        params
+      )
+      this.$store.dispatch('AuthStore/createTimeClock', data)
+    },
+    async updateTimeClock() {
+      this.timeFigured = true
+      if (this.clockStatus === 'in') {
+        let params = {
+          id: this.$store.state.AuthStore.humanity_attributes.humanityUserId,
+          token: this.$store.state.AuthStore.humanity_attributes.currentToken
+        }
+        let { data } = await axios.post(
+          'https://h4d0oqhk00.execute-api.us-east-2.amazonaws.com/dev/updatetimeclock',
+          params
+        )
+        this.$store.dispatch('AuthStore/updateTimeClock', data)
+      }
     },
     async getClockStatus() {
       var params = {
         id: this.$store.state.AuthStore.humanity_attributes.humanityUserId,
+        inOut: this.$store.state.AuthStore.humanity_attributes.clockStatus,
         token: this.$store.state.AuthStore.humanity_attributes.currentToken
       }
       let { response } = await axios.post(
