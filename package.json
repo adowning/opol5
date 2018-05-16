@@ -18,7 +18,7 @@
   "dependencies": {
     "@nuxtjs/axios": "^5.3.1",
     "@nuxtjs/proxy": "^1.2.4",
-    "aws-amplify": "^0.2.9",
+    "aws-amplify": "^0.2.15",
     "axios": "^0.18.0",
     "chai": "^4.1.2",
     "jsdom": "^11.6.2",
@@ -56,6 +56,11 @@
   "config": {
     "nuxt": {
       "port": "4444"
+    }
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint --fix"
     }
   }
 }
