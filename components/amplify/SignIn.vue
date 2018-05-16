@@ -1,37 +1,4 @@
-<!--<template>
-  <div :style="theme.form">
-    <h1 :style="theme.header" v-if="!confirmView">Sign In</h1>
-    <h1 :style="theme.header" v-if="confirmView">Confirm Sign In</h1>
-    <div v-if="!confirmView">
-      <div :style="theme.inputRow">
-        <input :style="theme.input" v-model="username" placeholder="Username" autofocus v-on:keyup.enter="signIn" />
-      </div>
-      <div :style="theme.inputRow">
-        <input :style="theme.input" v-model="password" type="password" placeholder="Password" v-on:keyup.enter="signIn" />
-      </div>
-      <div :style="theme.actionRow">
-        <button :style="theme.action" v-on:click="signIn" :disabled="!username || !password">Sign In</button>
-      </div>
-    </div>
-    <div v-if="confirmView">
-      <div :style="theme.inputRow">
-        <input :style="theme.input" v-model="code" placeholder="Code" v-on:keyup.enter="confirm" />
-      </div>
-      <div :style="theme.actionRow">
-        <button :style="theme.action" v-on:click="confirm" :disabled="!code">Confirm</button>
-      </div>
-    </div>
-    <div :style="theme.footer">
-      <span :style="theme.footerLeft">
-        <a :style="theme.link" v-on:click="forgot">Forgot Password</a>
-      </span>
-      &nbsp;
-      <span :style="theme.footerRight">
-        <a :style="theme.link" v-on:click="signUp">Sign Up</a>
-      </span>
-    </div>
-  </div>
-</template>-->
+
 <template>
   <v-container
     grid-list-md
@@ -152,7 +119,7 @@ export default {
         const user = await Auth.signIn(this.username, this.password)
         const attributes = await Auth.currentUserInfo()
         user.attributes = attributes.attributes
-        this.$store.dispatch('AuthStore/setUser', user)
+        this.$store.dispatch('modules/AuthStore/setUser', user)
         this.$nuxt.$loading.finish()
         this.$router.push('/people/Profile')
         /* eslint-disable-next-line */
@@ -171,7 +138,7 @@ export default {
       if (user) return
       try {
         const data = await Auth.verifiedContact(user)
-        this.$store.dispatch('AuthStore/setVerification', data)
+        this.$store.dispatch('modules/AuthStore/setVerification', data)
         if (!JS.isEmpty(data.verified)) {
           this.$router.push('/people/Profile')
         } else {

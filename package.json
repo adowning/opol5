@@ -12,10 +12,14 @@
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "precommit": "npm run lint",
     "test": "mocha-webpack --webpack-config webpack.config.js --require test/setup.js test/**/*.spec.js",
-    "unit": "mocha-webpack --webpack-config webpack.config.js --require test/setup.js"
+    "unit": "mocha-webpack --webpack-config webpack.config.js --require test/setup.js",
+    "deploy": "push-dir --dir=dist --branch=nuxt --cleanup"
   },
   "dependencies": {
+    "@nuxtjs/axios": "^5.3.1",
+    "@nuxtjs/proxy": "^1.2.4",
     "aws-amplify": "^0.2.9",
+    "axios": "^0.18.0",
     "chai": "^4.1.2",
     "jsdom": "^11.6.2",
     "jsdom-global": "^3.0.2",
@@ -26,6 +30,7 @@
     "vue-property-decorator": "^6.0.0",
     "vuetify": "^1.0.17",
     "vuex": "^3.0.1",
+    "vuex-persist": "^1.2.2",
     "vuex-persistedstate": "^2.5.1"
   },
   "devDependencies": {

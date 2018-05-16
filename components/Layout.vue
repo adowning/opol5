@@ -222,7 +222,7 @@ export default {
       {
         icon: 'android',
         title: 'Hardware',
-        link: '/hardware'
+        link: '/assets/Hardware'
       },
       {
         icon: 'invert_colors',

@@ -116,10 +116,11 @@ export default {
       try {
         const data = await Auth.signOut()
         console.log(data)
-        this.$store.dispatch('AuthStore/setUser', null)
+        this.$store.dispatch('modules/AuthStore/logOut', null)
         this.$router.replace('/')
       } catch (err) {
         this.setError(err)
+        console.log(err)
         this.fireAuthNotify(this.error)
       }
     },

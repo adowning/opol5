@@ -12,6 +12,8 @@
         sm12
         xs12>
         <v-card class="elevation-0 transparent pa-4 ml-4 mr-4">
+                <div class="headline mb-2">User Profile</div>
+
           <v-layout
             row
             justify-center>
@@ -22,9 +24,22 @@
               sm4
               class="hidden-xs-only">
               <v-card class="elevation-0 mr-2 transparent">
-                <div class="headline mb-2">User Profile</div>
-                <div class="body-1">Manage your basic information: your name, email, and phone number, etc. Help others find you and make it easier to get in touch.</div>
-                <!-- <v-btn small @click="getAttributes()">GET</v-btn> -->
+                <!-- 140x140 -->
+                <div class="body-1"></div>
+            <v-card>
+        <v-card-media :src="userModel.avatar_url" height="200px">
+        </v-card-media>
+        <v-card-title primary-title>
+          <div>
+            <h3 class="headline mb-0">{{userModel.name.first}}, {{userModel.name.last}}</h3>
+            <!-- <div>Located two hours south of Sydney in the <br>Southern Highlands of New South Wales, ...</div> -->
+          </div>
+        </v-card-title>
+        <!-- <v-card-actions>
+          <v-btn flat color="orange">Share</v-btn>
+          <v-btn flat color="orange">Explore</v-btn>
+        </v-card-actions> -->
+      </v-card>
               </v-card>
             </v-flex>
             <v-flex
@@ -43,7 +58,7 @@
                   @updateName="updateName($event)"/>
                 <v-divider/>
                 <app-user-email
-                  :email="userModel.email"/>
+                  :email="userModel.emailAddress"/>
                 <v-divider/>
                 <!-- <app-birth-date
                   :birthdate="userModel.birthDate"
@@ -51,7 +66,7 @@
                   @updateBirthDate="updateBirthDate($event)"/> -->
                 <v-divider/>
                 <app-phone-number
-                  :phone="userModel.phone"
+                  :phone="userModel.phoneNumber"
                   @updatePhoneNumber="updatePhone($event)"/>
                 <v-divider/>
                 <app-address
@@ -60,7 +75,7 @@
                   @updateAddress="updateAddress($event, 'home')"/>
                 <v-divider/>
               </v-card>
-              <v-card class="mb-2 mt-4">
+              <!-- <v-card class="mb-2 mt-4">
                 <v-toolbar
                   dense
                   class="elevation-1">
@@ -86,7 +101,7 @@
                     @update="updateCustom($event, index)"
                     @delete="deleteCustom(index)"/>
                 </template>
-              </v-card>
+              </v-card> -->
               <v-dialog
                 v-model="addCustomForm"
                 max-width="500px">
@@ -159,12 +174,12 @@ export default {
   },
   methods: {
     getAttributes: function() {
-      this.mapAttributes(this.$store.state.AuthStore.humanity_attributes)
+      this.mapAttributes(this.$store.state.modules.AuthStore.humanity_attributes)
     },
     mapAttributes: function(result) {
-      console.log('mapping attributes... ', result)
       // this.userModel = result
-      this.userModel.email = 'asdf'
+      this.userModel.emailAddress = 'info@andrewsgroup.com'
+      this.userModel.avatar_url = result.avatar_url
       this.userModel.address = {
         line: result.line || 'NA',
         city: result.city || 'NA',
@@ -178,7 +193,7 @@ export default {
         middle: result.middle_name,
         last: result.lastname
       }
-      this.userModel.phone = {
+      this.userModel.phoneNumber = {
         mobile: result.cell_phone,
         home: result.cell_phone,
         business: result.cell_phone
@@ -257,7 +272,6 @@ export default {
             console.log('error: ' + err)
             return
           }
-          console.log('call result: ' + result)
           this.userModel.birthDate = date
         }
       )
@@ -266,7 +280,6 @@ export default {
       console.log('updating phone number...')
       var attributeList = []
       var phoneNumbers = JSON.stringify(phone)
-      console.log('saving numbers :' + phoneNumbers)
       var attributePhoneNumber = {
         Name: 'custom:phone_numbers',
         Value: phoneNumbers

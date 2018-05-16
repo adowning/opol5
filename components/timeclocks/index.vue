@@ -1,12 +1,12 @@
 <template>
-  <v-container>
-    <v-layout class=".pa-5">
+  <v-container grid-list-md >
+    <v-layout row wrap>
       <v-flex xs4 >
-        <v-card>
+        <v-card  class="px-0">
           <v-toolbar color="primary" dark>
             <v-toolbar-title>{{date}}</v-toolbar-title>
             <v-spacer></v-spacer>
-            <v-subheader v-if="timeFigured">Total Time: {{totalTime}}</v-subheader>
+            <!-- <v-subheader v-if="timeFigured">Total Time: {{totalTime}}</v-subheader> -->
           </v-toolbar>
           <template v-if="loading">
             <!-- <v-progress-circular indeterminate :size="70" :width="7" color="primary"></v-progress-circular> -->
@@ -14,25 +14,25 @@
           </template>
           <template v-if="!loading">
             <v-list>
-              <template v-if="clockStatus ==='out'">
+              <template v-if="clockStatus.clockStatus ==='out'">
                 <v-layout row my-4>
-                  <v-flex xs6 offset-xs3>
-                    <v-btn block color="info" dark @click.native="createTimeClock()">Clock In</v-btn>
+                  <v-flex xs4 offset-xs1>
+                    <v-btn block color="info" dark @click.native="employeeClockIn()">Clock In</v-btn>
                   </v-flex>
                 </v-layout>
               </template>
-              <template v-if="clockStatus === 'in'">
-                <v-layout row mt-4>
-                  <v-flex xs8 offset-xs1>
+              <template v-if="clockStatus.clockStatus === 'in'">
+                <v-layout row mt-1>
+                  <v-flex xs7 offset-xs1>
                     <v-text-field name="input-1" label="Note" id="testing"></v-text-field>
                   </v-flex>
-                  <v-flex xs1>
+                  <v-flex>
                     <v-btn flat color="info" dark @click.native="addNote()">Add Note</v-btn>
                   </v-flex>
                 </v-layout>
                 <v-layout row mb-4>
-                  <v-flex xs6 offset-xs3>
-                    <v-btn block color="error" dark @click.native="updateClockStatus()">Clock Out</v-btn>
+                  <v-flex xs4 offset-xs1>
+                    <v-btn block color="error" dark @click.native="employeeClockOut()">Clock Out</v-btn>
                   </v-flex>
                 </v-layout>
               </template>
@@ -40,8 +40,8 @@
           </template>
         </v-card>
       </v-flex>
-      <v-flex xs10>
-        <v-card>
+      <v-flex xs8>
+        <v-card  class="px-0">
           <v-toolbar color="primary" dark>
             <v-toolbar-title>Timesheets</v-toolbar-title>
             <v-spacer>
@@ -61,10 +61,14 @@
           </template>
           <v-data-table v-if="!loading" :headers="headers" :items="timeClocks" hide-actions class="elevation-1">
             <template slot="items" slot-scope="props">
-              <td>{{ props.item.length.total_hours }}</td>
-              <td class="text-xs-right">{{ props.item.in_time.time }}</td>
-              <td class="text-xs-right">{{ props.item.out_time.time }}</td>
-              <td class="text-xs-right">{{ props.item.in_time.day }}</td>
+              <td  v-if="props.item.out_time.time"> <span v-if="props.item.current_length.hours > 0">{{props.item.current_length.hours}}h, </span>  {{ props.item.length.mins }}m</td>
+              <td  v-else><span v-if="props.item.current_length.hours > 0">{{props.item.current_length.hours}}h,</span> {{props.item.current_length.mins}}m </td>
+
+              <td class="text-xs-right" >{{ props.item.in_time.time }}, {{props.item.in_time.day}}</td>
+
+              <td class="text-xs-right" v-if="props.item.out_time.time">{{ props.item.out_time.time }}, {{ props.item.out_time.day }}</td>
+              <td class="text-xs-right" v-else>Current Clock</td>
+
             </template>
           </v-data-table>
         </v-card>
@@ -75,7 +79,7 @@
 
 <script>
 import moment from 'moment'
-import { API, Cache } from 'aws-amplify'
+// import { API, Cache } from 'aws-amplify'
 import axios from 'axios'
 export default {
   name: 'timeclocks',
@@ -113,12 +117,12 @@ export default {
           text: 'Clock out',
           align: 'left',
           value: 'out_time'
-        },
-        {
-          text: 'Date',
-          align: 'left',
-          value: 'model'
         }
+        // {
+        //   text: 'Date',
+        //   align: 'left',
+        //   value: 'model'
+        // }
       ],
       items: []
     }
@@ -131,10 +135,10 @@ export default {
       return moment.utc(moment.duration(diff).asMilliseconds()).format('H:mm')
     },
     timeClocks: function() {
-      return this.$store.state.AuthStore.timeClocks
+      return this.$store.state.modules.TimeClockStore.timeClocks
     },
     clockStatus: function() {
-      return this.$store.state.AuthStore.humanity_attributes.clockStatus
+      return this.$store.state.modules.TimeClockStore.timeClockStatus
     },
     startEndDates: function() {
       return {
@@ -149,86 +153,49 @@ export default {
       }
     }
   },
-  created() {
-    // this.request(0)
-  },
   methods: {
-    request() {
-      let apiName = 'dev-serverless-employees'
-      let path = '/gethumanitytimeclocks'
-      var humanityToken = Cache.getItem('humanityToken')
-      var humanityID = Cache.getItem('humanityID')
-      console.log(humanityToken)
-      let myInit = {
-        body: {
-          start_date: this.startEndDates.start_date,
-          end_date: this.startEndDates.end_date,
-          employee: humanityID,
-          access_token: humanityToken
-        },
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      }
-      this.items = []
-      this.loading = true
-      API.post(apiName, path, myInit)
-        .then(response => {
-          console.log('shiy')
-          console.log(response)
-          this.serverPagination = false
-          // this.serverPagination.rowsNumber = response.data.total
-          for (var item of response.data) {
-            if (item.out_day !== 0) {
-              this.items.push(item)
-            }
-          }
-          this.current_length = response.data.current_length
-          this.getClockStatus()
-        })
-        .catch(error => {
-          console.log('sugar tits ', error)
-          this.loading = false
-        })
-    },
-    async createTimeClock() {
+    async employeeClockIn() {
       this.timeFigured = true
       let params = {
-        userId: this.$store.state.AuthStore.humanity_attributes.humanityUserId,
-        token: this.$store.state.AuthStore.humanity_attributes.currentToken
+        userId: this.$store.state.modules.AuthStore.humanity_attributes.humanityUserId,
+        token: this.$store.state.modules.AuthStore.humanity_attributes.currentToken
       }
       let { data } = await axios.post(
-        'https://h4d0oqhk00.execute-api.us-east-2.amazonaws.com/dev/createtimeclock',
+        'https://h4d0oqhk00.execute-api.us-east-2.amazonaws.com/dev/employeeclockin',
         params
       )
-      this.$store.dispatch('AuthStore/createTimeClock', data)
+      console.log(data)
+      this.$store.dispatch('modules/TimeClockStore/setEmployeeTimeClockStatus', data)
     },
-    async updateTimeClock() {
+    async employeeClockOut() {
       this.timeFigured = true
-      if (this.clockStatus === 'in') {
-        let params = {
-          id: this.$store.state.AuthStore.humanity_attributes.humanityUserId,
-          token: this.$store.state.AuthStore.humanity_attributes.currentToken
-        }
-        let { data } = await axios.post(
-          'https://h4d0oqhk00.execute-api.us-east-2.amazonaws.com/dev/updatetimeclock',
-          params
-        )
-        this.$store.dispatch('AuthStore/updateTimeClock', data)
+      let params = {
+        userId: this.$store.state.modules.AuthStore.humanity_attributes.humanityUserId,
+        token: this.$store.state.modules.AuthStore.humanity_attributes.currentToken
+      }
+      let { data } = await axios.post(
+        'https://h4d0oqhk00.execute-api.us-east-2.amazonaws.com/dev/employeeclockout',
+        params
+      )
+      console.log(data)
+      if (data.status === 13) {
+        this.$store.dispatch('modules/TimeClockStore/setEmployeeTimeClockStatus', 'out')
+      } else {
+        this.$store.dispatch('modules/TimeClockStore/setEmployeeTimeClockStatus', data)
       }
     },
     async getClockStatus() {
       var params = {
-        id: this.$store.state.AuthStore.humanity_attributes.humanityUserId,
-        inOut: this.$store.state.AuthStore.humanity_attributes.clockStatus,
-        token: this.$store.state.AuthStore.humanity_attributes.currentToken
+        userId: this.$store.state.modules.AuthStore.humanity_attributes.humanityUserId,
+        token: this.$store.state.modules.AuthStore.humanity_attributes.currentToken
       }
+      console.log(params)
       let { response } = await axios.post(
-        'https://h4d0oqhk00.execute-api.us-east-2.amazonaws.com/dev/createTimeClock',
+        'https://h4d0oqhk00.execute-api.us-east-2.amazonaws.com/dev/gethumanitytimeclockstatus',
         params
       )
-      this.clockStatus = response.data.data
-      this.loading = false
+      console.log(response)
+      this.$store.dispatch('modules/TimeClockStore/setEmployeeTimeClockStatus', response)
     },
     changeWeek(amount) {
       console.log(this.start_date)
@@ -236,7 +203,7 @@ export default {
       console.log(amount)
       this.week = amount
       this.items = []
-      this.request()
+      // this.request()
     },
     addNote() {
       this.$http

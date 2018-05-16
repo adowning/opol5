@@ -3,10 +3,10 @@ import { mapGetters } from 'vuex'
 Vue.mixin({
   computed: {
     ...mapGetters({
-      $_AuthUser: 'AuthStore/loggedinUser',
-      $_AuthUsername: 'AuthStore/loggedinusername',
-      $_isAuthenticated: 'AuthStore/isAuthenticated',
-      $_userVerification: 'AuthStore/userVerification'
+      $_AuthUser: 'modules/AuthStore/loggedinUser',
+      $_AuthUsername: 'modules/AuthStore/loggedinusername',
+      $_isAuthenticated: 'modules/AuthStore/isAuthenticated',
+      $_userVerification: 'modules/AuthStore/userVerification'
     })
   },
   methods: {
