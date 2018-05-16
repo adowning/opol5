@@ -72,13 +72,6 @@
  * limitations under the License.
  */
 
-/*!
- * The buffer module from node.js, for the browser.
- *
- * @author   Feross Aboukhadijeh <feross@feross.org> <http://feross.org>
- * @license  MIT
- */
-
 /**
  * vuex v3.0.1
  * (c) 2017 Evan You
@@ -163,6 +156,13 @@
  */
 
 /*!
+ * The buffer module from node.js, for the browser.
+ *
+ * @author   Feross Aboukhadijeh <feross@feross.org> <http://feross.org>
+ * @license  MIT
+ */
+
+/*!
  * Copyright 2016 Amazon.com,
  * Inc. or its affiliates. All Rights Reserved.
  *
@@ -186,6 +186,8 @@
  *            See https://raw.githubusercontent.com/stefanpenner/es6-promise/master/LICENSE
  * @version   v4.2.4+314e4831
  */
+
+/*! https://mths.be/punycode v1.4.1 by @mathias */
 
 /*!
  * JavaScript Cookie v2.2.0
@@ -240,5 +242,3 @@ object-assign
  * for the specific language governing permissions and
  * limitations under the License.
  */
-
-/*! https://mths.be/punycode v1.4.1 by @mathias */
