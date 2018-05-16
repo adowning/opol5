@@ -8,7 +8,7 @@ cache:
 
 branches:
   only:
-  - nuxt
+  - master
 
 install:
   - npm install
