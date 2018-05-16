@@ -1,4 +1,4 @@
-import moment from 'moment'
+import moment from "moment"
 
 function initialState() {
   return {
@@ -12,13 +12,10 @@ export const state = () => ({
 })
 const getters = {
   timeClockStatus: state => state.timeClockStatus
-
 }
 const actions = {
-  setTimeClocks({
-    commit,
-    state
-  }, value) {
+  setTimeClocks({ commit, state }, value) {
+    console.log(state)
     var clocks = []
     for (let o of value.data) {
       // context.commit('SET_TIME_CLOCKS', o)
@@ -26,72 +23,73 @@ const actions = {
         clocks.push(o)
       }
     }
-    commit('SET_TIME_CLOCKS', clocks)
+    commit("SET_TIME_CLOCKS", clocks)
   },
-  setEmployeeTimeClockStatus({
-    commit,
-    state
-  }, value) {
+  setEmployeeTimeClockStatus({ commit, state }, value) {
     console.log(value)
+    console.log(state)
+
     var newValue = {}
-    if (value !== 'in' && value !== 'out') {
+    if (value !== "in" && value !== "out") {
       if (value.address) {
         newValue.clockStatus = value.clockStatus
-        newValue.clockID = 'blank'
-        console.log('newval ', newValue)
-        newValue.updatedAt = moment().format('HH:MM:SS')
-        commit('SET_TIME_CLOCK_STATUS', newValue)
-        return 'clocked employee out or in'
+        newValue.clockID = "blank"
+        console.log("newval ", newValue)
+        newValue.updatedAt = moment().format("HH:MM:SS")
+        commit("SET_TIME_CLOCK_STATUS", newValue)
+        return "clocked employee out or in"
       } else {
-        if (value.data.data === 'out') {
-          newValue.clockStatus = 'out'
-          newValue.clockID = 'blank'
-          console.log('newval ', newValue)
-          newValue.updatedAt = moment().format('HH:MM:SS')
-          commit('SET_TIME_CLOCK_STATUS', newValue)
-          return 'clocked employee out'
+        if (value.data.data === "out") {
+          newValue.clockStatus = "out"
+          newValue.clockID = "blank"
+          console.log("newval ", newValue)
+          newValue.updatedAt = moment().format("HH:MM:SS")
+          commit("SET_TIME_CLOCK_STATUS", newValue)
+          return "clocked employee out"
         }
-        if (value.data.clockStatus === 'in') {
-          newValue.clockStatus = 'in'
+        if (value.data.clockStatus === "in") {
+          newValue.clockStatus = "in"
           newValue.clockID = value.data.data.id
-          console.log('newval ', newValue)
-          newValue.updatedAt = moment().format('HH:MM:SS')
-          commit('SET_TIME_CLOCK_STATUS', newValue)
-          return 'clocked employee in'
+          console.log("newval ", newValue)
+          newValue.updatedAt = moment().format("HH:MM:SS")
+          commit("SET_TIME_CLOCK_STATUS", newValue)
+          return "clocked employee in"
         }
         if (value.data.end_timestamp) {
-          newValue.clockStatus = 'out'
-          newValue.clockID = 'blank'
-          console.log('newval ', newValue)
-          newValue.updatedAt = moment().format('HH:MM:SS')
-          commit('SET_TIME_CLOCK_STATUS', newValue)
-          return 'clocked employee out'
+          newValue.clockStatus = "out"
+          newValue.clockID = "blank"
+          console.log("newval ", newValue)
+          newValue.updatedAt = moment().format("HH:MM:SS")
+          commit("SET_TIME_CLOCK_STATUS", newValue)
+          return "clocked employee out"
         } else {
-          newValue.clockStatus = 'in'
+          newValue.clockStatus = "in"
           newValue.clockID = value.data.id
-          console.log('newval ', newValue)
-          newValue.updatedAt = moment().format('HH:MM:SS')
-          commit('SET_TIME_CLOCK_STATUS', newValue)
-          return 'clocked employee in'
+          console.log("newval ", newValue)
+          newValue.updatedAt = moment().format("HH:MM:SS")
+          commit("SET_TIME_CLOCK_STATUS", newValue)
+          return "clocked employee in"
         }
       }
     } else {
       console.log(value)
-      if (value === 'out') {
-        newValue.clockStatus = 'out'
-        newValue.clockID = 'blank'
-        console.log('newval ', newValue)
-        newValue.updatedAt = moment().format('HH:MM:SS')
-        commit('SET_TIME_CLOCK_STATUS', newValue)
-        return 'clocked employee out'
+      if (value === "out") {
+        newValue.clockStatus = "out"
+        newValue.clockID = "blank"
+        console.log("newval ", newValue)
+        newValue.updatedAt = moment().format("HH:MM:SS")
+        commit("SET_TIME_CLOCK_STATUS", newValue)
+        return "clocked employee out"
       } else {
-        console.log('error')
+        console.log("error")
       }
     }
   }
 }
 const mutations = {
   reset(state, user) {
+    console.log(user)
+
     const s = initialState()
     Object.keys(s).forEach(key => {
       state[key] = s[key]
@@ -103,7 +101,6 @@ const mutations = {
   SET_TIME_CLOCK_STATUS(state, status) {
     state.timeClockStatus = status
   }
-
 }
 export default {
   state,

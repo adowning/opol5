@@ -1,0 +1,14 @@
+{    
+    "prettier/prettier": ["warn", {
+    "singleQuote": true
+  }],
+    "semi": false,
+    "overrides": [
+      {
+        "files": "*.test.js",
+        "options": {
+          "semi": true
+        }
+      }
+    ]
+  }

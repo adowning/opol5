@@ -1,88 +1,48 @@
 
 <template>
-  <v-container
-    grid-list-md
-    class="mt-3">
-    <v-layout
-      row
-      wrap
-      justify-center>
-      <v-flex
-        xl6
-        lg10
-        md10
-        sm12
-        xs10>
+  <v-container grid-list-md class="mt-3">
+    <v-layout row wrap justify-center>
+      <v-flex xl6 lg10 md10 sm12 xs10>
         <v-card class="pa-2 ml-4 mr-2">
-          <v-layout
-            row
-            justify-center>
-            <v-layout
-              column
-              align-center>
-              <transition
-                appear
-                name="fadeout">
-                <img
-                  class="aws-logo"
-                  style="width:140px;height:140px"
-                  src="../../static/logo.png">
+          <v-layout row justify-center>
+            <v-layout column align-center>
+              <transition appear name="fadeout">
+                <img class="aws-logo" style="width:140px;height:140px" src="../../static/logo.png">
               </transition>
               <h3 class="text-xs-center grey--text hidden-xs-only">Andrews Administration</h3>
             </v-layout>
-            <v-flex
-              xl6
-              lg6
-              md6
-              sm6>
-              <transition
-                appear
-                name="fadeout">
+            <v-flex xl6 lg6 md6 sm6>
+              <transition appear name="fadeout">
                 <v-card class="elevation-0">
-                  <v-alert
-                    v-model="error"
-                    outline
-                    type="error"
-                    dismissible
-                    class="ml-3 mr-3">
+                  <v-alert v-model="error" outline type="error" dismissible class="ml-3 mr-3">
                     {{ error }}
                   </v-alert>
                   <v-card-text>
-                  <div v-if="!confirmView">
+                    <div v-if="!confirmView">
 
-                      <v-text-field
-                        v-model="username"
-                        label="Username"
-                        required/>
-                        </div>
-                      <v-text-field
-                        v-model="password"
-                        :append-icon="hidepw ? 'visibility' : 'visibility_off'"
-                        :append-icon-cb="() => (hidepw = !hidepw)"
-                        :type="hidepw ? 'password' : 'text'"
-                        label="Password"
-                        hint="At least 6 characters"
-                        required/>
-                <v-btn color="#9c27b0"
-                      v-on:click="signIn">
+                      <v-text-field v-model="username" label="Username" required/>
+                    </div>
+                    <v-text-field v-model="password" :append-icon="hidepw ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (hidepw = !hidepw)" :type="hidepw ? 'password' : 'text'" label="Password" hint="At least 6 characters" required/>
+                    <v-btn color="#9c27b0" v-on:click="signIn">
                       Sign In
                     </v-btn>
-                  <div v-if="confirmView">
-<div :style="theme.inputRow">
-        <input :style="theme.input" v-model="code" placeholder="Code" v-on:keyup.enter="confirm" />
-      </div>
-      <div :style="theme.actionRow">
-        <button :style="theme.action" v-on:click="confirm" :disabled="!code">Confirm</button>
-      </div>
-</div>
-                  <div :style="theme.footer">
-      <span :style="theme.footerLeft">
-        <a :style="theme.link" v-on:click="forgot">Forgot Password</a>
-      </span>
-<br>      <!-- <span :style="theme.footerRight"> -->
-        <a :style="theme.link" v-on:click="signUp">Sign Up</a>
-      <!-- </span> -->
-    </div>
+                    <div v-if="confirmView">
+                      <div :style="theme.inputRow">
+                        <input :style="theme.input" v-model="code" placeholder="Code" v-on:keyup.enter="confirm" />
+                      </div>
+                      <div :style="theme.actionRow">
+                        <button :style="theme.action" v-on:click="confirm" :disabled="!code">Confirm</button>
+                      </div>
+                    </div>
+                    <div :style="theme.footer">
+                      <span :style="theme.footerLeft">
+                        <a :style="theme.link" v-on:click="forgot">Forgot Password</a>
+                      </span>
+                      <br>
+                      <span :style="theme.footerRight">
+                      <a :style="theme.link" v-on:click="signUp">Sign Up</a>
+                      </span>
+                    </div>
                   </v-card-text>
                 </v-card>
               </transition>
@@ -92,7 +52,7 @@
       </v-flex>
     </v-layout>
   </v-container>
-  </template>
+</template>
 <script>
 import { Auth, JS } from 'aws-amplify'
 import AmplifyTheme from './AmplifyTheme'

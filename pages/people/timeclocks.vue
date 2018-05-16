@@ -1,5 +1,5 @@
 <template>
-    <TimeClocks></TimeClocks>
+  <TimeClocks></TimeClocks>
 </template>
 
 <script>
@@ -10,7 +10,7 @@ import moment from 'moment'
 export default {
   middleware: 'need_auth',
   // async fetch({ store, pars }) {
-  async asyncData (context) {
+  async asyncData(context) {
     console.log(context)
     let params = {
       start_date: moment()
@@ -37,13 +37,13 @@ export default {
       }
     }
     if (!context.store.state.modules.TimeClockStore.timeClockStatus) {
-      let {data2} = await axios.post(
+      let { data2 } = await axios.post(
         // let data2 = axios.post(
         '/api/users/gethumanitytimeclockstatus',
         params
       )
       if (data2) {
-      // store.dispatch('modules/TimeClockStore/setEmployeeTimeClockStatus', data2)
+        // store.dispatch('modules/TimeClockStore/setEmployeeTimeClockStatus', data2)
         context.store.dispatch('modules/TimeClockStore/setEmployeeTimeClockStatus', data2)
       }
     }

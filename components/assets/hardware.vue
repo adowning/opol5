@@ -398,8 +398,8 @@ export default {
       console.log('here')
       console.log(asset)
 
-      //   const checkedInAsset = await this.$axios.$post(`/api/assets/hardware/${assetId.id}/checkout`, { assigned_asset: asset.id, assigned_user: userSnipeID })
-    //   console.log(checkedInAsset)
+      const checkedInAsset = await this.$axios.$post(`/api/assets/hardware/${asset.id}/checkout`, { assigned_asset: asset.id, assigned_user: '4041624', checkout_to_type: 'user' })
+      console.log(checkedInAsset)
     },
     request({ pagination, filter, list }) {
       this.loading = true

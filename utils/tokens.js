@@ -1,6 +1,11 @@
-import { CognitoUserSession, CognitoIdToken, CognitoAccessToken, CognitoRefreshToken } from 'amazon-cognito-identity-js'
+import {
+  CognitoUserSession,
+  CognitoIdToken,
+  CognitoAccessToken,
+  CognitoRefreshToken
+} from "amazon-cognito-identity-js"
 
-export function getTokenFromUser (user) {
+export function getTokenFromUser(user) {
   let tokens = null
   if (user) {
     try {
@@ -16,7 +21,7 @@ export function getTokenFromUser (user) {
   return tokens
 }
 
-export function makeToken (IdToken, AccessToken, RefreshToken) {
+export function makeToken(IdToken, AccessToken, RefreshToken) {
   const idToken = new CognitoIdToken({
     IdToken: IdToken
   })
@@ -34,13 +39,15 @@ export function makeToken (IdToken, AccessToken, RefreshToken) {
   return token
 }
 
-export function verifyTokens (req) {
+export function verifyTokens(req) {
   if (!req.headers.cookie) return false
 
-  const tokensCookie = req.headers.cookie.split(';').find(c => c.trim().startsWith('tokens='))
+  const tokensCookie = req.headers.cookie
+    .split(";")
+    .find(c => c.trim().startsWith("tokens="))
   if (!tokensCookie) return false
 
-  const rowTokens = tokensCookie.split('=')[1]
+  const rowTokens = tokensCookie.split("=")[1]
   try {
     const tokenObj = JSON.parse(unescape(rowTokens))
     if (!tokenObj) return false

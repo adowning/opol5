@@ -1,16 +1,16 @@
 <template>
     <div>
-    <SignUp></SignUp>
+    <RegisterExisting></RegisterExisting>
     </div>
 </template>
 
 <script>
-import SignUp from '../../components/amplify/SignUp.vue'
+import RegisterExisting from '../../components/amplify/RegisterExisting.vue'
 export default {
   layout: 'nouser',
   middleware: 'guest',
   components: {
-    SignUp
+    RegisterExisting
   }
 }
 </script>

@@ -80,6 +80,13 @@ functions:
           method: post
           path: employeeclockout
           cors: true
+  gatherForCreate:
+    handler: humanity.gatherForCreate
+    events:
+      - http:
+          method: post
+          path: gatherforcreate
+          cors: true
   createUser:
     handler: mongoUsers/handler.createUser
     package:
