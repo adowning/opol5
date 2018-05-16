@@ -83,15 +83,19 @@ module.exports = {
     proxy: true
   },
   proxy: {
-    // Simple proxy
-    // '/api/': 'http://35.172.138.127:82/api/v1',
     '/api/assets/': {
       target: 'http://47.219.112.177:83/api/v1',
       pathRewrite: {
         '^/api/assets/': ''
       }
+    },
+    '/api/users/': {
+      target: 'https://h4d0oqhk00.execute-api.us-east-2.amazonaws.com/dev',
+      // target: 'https://canihazip.com',
+      pathRewrite: {
+        '^/api/users/': ''
+      }
     }
-
     // With options
     // '/api2': { target: 'http://35.172.138.127:82/', ws: false }
   },

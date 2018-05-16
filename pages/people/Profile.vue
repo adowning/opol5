@@ -9,6 +9,7 @@ import Profile from '../../components/profile/'
 import axios from 'axios'
 
 export default {
+  middleware: 'need_auth',
   async fetch({ store, pars }) {
     let params = {
       username: store.state.modules.AuthStore.user.attributes.humanityUsername,
@@ -18,7 +19,7 @@ export default {
     console.log(params)
     if (!store.state.modules.AuthStore.humanity_attributes) {
       let { data } = await axios.post(
-        'https://h4d0oqhk00.execute-api.us-east-2.amazonaws.com/dev/gethumanitydata',
+        '/api/users/gethumanitydata',
         params
       )
       store.dispatch('modules/AuthStore/setHumanityData', data)

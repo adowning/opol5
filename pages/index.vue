@@ -19,8 +19,10 @@ ANDREWS ADMINISTRATION
 
 <script>
 import AppLogo from '~/components/AppLogo.vue'
+
 export default {
   layout: 'nouser',
+  middleware: 'need_auth',
   components: {
     AppLogo
   }

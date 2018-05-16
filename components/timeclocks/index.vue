@@ -161,7 +161,7 @@ export default {
         token: this.$store.state.modules.AuthStore.humanity_attributes.currentToken
       }
       let { data } = await axios.post(
-        'https://h4d0oqhk00.execute-api.us-east-2.amazonaws.com/dev/employeeclockin',
+        '/api/users/employeeclockin',
         params
       )
       console.log(data)
@@ -174,7 +174,7 @@ export default {
         token: this.$store.state.modules.AuthStore.humanity_attributes.currentToken
       }
       let { data } = await axios.post(
-        'https://h4d0oqhk00.execute-api.us-east-2.amazonaws.com/dev/employeeclockout',
+        '/api/users/employeeclockout',
         params
       )
       console.log(data)
@@ -191,7 +191,7 @@ export default {
       }
       console.log(params)
       let { response } = await axios.post(
-        'https://h4d0oqhk00.execute-api.us-east-2.amazonaws.com/dev/gethumanitytimeclockstatus',
+        '/api/users/gethumanitytimeclockstatus',
         params
       )
       console.log(response)

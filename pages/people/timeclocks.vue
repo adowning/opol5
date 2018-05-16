@@ -8,6 +8,7 @@ import axios from 'axios'
 import moment from 'moment'
 
 export default {
+  middleware: 'need_auth',
   // async fetch({ store, pars }) {
   async asyncData (context) {
     console.log(context)
@@ -27,7 +28,7 @@ export default {
     if (!context.store.state.modules.TimeClockStore.timeClocks) {
       let { data } = await axios.post(
         // let { data } = axios.post(
-        'https://h4d0oqhk00.execute-api.us-east-2.amazonaws.com/dev/gethumanitytimeclocks',
+        '/api/users/gethumanitytimeclocks',
         params
       )
       if (data) {
@@ -38,7 +39,7 @@ export default {
     if (!context.store.state.modules.TimeClockStore.timeClockStatus) {
       let {data2} = await axios.post(
         // let data2 = axios.post(
-        'https://h4d0oqhk00.execute-api.us-east-2.amazonaws.com/dev/gethumanitytimeclockstatus',
+        '/api/users/gethumanitytimeclockstatus',
         params
       )
       if (data2) {
@@ -47,6 +48,7 @@ export default {
       }
     }
   },
+
   components: {
     TimeClocks
   }
