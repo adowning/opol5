@@ -13,7 +13,7 @@
     "precommit": "npm run lint",
     "test": "mocha-webpack --webpack-config webpack.config.js --require test/setup.js test/**/*.spec.js",
     "unit": "mocha-webpack --webpack-config webpack.config.js --require test/setup.js",
-    "deploy": "push-dir --dir=dist --branch=nuxt --cleanup"
+    "deploy": "push-dir --dir=dist --branch=gh-pages"
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.3.1",
