@@ -18,10 +18,7 @@ export default {
     }
     console.log(params)
     if (!store.state.modules.AuthStore.humanity_attributes) {
-      let { data } = await axios.post(
-        '/api/users/gethumanitydata',
-        params
-      )
+      let { data } = await axios.post('/api/users/gethumanitydata', params)
       store.dispatch('modules/AuthStore/setHumanityData', data)
       store.dispatch('modules/TimeClockStore/setEmployeeTimeClockStatus', data)
     }

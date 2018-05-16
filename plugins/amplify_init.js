@@ -12,7 +12,7 @@
  */
 
 import { Auth } from "aws-amplify"
-import AWSExports from "./aws-exports"
+import AWSExports from "../awsmobilejs/#current-backend-info/aws-exports"
 export default async () => {
   Auth.configure(AWSExports)
 }

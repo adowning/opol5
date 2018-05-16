@@ -369,18 +369,6 @@ async function _gatherForCreate(requestData, callback) {
       body: JSON.stringify(info)
     }
     callback(null, response)
-    // lambda.invoke({
-    //   FunctionName: 'serverless-employees-dev-createUser',
-    //   Payload: JSON.stringify(event, null, info) // pass params
-    // }, function(error, data) {
-    //   if (error) {
-    //     context.done('error', error);
-    //   }
-    //   if(data.Payload){
-    //    context.succeed(data.Payload)
-    //   }
-    // });
-    // insertIntDatabase(details.data.data, snipeitID, requestData, callback)
 
   } catch (e) {
     console.error(e)

@@ -1,0 +1,6 @@
+{
+  "python.linting.pylintEnabled": false,
+  "azureFunctions.projectRuntime": "beta",
+  "azureFunctions.projectLanguage": "JavaScript",
+  "azureFunctions.templateFilter": "Verified"
+}

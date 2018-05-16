@@ -1,6 +1,0 @@
-{
-	"SourceDir": "src",
-	"DistributionDir": "dist",
-	"BuildCommand": "yarn generate",
-	"StartCommand": "yarn test"
-}

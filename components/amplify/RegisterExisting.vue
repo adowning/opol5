@@ -11,7 +11,7 @@
                             </transition>
                             <h3 class="text-xs-center grey--text hidden-xs-only">Andrews Administration</h3>
                         </v-layout>
-                        <v-flex xl6 lg6 md6 sm6>
+                        <v-flex xl6 lg6 md6 sm6 v-if="!result">
                             <transition appear name="fadeout">
                                 <v-card class="elevation-0">
                                     <v-alert v-model="error" outline type="error" dismissible class="ml-3 mr-3">
@@ -72,6 +72,7 @@ export default {
       email: "",
       firstname: "",
       lastname: "",
+      result: null,
       phone: "",
       imageUrl: "",
       imageName: "",
@@ -87,7 +88,9 @@ export default {
   methods: {
     async verify() {
       this.$nuxt.$loading.start();
+      if(!this.imageName){
 
+      }
       let params = {
         username: this.username,
         password: this.password,
@@ -97,16 +100,12 @@ export default {
       this.email = "temp@groupandrews.com";
       // var phone_number = this.phone
       this.phone_number = "+19035301197";
-      // const data = await Auth.signUp({
-      //   username: this.username,
-      //   password: this.password,
-      //   attributes: {
-      //     email: this.password,
-      //     phone_number: this.password
-      //   }
-      // });
-      // const attributes = await Auth.currentUserInfo();
-      // let { data } = await axios.post('/api/users/createuser', params)
+        var random = Math.floor(Math.random() * 100)
+        this.username += random.toString() 
+        var oldname = this.username
+        if(process.env.NODE === 'development'){
+        this.username += random.toString()     
+        }    
       const [cognitoUser, details] = await Promise.all([
         Auth.signUp({
           username: this.username,
@@ -116,12 +115,17 @@ export default {
             phone_number: this.phone_number
           }
         }),
-        this.$axios.$post("/api/users/gatherforcreate", params)
+        this.$axios.$post("/api/users/gethumanitydata", params)
       ]);
       //  let moreData = await this.$axios.$post("/api/users/gatherforcreate", params)
+      var moreData = {} 
+      moreData. cognitoUser = cognitoUser
+      moreData.details = details
+      console.log(moreData)
        let user = await this.$axios.$post("/api/users/createuser", moreData)
-    
       this.$nuxt.$loading.finish();
+      this.result = true
+      this.$router.push("/people/Profile");      
     },
     pickFile() {
       this.$refs.image.click();
@@ -183,7 +187,7 @@ export default {
       this.$router.push("/Auth/forgotPassword");
     },
     signUp() {
-      this.$router.push("/Auth/SignUp");
+      this.$router.push("/Auth/SignIn");
     },
     setError(err) {
       this.error = err.message || err;

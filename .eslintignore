@@ -1,4 +1,5 @@
 *
+!/src/components/*
 node_modules/*
 awsmobilejs/*
 # dependencies
