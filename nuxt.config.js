@@ -90,7 +90,7 @@ module.exports = {
       }
     },
     '/api/users/': {
-      target: 'https://h4d0oqhk00.execute-api.us-east-2.amazonaws.com/dev',
+      target: 'https://edwgsi8nll.execute-api.us-east-2.amazonaws.com/dev',
       // target: 'https://canihazip.com',
       pathRewrite: {
         '^/api/users/': ''

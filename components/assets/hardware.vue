@@ -1,7 +1,17 @@
 <template>
   <v-container grid-list-md >
     <v-layout row wrap>
-    <v-tabs
+       <div class="list">
+    <ul class="list-article">
+      <li class="article" v-for="(article, index) in articles" :key="article.id">
+        <h2 class="article-title">
+          <nuxt-link class="title-link" :to="'/detail/' + article.id">{{ article.id }}</nuxt-link>
+        </h2>
+        <!-- <p class="article-body">{{ article  }}</p> -->
+      </li>
+    </ul>
+  </div>
+    <!-- <v-tabs
       v-model="active"
       class="pa-3"
       color="accent"
@@ -42,8 +52,8 @@
                 small
                 outline
                 @click="checkOut(props.item)">
-                <!-- <v-icon color="success">edit</v-icon>
-             -->CheckOut
+                <v-icon color="success">edit</v-icon>
+             CheckOut
               </v-btn>
               <v-btn
                 v-if="props.item.assigned_to"
@@ -51,7 +61,7 @@
                 small
                 outline
                 @click="checkIn(props.item)">
-                <!-- <v-icon color="warning">edit</v-icon> -->
+               <v-icon color="warning">edit</v-icon> 
                 CheckIn
               </v-btn>
             </td>
@@ -83,12 +93,12 @@
             1>
             <v-card>
 
-              <!-- <qrcode-reader
+              <qrcode-reader
                 :active="active"
                 @init="onInit"
                 @decode="onDecode">
                 <b>{{ overlay }}</b>
-              </qrcode-reader> -->
+              </qrcode-reader>
             </v-card>
           </v-flex>
           <v-flex
@@ -141,7 +151,7 @@
           {{ alert }}
         </v-alert>
       </v-tab-item>
-    </v-tabs>
+    </v-tabs> -->
     </v-layout>
   </v-container>
 </template>
@@ -151,10 +161,14 @@
 // import axios from 'axios'
 // Vue.component('qrcode-reader', QrcodeReader)
 export default {
-//   props: ['assets'],
+  props: {
+    articles: {
+      type: Array,
+      default: () => []
+    }
+  },
   data: () => ({
     active: null,
-    assets: [],
     alert: '',
     text:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
@@ -219,32 +233,29 @@ export default {
         value: 'checky'
       }
     ],
-    items: []
   }),
   computed: {
-    // user() {
-    //   return this.$store.getters.user
-    // },
-    // error() {
-    //   return this.$store.getters.error
-    // }
 
     pages () {
-      if (this.assets) {
-        var spc = this.serverPagination
-        var assetsCount = this.assets.total
-        spc.totalItems = assetsCount
-        if (this.serverPagination.totalItems == null) return 0
-        return Math.ceil(this.assets.total / 50)
-      }
+      return 5
+      // if (this.assets) {
+      //   var spc = this.serverPagination
+      //   var assetsCount = this.assets.total
+      //   spc.totalItems = assetsCount
+      //   if (this.serverPagination.totalItems == null) return 0
+      //   return Math.ceil(this.assets.total / 50)
+      // }
     }
 
   },
   watch: {
-    assets(value) {
-      console.log('here')
-      console.log(value)
-    }
+  // assets: {
+  //   immediate: true,
+  //   handler(value) {
+  //     this.assets = value;
+  //   }
+  
+  //   }
     // user(value) {
     //   console.log(value)
     //   if (value === null || value === undefined) {
@@ -267,43 +278,9 @@ export default {
     // console.log(this.serverPagination)
     // Math.ceil(this.pagination.totalItems / this.pagination.rowsPerPage)
     // this.serverPagination.totalItems = this.assets.data.total
-    this.getAssets()
+    // this.getAssets()
   },
   methods: {
-    async getAssets() {
-      console.log(this.assets)
-      const assets = await this.$axios.$get('/api/assets/hardware')
-      this.assets = assets
-      console.log(assets)
-      for (var item of assets.rows) {
-        item.model = item.model.name
-        item.category = item.category.name
-        if (item.location) {
-          item.location = item.location.name
-        } else {
-          item.location = 'needs location'
-        }
-        if (item.status_label) {
-          item.status_label = item.status_label.name
-        }
-        if (item.assigned_to) {
-          item.assigned_to = item.assigned_to.name
-        }
-        item.checky = 'xxx'
-        //   if (!filter) {
-        this.items.push(item)
-      //   } else {
-      //     for (let id of filter) {
-      //       if (id === item.id) {
-      //         console.log('qritems')
-      //         item.search = 'found'
-      //         this.qrItems.push(item)
-      //       }
-      //     }
-      //   }
-      }
-    //   this.assets = assets
-    },
     checkedOutList() {
       console.log('hi')
       return []
@@ -392,14 +369,21 @@ export default {
     async checkIn(assetId) {
       console.log(assetId)
       const checkedInAsset = await this.$axios.$post(`/api/assets/hardware/${assetId.id}/checkin`, { assigned_asset: assetId.id })
-      console.log(checkedInAsset)
+     this.assets = []
+     this.getAssets()
+      
     },
     async checkOut(asset) {
       console.log('here')
       console.log(asset)
 
-      const checkedInAsset = await this.$axios.$post(`/api/assets/hardware/${asset.id}/checkout`, { assigned_asset: asset.id, assigned_user: '4041624', checkout_to_type: 'user' })
-      console.log(checkedInAsset)
+      const checkedInAsset = await this.$axios.$post(`/api/assets/hardware/${asset.id}/checkout`, { assigned_asset: asset.id, assigned_user: '27', checkout_to_type: 'user' })
+     if(checkedInAsset){
+      //  this.assets = []
+     this.getAssets()
+     
+
+     }
     },
     request({ pagination, filter, list }) {
       this.loading = true

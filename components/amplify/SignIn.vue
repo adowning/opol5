@@ -61,7 +61,7 @@ export default {
   name: 'Login',
   data() {
     return {
-      username: 'testgroupandrews.com',
+      username: '',
       password: 'testgroupandrews.com',
       // showerr: false,
       hidepw: true,
@@ -85,12 +85,15 @@ export default {
         /* eslint-disable-next-line */
         if (user.challengeNa / me === 'SMS_MFA') {
           this.confirmView = true
+      this.$nuxt.$loading.finish()
+          
           return
         }
         await this.checkUser()
       } catch (err) {
         this.setError(err)
         this.fireAuthNotify(this.error)
+      this.$nuxt.$loading.finish()        
       }
     },
     async checkUser() {

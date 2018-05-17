@@ -4,6 +4,9 @@
   "main": "handler.js",
   "license": "MIT",
   "dependencies": {
-    "mongodb": "^3.1.0-beta4"
+    "mongodb": "^3.1.0-beta4",
+    "pretty-logger": "^0.1.2",
+    "prettyjson": "^1.2.1",
+    "vue-async-computed": "^3.3.1"
   }
 }

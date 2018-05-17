@@ -1054,6 +1054,12 @@ sax@>=0.6.0:
   version "1.2.4"
   resolved "https://registry.yarnpkg.com/sax/-/sax-1.2.4.tgz#2816234e2378bddc4e5354fab5caa895df7100d9"
 
+serverless-log-forwarding@^1.1.6:
+  version "1.1.6"
+  resolved "https://registry.yarnpkg.com/serverless-log-forwarding/-/serverless-log-forwarding-1.1.6.tgz#fff156eddfebee2521945cbf821b09bbbe4ad7aa"
+  dependencies:
+    underscore "^1.8.3"
+
 serverless-offline@^3.21.1:
   version "3.21.1"
   resolved "https://registry.yarnpkg.com/serverless-offline/-/serverless-offline-3.21.1.tgz#cdf3f8e3606771295cc3fa171fc53fd2cb97debc"
@@ -1191,6 +1197,10 @@ tunnel-agent@^0.6.0:
 tweetnacl@^0.14.3, tweetnacl@~0.14.0:
   version "0.14.5"
   resolved "https://registry.yarnpkg.com/tweetnacl/-/tweetnacl-0.14.5.tgz#5ae68177f192d4456269d108afa93ff8743f4f64"
+
+underscore@^1.8.3:
+  version "1.9.0"
+  resolved "https://registry.yarnpkg.com/underscore/-/underscore-1.9.0.tgz#31dbb314cfcc88f169cd3692d9149d81a00a73e4"
 
 universal-analytics@^0.4.13:
   version "0.4.16"

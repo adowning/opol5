@@ -1,0 +1,25 @@
+service: log-forwarder
+
+provider:
+  name: aws
+  runtime: nodejs6.10
+  stage: dev
+  region: us-east-2
+  timeout: 30
+  memorySize: 128
+
+functions:
+  forwarder:
+    handler: handler.handler
+
+resources:
+  Resources:
+    ForwarderLambdaPermission:
+      Type: "AWS::Lambda::Permission"
+      Properties:
+        Action: "lambda:InvokeFunction"
+        FunctionName:
+          Fn::GetAtt:
+            - ForwarderLambdaFunction
+            - Arn
+        Principal: logs.${self:provider.region}.amazonaws.com

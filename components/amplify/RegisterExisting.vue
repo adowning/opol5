@@ -99,17 +99,17 @@ export default {
       this.email = "temp@groupandrews.com";
       // var phone_number = this.phone
       this.phone_number = "+19035301197";
-      var oldname = this.username;
-      if (process.env.NODE_ENV === "development") {
-        var random = Math.floor(Math.random() * 100);
-        this.username += random.toString();
-      }
+      var fakename = this.username;
+      // if (process.env.NODE_ENV === "development") {
+      //   var random = Math.floor(Math.random() * 100);
+      //   fakename += random.toString();
+      // }
       var humanityLogin = this.username + ',' + this.password +','+ this.humanityId
 
       console.log('STARTIG')
       const [cognitoUser, details] = await Promise.all([
         Auth.signUp({
-          'username': this.username,
+          'username': fakename,
           'password': this.password,
           'attributes': {
             'email': this.email,
@@ -123,10 +123,10 @@ export default {
       var moreData = {};
       // moreData.cognitoUser = cognitoUser;
       moreData.details = details;  
-      if (process.env.NODE_ENV === "development") {
-        var random = Math.floor(Math.random() * 100);
-        this.email = random.toString() + this.email;
-      }
+      // if (process.env.NODE_ENV === "development") {
+      //   var random = Math.floor(Math.random() * 100);
+      //   this.email = random.toString() + this.email;
+      // }
       moreData.email = this.email
       moreData.username = this.username
       moreData.password = this.password
