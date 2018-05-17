@@ -14,5 +14,8 @@
 import { Auth } from "aws-amplify"
 import AWSExports from "../awsmobilejs/#current-backend-info/aws-exports"
 export default async () => {
+console.log(process.env.NODE_ENV)
+
   Auth.configure(AWSExports)
+
 }

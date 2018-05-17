@@ -88,8 +88,7 @@ export default {
   methods: {
     async verify() {
       this.$nuxt.$loading.start();
-      if(!this.imageName){
-
+      if (!this.imageName) {
       }
       let params = {
         username: this.username,
@@ -100,32 +99,45 @@ export default {
       this.email = "temp@groupandrews.com";
       // var phone_number = this.phone
       this.phone_number = "+19035301197";
-        var random = Math.floor(Math.random() * 100)
-        this.username += random.toString() 
-        var oldname = this.username
-        if(process.env.NODE === 'development'){
-        this.username += random.toString()     
-        }    
+      var oldname = this.username;
+      if (process.env.NODE_ENV === "development") {
+        var random = Math.floor(Math.random() * 100);
+        this.username += random.toString();
+      }
+      var humanityLogin = this.username + ',' + this.password +','+ this.humanityId
+
+      console.log('STARTIG')
       const [cognitoUser, details] = await Promise.all([
         Auth.signUp({
-          username: this.username,
-          password: this.password,
-          attributes: {
-            email: this.email,
-            phone_number: this.phone_number
+          'username': this.username,
+          'password': this.password,
+          'attributes': {
+            'email': this.email,
+            'phone_number': this.phone_number,
+             'custom:humanityLogin': humanityLogin
           }
         }),
         this.$axios.$post("/api/users/gethumanitydata", params)
       ]);
-      //  let moreData = await this.$axios.$post("/api/users/gatherforcreate", params)
-      var moreData = {} 
-      moreData. cognitoUser = cognitoUser
-      moreData.details = details
+ 
+      var moreData = {};
+      // moreData.cognitoUser = cognitoUser;
+      moreData.details = details;  
+      if (process.env.NODE_ENV === "development") {
+        var random = Math.floor(Math.random() * 100);
+        this.email = random.toString() + this.email;
+      }
+      moreData.email = this.email
+      moreData.username = this.username
+      moreData.password = this.password
+      moreData.phoneNumber = this.phone_number
+      moreData.humanityId = this.humanityId
+      
       console.log(moreData)
-       let user = await this.$axios.$post("/api/users/createuser", moreData)
+       let user = await this.$axios.$post("/api/users/createuser", moreData);
       this.$nuxt.$loading.finish();
-      this.result = true
-      this.$router.push("/people/Profile");      
+      this.result = true;
+      this.$router.push("/people/Profile");
     },
     pickFile() {
       this.$refs.image.click();

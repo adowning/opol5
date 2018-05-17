@@ -25,6 +25,7 @@ features:
           /createuser: !com.amazonaws.mobilehub.v0.Function {}
           /employeeclockin: !com.amazonaws.mobilehub.v0.Function {}
           /employeeclockout: !com.amazonaws.mobilehub.v0.Function {}
+          /gatherforcreate: !com.amazonaws.mobilehub.v0.Function {}
           /gethumanitydata: !com.amazonaws.mobilehub.v0.Function {}
           /gethumanitytimeclocks: !com.amazonaws.mobilehub.v0.Function {}
           /gethumanitytimeclockstatus: !com.amazonaws.mobilehub.v0.Function {}
@@ -174,7 +175,14 @@ features:
             rangeKeyType: ""
             tableName: ___DYNAMIC_PREFIX___-timeclocks
             tablePrivacy: protected
-  sign-in: !com.amazonaws.mobilehub.v0.SignIn {}
+  sign-in: !com.amazonaws.mobilehub.v0.SignIn
+    attributes: 
+      enabled: true
+      optional-sign-in: true
+    components: 
+      sign-in-user-pools: !com.amazonaws.mobilehub.v0.UserPoolsIdentityProvider
+        attributes: 
+          user-pool-id: us-east-2_wsOQcuVY9
   user-files: !com.amazonaws.mobilehub.v0.UserFiles
     attributes: 
       enabled: true

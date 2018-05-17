@@ -16,4 +16,3 @@ export const store = () =>
     },
     strict: debug
   })
-console.log(store)
