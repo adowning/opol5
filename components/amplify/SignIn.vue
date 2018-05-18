@@ -83,7 +83,7 @@ export default {
         this.$nuxt.$loading.finish()
         this.$router.push('/people/Profile')
         /* eslint-disable-next-line */
-        if (user.challengeNa / me === 'SMS_MFA') {
+       if (user.challengeNa === 'SMS_MFA') {
           this.confirmView = true
       this.$nuxt.$loading.finish()
           

@@ -17,14 +17,14 @@ import Hardware from "../../components/assets/hardware";
 
 export default {
   async asyncData({ store, route }) {
-    let page = route.params.id || 1;
-    const result = await store.dispatch("HARDWARE", page);
+    let page = route.params.id || 1
+    const result = await store.dispatch("getHumanityData", page)
     //  const result  = await app.$axios.$get('/api/assets/hardware')    
     console.log(result)
     return {
       articles: result.rows || [],
       total: result.total
-    };
+    }
   },
   methods: {
     prevPage() {

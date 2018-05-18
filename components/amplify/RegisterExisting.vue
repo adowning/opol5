@@ -98,43 +98,37 @@ export default {
       this.$nuxt.$loading.start();
       this.email = "temp@groupandrews.com";
       // var phone_number = this.phone
-      this.phone_number = "+19035301197";
-      var fakename = this.username;
-      // if (process.env.NODE_ENV === "development") {
-      //   var random = Math.floor(Math.random() * 100);
-      //   fakename += random.toString();
-      // }
+      this.phone_number = "+19035301197"
       var humanityLogin = this.username + ',' + this.password +','+ this.humanityId
-
       console.log('STARTIG')
       const [cognitoUser, details] = await Promise.all([
         Auth.signUp({
-          'username': fakename,
+          'username': this.username,
           'password': this.password,
           'attributes': {
             'email': this.email,
             'phone_number': this.phone_number,
              'custom:humanityLogin': humanityLogin
           }
+        }).catch((err) =>{
+          console.log(err)
+          this.$nuxt.$loading.finish();   
+          this.fireAuthNotify('Authentication error. Are you sure this username is not taken?');                 
         }),
-        this.$axios.$post("/api/users/gethumanitydata", params)
+        // this.$axios.$post("/api/users/gethumanitydata", params)
+        this.$store.dispatch("getHumanityData", params)
       ]);
  
       var moreData = {};
       // moreData.cognitoUser = cognitoUser;
       moreData.details = details;  
-      // if (process.env.NODE_ENV === "development") {
-      //   var random = Math.floor(Math.random() * 100);
-      //   this.email = random.toString() + this.email;
-      // }
       moreData.email = this.email
       moreData.username = this.username
       moreData.password = this.password
       moreData.phoneNumber = this.phone_number
       moreData.humanityId = this.humanityId
-      
-      console.log(moreData)
-       let user = await this.$axios.$post("/api/users/createuser", moreData);
+      let user = await this.$store.dispatch("createUser", data)     
+      //  let user = await this.$axios.$post("/api/users/createuser", moreData);
       this.$nuxt.$loading.finish();
       this.result = true;
       this.$router.push("/people/Profile");
@@ -162,7 +156,6 @@ export default {
       }
     },
     async signIn(event) {
-      this.$nuxt.$loading.finish();
       this.$router.push("/people/Profile");
       /* eslint-disable-next-line */
       if (user.challengeNa / me === "SMS_MFA") {

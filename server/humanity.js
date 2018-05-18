@@ -11,6 +11,18 @@ const snipeit = axios.create({
     'Authorization': `Bearer ${token}`
   }
 })
+function respond(JSONmessage, callback){
+  var response = {
+  "statusCode": 200,
+  "headers": {
+    'Access-Control-Allow-Origin': '*',
+    'Content-type': 'application/json'
+  },
+  "body": JSON.stringify(JSONmessage),
+  "isBase64Encoded": false
+  };
+  callback(null, response);
+}
 
 const getToken = requestData => {
   return new Promise(resolve =>
@@ -18,6 +30,7 @@ const getToken = requestData => {
       .post('https://www.humanity.com/oauth2/token.php', requestData)
       .catch(error => {
         resolve('500', error)
+
       })
       .then(response => {
         console.log(response)
@@ -63,8 +76,6 @@ const getMyDetails = requestData => {
 }
 
 const insertIntDatabase = (dbData, requestData, callback) => {
-  console.log(dbData)
-  console.log(requestData)
   const timestamp = new Date().getTime()
   const params = {
     TableName: 'serverless-dev-users',
@@ -155,22 +166,9 @@ const insertIntDatabase = (dbData, requestData, callback) => {
     // handle potential errors
     if (error) {
       console.error(error)
-      callback(null, {
-        statusCode: 200,
-        headers: {
-          'Access-Control-Allow-Origin': '*'
-        },
-        body: error
-      })
+      respond(error, callback)
     } else {
-      const response = {
-        statusCode: 200,
-        headers: {
-          'Access-Control-Allow-Origin': '*'
-        },
-        body: JSON.stringify(params.Item)
-      }
-      callback(null, response)
+      respond(params.Item)
     }
 
     // create a response
