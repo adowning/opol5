@@ -1,9 +1,9 @@
 {
   "name": "eleopol5",
-  "version": "1.0.0",
-  "description": "Nuxt + Electron",
+  "version": "0.0.001",
+  "description": "Opol5",
   "author": "adowning <ashdowning@gmail.com>",
-  "private": true,
+  "private": false,
   "main": "main.js",
   "build": {
     "appId": "com.andrews.app",
