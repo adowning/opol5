@@ -61,7 +61,7 @@ export default {
   name: 'Login',
   data() {
     return {
-      username: '',
+      username: 'testgroupandrews.com',
       password: 'testgroupandrews.com',
       // showerr: false,
       hidepw: true,
@@ -79,7 +79,7 @@ export default {
         const user = await Auth.signIn(this.username, this.password)
         const attributes = await Auth.currentUserInfo()
         user.attributes = attributes.attributes
-        this.$store.dispatch('modules/AuthStore/setUser', user)
+        this.$store.dispatch('setUser', user)
         this.$nuxt.$loading.finish()
         this.$router.push('/people/Profile')
         /* eslint-disable-next-line */
@@ -89,7 +89,7 @@ export default {
           
           return
         }
-        await this.checkUser()
+        // await this.checkUser()
       } catch (err) {
         this.setError(err)
         this.fireAuthNotify(this.error)
@@ -101,7 +101,7 @@ export default {
       if (user) return
       try {
         const data = await Auth.verifiedContact(user)
-        this.$store.dispatch('modules/AuthStore/setVerification', data)
+        this.$store.dispatch('setVerification', data)
         if (!JS.isEmpty(data.verified)) {
           this.$router.push('/people/Profile')
         } else {

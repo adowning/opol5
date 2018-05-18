@@ -1,27 +1,19 @@
-import Vue from "vue"
-import { mapGetters } from "vuex"
-import AsyncComputed from 'vue-async-computed'
-Vue.use(AsyncComputed);
-
+import Vue from 'vue'
+import { mapGetters } from 'vuex'
 Vue.mixin({
-  computed: {
-    ...mapGetters({
-      $_AuthUser: "loggedinUser",
-      $_AuthUsername: "loggedinusername",
-      $_isAuthenticated: "isAuthenticated",
-      $_userVerification: "userVerification"
-      // $_AuthUser: "modules/AuthStore/loggedinUser",
-      // $_AuthUsername: "modules/AuthStore/loggedinusername",
-      // $_isAuthenticated: "modules/AuthStore/isAuthenticated",
-      // $_userVerification: "modules/AuthStore/userVerification"
-    })
-  },
+  // computed: {
+  //   ...mapGetters({
+  //     $_AuthUsername: 'loggedinusername',
+  //     $_isAuthenticated: 'isAuthenticated',
+  //     $_userVerification: 'userVerification'
+  //   })
+  // },
   methods: {
-    fireAuthNotify(msg) {
+    fireAuthNotify (msg) {
       this.$notify({
-        group: "auth",
-        title: "Authentication",
-        text: msg || ""
+        group: 'auth',
+        title: 'Authentication',
+        text: msg || ''
       })
     }
   }

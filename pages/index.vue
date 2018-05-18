@@ -9,23 +9,26 @@
 ANDREWS ADMINISTRATION
     </h2>
     <div class="links">
-      <no-ssr><router-link v-if="!$_isAuthenticated" to="Auth/SignIn" class="button--grey">SignIn</router-link></no-ssr>
-      <no-ssr><router-link v-if="$_isAuthenticated" to="secret" class="button--green">secret</router-link></no-ssr>
+      <!-- <no-ssr><router-link v-if="!authenticated" to="Auth/SignIn" class="button--grey">SignIn</router-link></no-ssr> -->
+      <no-ssr><router-link v-if="authenticated" to="people/Profile" class="button--grey">Continue</router-link></no-ssr>
+      <no-ssr><router-link v-if="authenticated" to="Auth/SignOut" class="button--grey">Log Out</router-link></no-ssr>
     </div>
-    <no-ssr><p>{{ $_AuthUsername }}</p></no-ssr>
+
   </div>
 </section>
 </template>
 
 <script>
 import AppLogo from '~/components/AppLogo.vue'
-
 export default {
   layout: 'nouser',
   middleware: 'need_auth',
   components: {
     AppLogo
-  }
+  },
+  computed: {
+    authenticated() {return this.$store.getters.isAuthenticated  }
+  },
 }
 </script>
 

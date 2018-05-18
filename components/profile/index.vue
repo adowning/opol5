@@ -174,7 +174,7 @@ export default {
   },
   methods: {
     getAttributes: function() {
-      this.mapAttributes(this.$store.state.modules.AuthStore.humanity_attributes)
+      this.mapAttributes(this.$store.state.humanity_attributes)
     },
     mapAttributes: function(result) {
       // this.userModel = result

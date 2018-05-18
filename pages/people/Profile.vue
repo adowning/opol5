@@ -12,15 +12,15 @@ export default {
   middleware: 'need_auth',
   async fetch({ store, pars }) {
     let params = {
-      username: store.state.modules.AuthStore.user.attributes.humanityUsername,
-      password: store.state.modules.AuthStore.user.attributes.humanityPassword,
-      userId: store.state.modules.AuthStore.user.attributes.humanityID
+      username: store.state.user.attributes.humanityUsername,
+      password: store.state.user.attributes.humanityPassword,
+      userId: store.state.user.attributes.humanityID
     }
     console.log(params)
-    if (!store.state.modules.AuthStore.humanity_attributes) {
+    if (!store.state.humanity_attributes) {
       let { data } = await axios.post('/api/users/gethumanitydata', params)
-      store.dispatch('modules/AuthStore/setHumanityData', data)
-      store.dispatch('modules/TimeClockStore/setEmployeeTimeClockStatus', data)
+      store.dispatch('humanityData', data)
+     // store.dispatch('employeeTimeClockStatus', data)
     }
   },
   components: {

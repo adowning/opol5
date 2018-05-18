@@ -1,51 +1,70 @@
 import  axios from 'axios'
-import humanity from '../api/humanityAPI';
 import Vuex from 'vuex'
+import {getTokenFromUser} from '../utils/tokens'
+import Cookie from 'js-cookie'
 
-const createStore = () => {
-  return new Vuex.Store({
+
+const store = () => new Vuex.Store({
+
     state: {
+      loading: false,
+      user: null,      
       hardware: null,
-      user: null,
       humanity_attributes: null,
       userVerification: null,
       timeClockStatus: null,
-      timeClocks: null
+      timeClocks: null,
+      errors: []
+    },
+    mutations: {
+      SET_FETCH_ERROR(state, value) {
+        state.errors.push = value
+      },
+      RESET_ALL(state, value) {
+        const s = initialState()
+        Object.keys(s).forEach(key => {
+          state[key] = s[key]
+        })
+      },
+      SET_USER(state, value) {
+        state.user = value
+        let token = getTokenFromUser(value)
+        Cookie.set("tokens", token)
+      },
+      SET_VERIFICATION(state, value) {
+        state.userVerification.push(value)
+      },
+      SET_HUMANITY_ATTRIBUTES(state, value) {
+        state.humanity_attributes = value
+      }
     },
     actions: {
-      async getHumanityData({ commit, state }, { skip, limit }) {
+      
+      async humanityData({ commit, state }, { skip, limit }) {
         // signal to the views that we are loading data
-        // commit(SET_LOADING);
-    
-        const results = await humanity.getDetails(skip, limit);
-    
+        const results = axios('/api/assets/hardware')
         if (results) {
-            commit(REMOVE_LOADING, { results, noMoreData: results.length < limit });
+            commit('SET_HUMANITY_ATTRIBUTES', { results, noMoreData: results.length < limit });
         } else {
-            // commit(SET_FETCH_ERROR);
-            return 'error'
-
+             commit('SET_FETCH_ERROR', 'humanityData');
           }
-    },
+        },
+
     async createUser({ commit, state }, { skip, limit }) {
         // signal to the views that we are loading data
-        commit(PROCESSING_CREATE_USER);
-    
-        const results = await humanity.createUser(skip, limit);
-    
+        const results = await app.$axios.$get('/api/assets/createuser')
         if (results) {
-            commit(RECEIVED_CREATE_USER, { results, noMoreData: results.length < limit });
-        } else {
-            commit(CREATE_USER_FETCHERRORS);
+            commit('CREATE_USER', { results, noMoreData: results.length < limit });
+          } else {
+            commit('SET_FETCH_ERROR', 'createUser');
         }
     },
     
     resetAll({ commit, state }, value) {
-        commit("resetAll", value)
+        commit("RESET_ALL", value)
       },
     
       setUser({ commit, state }, user) {
-        console.log(state)
         user.attributes.humanityUsername = user.attributes[
           "custom:humanityLogin"
         ].split(",")[0]
@@ -56,36 +75,7 @@ const createStore = () => {
           ","
         )[2]
         user.attributes["custom:humanityLogin"] = null
-        commit("setUser", user)
-      }
-    },
-    mutations: {
-      SET_LOADING(state){
-        this.loading = true
-      },
-      REMOVE_LOADING(){
-        this.loading = false
-      },
-      SET_FETCH_ERROR() {
-        this.fetchError = true
-      },
-      resetAll(state, user) {
-        console.log(user)
-        const s = initialState()
-        Object.keys(s).forEach(key => {
-          state[key] = s[key]
-        })
-      },
-      setUser(state, user) {
-        state.user = user
-        let token = getTokenFromUser(user)
-        Cookie.set("tokens", token)
-      },
-      SET_VERIFICATION(state, verification) {
-        state.userVerification.push(verification)
-      },
-      SET_HUMANITY_ATTRIBUTES(state, attributes) {
-        state.humanity_attributes = attributes
+        commit("SET_USER", user)
       }
     },
     getters: {
@@ -97,11 +87,100 @@ const createStore = () => {
         return state.user ? state.user.username : ""
       },
       userVerification: state => state.userVerification
-    }
-  })
-}
+    },
 
-export default createStore
+  })
+
+
+export default store
+
+
+    //   async nuxtServerInit({ state, commit }, { isDev, req, redirect }) {
+    //   //   if (isDev) {
+    //   //     commit('setApiURI', 'http://localhost:4000')
+    //   //   }
+    //   //   const hostParts = (req.headers.host || '').replace('.org', '').split('.')
+    //   //   // If url like ja.nuxtjs.org
+    //   //   if (hostParts.length === 2) {
+    //   //     if (hostParts[0] === 'www') return redirect(301, 'https://nuxtjs.org' + req.url)
+    //   //     commit('setLocale', hostParts[0])
+    //   //   }
+    //   //   try {
+    //   //     const resReleases = await axios(state.apiURI + '/releases')
+    //   //     commit('setGhVersion', resReleases.data[0].name)
+    //   //     const resLang = await axios(state.apiURI + '/lang/' + state.locale)
+    //   //     commit('setLang', resLang.data)
+    //   //     commit('setDocVersion', resLang.data.docVersion)
+    //   //     const resMenu = await axios(state.apiURI + '/menu/' + state.locale)
+    //   //     commit('setMenu', resMenu.data)
+    //   //   } catch (e) {
+    //   //     console.error('Error on [nuxtServerInit] action, please run the docs server.') // eslint-disable-line no-console
+    //   //   }
+    //   // }
+    // },
+
+  //   setEmployeeTimeClockStatus({
+    //     commit,
+    //     state
+    //   }, value) {
+    //     console.log(value)
+    //     var newValue = {}
+    //     if (value !== 'in' && value !== 'out') {
+    //       if (value.address) {
+    //         newValue.clockStatus = value.clockStatus
+    //         newValue.clockID = 'blank'
+    //         console.log('newval ', newValue)
+    //         newValue.updatedAt = moment().format('HH:MM:SS')
+    //         commit('SET_TIME_CLOCK_STATUS', newValue)
+    //         return 'clocked employee out or in'
+    //       } else {
+    //         if (value.data.data === 'out') {
+    //           newValue.clockStatus = 'out'
+    //           newValue.clockID = 'blank'
+    //           console.log('newval ', newValue)
+    //           newValue.updatedAt = moment().format('HH:MM:SS')
+    //           commit('SET_TIME_CLOCK_STATUS', newValue)
+    //           return 'clocked employee out'
+    //         }
+    //         if (value.data.clockStatus === 'in') {
+    //           newValue.clockStatus = 'in'
+    //           newValue.clockID = value.data.data.id
+    //           console.log('newval ', newValue)
+    //           newValue.updatedAt = moment().format('HH:MM:SS')
+    //           commit('SET_TIME_CLOCK_STATUS', newValue)
+    //           return 'clocked employee in'
+    //         }
+    //         if (value.data.end_timestamp) {
+    //           newValue.clockStatus = 'out'
+    //           newValue.clockID = 'blank'
+    //           console.log('newval ', newValue)
+    //           newValue.updatedAt = moment().format('HH:MM:SS')
+    //           commit('SET_TIME_CLOCK_STATUS', newValue)
+    //           return 'clocked employee out'
+    //         } else {
+    //           newValue.clockStatus = 'in'
+    //           newValue.clockID = value.data.id
+    //           console.log('newval ', newValue)
+    //           newValue.updatedAt = moment().format('HH:MM:SS')
+    //           commit('SET_TIME_CLOCK_STATUS', newValue)
+    //           return 'clocked employee in'
+    //         }
+    //       }
+    //     } else {
+    //       console.log(value)
+    //       if (value === 'out') {
+    //         newValue.clockStatus = 'out'
+    //         newValue.clockID = 'blank'
+    //         console.log('newval ', newValue)
+    //         newValue.updatedAt = moment().format('HH:MM:SS')
+    //         commit('SET_TIME_CLOCK_STATUS', newValue)
+    //         return 'clocked employee out'
+    //       } else {
+    //         console.log('error')
+    //       }
+    //     }
+    //   }
+    // },
 
 // import Vue from "vue"
 // import Vuex from "vuex"

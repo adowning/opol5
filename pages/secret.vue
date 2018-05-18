@@ -8,7 +8,7 @@
       <div class="links">
         <router-link to="/" class="button--grey">home</router-link>
         <no-ssr>
-          <router-link v-if="$_isAuthenticated" to="Auth/SignOut" class="button--grey">SignOut</router-link>
+          <router-link v-if="authenticated" to="Auth/SignOut" class="button--grey">SignOut</router-link>
         </no-ssr>
         <a @click="notify">Notify Test</a>
       </div>

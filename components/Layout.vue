@@ -1,6 +1,6 @@
 <template>
     <v-navigation-drawer
-      v-if="$_isAuthenticated"
+      v-if="authenticated"
       id="mainNav"
       :mini-variant="miniVariant"
       v-model="leftDrawer"
@@ -262,12 +262,9 @@ export default {
     // ]
   }),
   computed: {
-    // user: function() {
-    //   return getters.loggedinUser()
-    // }
-    // userId: function () {
-    //   return store.state.userId
-    // }
+    authenticated() {
+      return this.$store.getters.isAuthenticated
+    }
   }
 }
 </script>

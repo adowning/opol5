@@ -116,7 +116,7 @@ export default {
       try {
         const data = await Auth.signOut()
         console.log(data)
-        this.$store.dispatch('modules/AuthStore/logOut', null)
+        this.$store.dispatch('resetAll', null)
         this.$router.replace('/')
       } catch (err) {
         this.setError(err)
