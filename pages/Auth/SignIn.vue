@@ -11,6 +11,7 @@ export default {
 	// middleware: 'guest',
 	components: {
 		SignIn
-	}
+	},
+
 }
 </script>

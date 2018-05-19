@@ -1,19 +1,18 @@
-/*
-**  Nuxt
-*/
-//handle setupevents as quickly as possible
-const SetupEvents = require('./installers/SetupEvents')
-if (SetupEvents.handleSquirrelEvent()) {
-	// squirrel event handled and app will exit in 1000ms, so don't do anything else
-	return;
-}
+require('dotenv').config()
+const autoUpdater = require("electron-updater").autoUpdater
+process.env.ELECTRON_DISABLE_SECURITY_WARNINGS=true
+process.env.ELECTRON_ENABLE_SECURITY_WARNINGS=false
+const log = require('electron-log');
+autoUpdater.checkForUpdatesAndNotify()
+autoUpdater.logger = log
+autoUpdater.logger.transports.file.level = 'info'
+log.info('App starting...')
 
-// if (require('electron-squirrel-startup')) return;
-const http = require('http')
 const { Nuxt, Builder } = require('nuxt')
-let config = require('./nuxt.config.js')
-config.rootDir = __dirname // for electron-builder
-// Init Nuxt.js
+const http = require('http')
+const isProd = (process.env.NODE_ENV === 'production')
+const config = require('./nuxt.config.js')
+config.dev = !isProd
 const nuxt = new Nuxt(config)
 const builder = new Builder(nuxt)
 const server = http.createServer(nuxt.render)
@@ -29,23 +28,18 @@ server.listen()
 const _NUXT_URL_ = `http://localhost:${server.address().port}`
 console.log(`Nuxt working on ${_NUXT_URL_}`)
 
-/*
-** Electron
-*/
 let win = null // Current window
 const electron = require('electron')
-const path = require('path')
 const app = electron.app
 
+function sendStatusToWindow(text) {
+	log.info(text);
+	win.webContents.send('message', text);
+}
 
+const path = require('path')
 const newWin = () => {
-	win = new electron.BrowserWindow({titleBarStyle: 'hidden',
-		width: 1281,
-		height: 800,
-		minWidth: 1281,
-		minHeight: 800,
-		backgroundColor: '#312450',
-		show: false,
+	win = new electron.BrowserWindow({
 		icon: path.join(__dirname, 'static/icon.png')
 	})
 	win.maximize()
@@ -66,6 +60,30 @@ const newWin = () => {
 		pollServer()
 	} else { return win.loadURL(_NUXT_URL_) }
 }
+
+autoUpdater.on('checking-for-update', () => {
+	sendStatusToWindow('Checking for update...');
+})
+autoUpdater.on('update-available', (info) => {
+	sendStatusToWindow('Update available.');
+})
+autoUpdater.on('update-not-available', (info) => {
+	sendStatusToWindow('Update not available.');
+})
+autoUpdater.on('error', (err) => {
+	sendStatusToWindow('Error in auto-updater. ' + err);
+})
+autoUpdater.on('download-progress', (progressObj) => {
+	let log_message = "Download speed: " + progressObj.bytesPerSecond;
+	log_message = log_message + ' - Downloaded ' + progressObj.percent + '%';
+	log_message = log_message + ' (' + progressObj.transferred + "/" + progressObj.total + ')';
+	sendStatusToWindow(log_message);
+})
+autoUpdater.on('update-downloaded', (info) => {
+	sendStatusToWindow('Update downloaded');
+});
+  
 app.on('ready', newWin)
+// app.on('activate', sendStatusToWindow(`Nuxt working on ${_NUXT_URL_}`))
 app.on('window-all-closed', () => app.quit())
 app.on('activate', () => win === null && newWin())

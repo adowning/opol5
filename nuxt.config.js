@@ -1,6 +1,17 @@
 module.exports = {
 	mode: 'spa',
-	head: {title: 'AndrewsAdmin'}, // Headers of the page
+	head: {title: 'AndrewsAdmin',
+		meta: [
+			{ charset: 'utf-8' },
+			{ name: 'viewport', content: 'width=device-width, initial-scale=1' },
+			{ hid: 'description', name: 'description', content: 'Nuxt.js project' }
+	  ],
+	  link: [
+			{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+			{ rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' }
+	  ]
+
+	},
 	//loading: false, // Disable default loading bar
 	build: {
 		extend (config, { isDev, isClient }) {
@@ -14,7 +25,11 @@ module.exports = {
 				})
 			}
 			// Extend only webpack config for client-bundle
-			if (isClient) { config.target = 'electron-renderer' }
+			// if (isClient) { config.target = 'electron-renderer' }
+			console.log(process.env.ELECTRON)
+			// if(isClient && process.env.ELECTRON){
+			// 	config.target = 'electron-renderer'
+			// }
 		}
 	},
 	/*
@@ -49,23 +64,23 @@ module.exports = {
 	  },
 	modules: [
 		'@nuxtjs/axios',
-		'@nuxtjs/pwa',
-		'@nuxtjs/onesignal'
+		'@nuxtjs/pwa'
+		// '@nuxtjs/onesignal'
 	],
 	metaInfo: {
 		noscript: [
 		  { innerHTML: 'This website requires JavaScript.' }
 		]
 	  },
-	oneSignal: {
-		init: {
-		  appId: '5cdf168d-8524-4387-bb6b-00079021d88b',
-		  allowLocalhostAsSecureOrigin: true,
-		  welcomeNotification: {
-			  disable: true
-		  }
-		}
-	},
+	// oneSignal: {
+	// 	init: {
+	// 	  appId: '5cdf168d-8524-4387-bb6b-00079021d88b',
+	// 	  allowLocalhostAsSecureOrigin: true,
+	// 	  welcomeNotification: {
+	// 		  disable: true
+	// 	  }
+	// 	}
+	// },
 	axios: {
 		debug: true,
 		proxy: true

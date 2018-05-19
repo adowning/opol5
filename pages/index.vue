@@ -6,8 +6,9 @@
       andrewsgroup.com
     </h1>
     <h2 class="subtitle">
-ANDREWS ADMINISTRATION
+ANDREWS ADMINISTRATION<br>
     </h2>
+    <h3>{{version}}</h3>
     <div class="links">
       <!-- <no-ssr><router-link v-if="!authenticated" to="Auth/SignIn" class="button--grey">SignIn</router-link></no-ssr> -->
       <no-ssr><router-link v-if="authenticated" to="people/Profile" class="button--grey">Continue</router-link></no-ssr>
@@ -20,6 +21,8 @@ ANDREWS ADMINISTRATION
 
 <script>
 import AppLogo from '~/components/AppLogo.vue'
+var pjson = require('../package.json')
+console.log(pjson.version);
 export default {
 	layout: 'nouser',
 	middleware: 'need_auth',
@@ -27,7 +30,8 @@ export default {
 		AppLogo
 	},
 	computed: {
-		authenticated() {return this.$store.getters.isAuthenticated  }
+		authenticated() {return this.$store.getters.isAuthenticated  },
+		version() {return pjson.version}
 	},
 }
 </script>

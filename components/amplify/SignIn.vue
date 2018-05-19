@@ -9,7 +9,10 @@
               <transition appear name="fadeout">
                 <img class="aws-logo" style="width:140px;height:140px" src="../../static/logo.png">
               </transition>
-              <h3 class="text-xs-center grey--text hidden-xs-only">Andrews Administration</h3>
+                 <h2 class="subtitle">
+						ANDREWS ADMINISTRATION<br>
+								</h2>
+    <h3>{{version}}</h3>
             </v-layout>
             <v-flex xl6 lg6 md6 sm6>
               <transition appear name="fadeout">
@@ -56,9 +59,13 @@
 <script>
 import { Auth, JS } from 'aws-amplify'
 import AmplifyTheme from './AmplifyTheme'
+var pjson = require('../../package.json')
 
 export default {
 	name: 'Login',
+	computed:{
+		version() {return pjson.version}		
+	},
 	data() {
 		return {
 			username: 'testgroupandrews.com',
@@ -132,3 +139,17 @@ export default {
 	}
 }
 </script>
+<style scoped>
+
+.subtitle {
+  font-weight: 300;
+  font-size: 18px;
+  color: #526488;
+  word-spacing: 5px;
+  padding-bottom: 15px;
+}
+
+.links {
+  padding-top: 15px;
+}
+</style>
