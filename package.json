@@ -21,15 +21,18 @@
     "linux": {
       "target": "AppImage",
       "category": "Office"
+    },
+    "publish": {
+      "provider": [
+        "github",
+        "s3"
+      ],
+      "owner": "adowning",
+      "repo": "opol5",
+      "bucket": "misc-opol5"
     }
   },
-  "publish": {
-    "provider": [
-      "github",
-      "s3"
-    ],
-    "bucket": "misc-opol5"
-  },
+
   "scripts": {
     "dev": "./dev_start.sh",
     "webdev": "./dev_start_web.sh",
