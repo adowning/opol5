@@ -1,6 +1,14 @@
 /*
 **  Nuxt
 */
+//handle setupevents as quickly as possible
+const SetupEvents = require('./installers/SetupEvents')
+if (SetupEvents.handleSquirrelEvent()) {
+	// squirrel event handled and app will exit in 1000ms, so don't do anything else
+	return;
+}
+
+// if (require('electron-squirrel-startup')) return;
 const http = require('http')
 const { Nuxt, Builder } = require('nuxt')
 let config = require('./nuxt.config.js')
@@ -28,8 +36,16 @@ let win = null // Current window
 const electron = require('electron')
 const path = require('path')
 const app = electron.app
+
+
 const newWin = () => {
-	win = new electron.BrowserWindow({
+	win = new electron.BrowserWindow({titleBarStyle: 'hidden',
+		width: 1281,
+		height: 800,
+		minWidth: 1281,
+		minHeight: 800,
+		backgroundColor: '#312450',
+		show: false,
 		icon: path.join(__dirname, 'static/icon.png')
 	})
 	win.maximize()

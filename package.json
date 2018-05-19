@@ -1,6 +1,6 @@
 {
   "version": "0.0.1",
-  "name": "andrews",
+  "name": "andrews-admin",
   "description": "Andrews Admin",
   "author": "adowning <ashdowning@gmail.com>",
   "private": false,
@@ -16,8 +16,9 @@
     "dev1": "nuxt",
     "dev2": "cross-env NODE_ENV=DEV electron .",
     "build": "nuxt build && electron-builder",
-    "package-win": "npm run build && electron-builder --win --x64",
-    "lintfix": "eslint --fix --ext .js,.vue --ignore-path .gitignore ."
+    "lintfix": "eslint --fix --ext .js,.vue --ignore-path .gitignore .",
+    "package-win": "electron-packager . --overwrite --asar=true --platform=win32 --arch=ia32 --icon=assets/icons/win/icon.png --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"Andrews-Admin\"",
+    "create-installer-win": "node installers/windows/createinstaller.js"
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.3.1",
@@ -37,6 +38,8 @@
     "electron": "2.0.0-beta.7",
     "electron-builder": "^20.8.1",
     "electron-devtools-installer": "^2.2.3",
+    "electron-packager": "^12.0.2",
+    "electron-winstaller": "^2.6.4",
     "eslint": "^4.15.0",
     "eslint-friendly-formatter": "^3.0.0",
     "eslint-loader": "^1.7.1",

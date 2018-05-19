@@ -1,34 +1,36 @@
 <template>
-<section class="container">
-  <div>
-    <app-logo/>
-    <h1 class="title">
-      andrewsgroup.com
-    </h1>
-    <h2 class="subtitle">
-ANDREWS ADMINISTRATION
-    </h2>
-    <div class="links">
-      <!-- <no-ssr><router-link v-if="!authenticated" to="Auth/SignIn" class="button--grey">SignIn</router-link></no-ssr> -->
-      <no-ssr><router-link v-if="authenticated" to="people/Profile" class="button--grey">Continue</router-link></no-ssr>
-      <no-ssr><router-link v-if="authenticated" to="Auth/SignOut" class="button--grey">Log Out</router-link></no-ssr>
+  <section class="container">
+    <div>
+      <app-logo/>
+      <h1 class="title">
+        SECRET PAGE
+      </h1>
+      <div class="links">
+        <router-link to="/" class="button--grey">home</router-link>
+        <no-ssr>
+          <router-link v-if="authenticated" to="Auth/SignOut" class="button--grey">SignOut</router-link>
+        </no-ssr>
+        <a @click="notify">Notify Test</a>
+      </div>
+      <no-ssr>
+        <p>{{ $_AuthUsername }}</p>
+      </no-ssr>
     </div>
-
-  </div>
-</section>
+  </section>
 </template>
 
 <script>
 import AppLogo from '~/components/AppLogo.vue'
 export default {
-	layout: 'nouser',
 	middleware: 'need_auth',
 	components: {
 		AppLogo
 	},
-	computed: {
-		authenticated() {return this.$store.getters.isAuthenticated  }
-	},
+	methods: {
+		notify() {
+			this.fireAuthNotify('asdf asdf')
+		}
+	}
 }
 </script>
 
