@@ -1,0 +1,14 @@
+directories:
+  output: dist
+  buildResources: static
+appId: com.andrews.app
+win:
+  target: nsis
+linux:
+  target: AppImage
+  category: Office
+publish:
+  provider: github
+  owner: adowning
+  repo: opol5
+electronVersion: 1.8.7

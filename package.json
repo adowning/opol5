@@ -1,0 +1,39 @@
+{
+  "version": "0.0.2-snapshot",
+  "name": "andrews-admin",
+  "description": "Andrews Admin",
+  "author": "adowning <ashdowning@gmail.com>",
+  "private": false,
+  "license": "MIT",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:adowning/opol5.git"
+  },
+  "build": {
+    "appId": "com.andrews.app",
+    "directories": {
+      "buildResources": "static"
+    },
+    "win": {
+      "target": "nsis"
+    },
+    "linux": {
+      "target": "AppImage",
+      "category": "Office"
+    },
+    "publish": {
+      "provider": "github",
+      "owner": "adowning",
+      "repo": "opol5"
+    }
+  },
+  "scripts":{
+    "dist": "electron-builder -l --publish always",
+    "build": "electron-builder -l"
+  },
+  "devDependencies": {
+    "electron-builder": "^20.13.4",
+    "electron-logger": "^0.0.3"
+  }
+}

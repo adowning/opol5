@@ -1,0 +1,9 @@
+version: 0.0.2-snapshot
+files:
+  - url: andrews-admin-0.0.2-snapshot-x86_64.AppImage
+    sha512: oXNXwwPUJGyg4EsP3brQY2H7bHrrXpjqvlPxi5O1O02eezCcT/dt33Os97C+EzogZCvx8uG1bBUEyfAJ9SKHOA==
+    size: 47905994
+    blockMapSize: 50702
+path: andrews-admin-0.0.2-snapshot-x86_64.AppImage
+sha512: oXNXwwPUJGyg4EsP3brQY2H7bHrrXpjqvlPxi5O1O02eezCcT/dt33Os97C+EzogZCvx8uG1bBUEyfAJ9SKHOA==
+releaseDate: '2018-05-20T16:37:19.217Z'
