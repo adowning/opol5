@@ -6,6 +6,7 @@ yarn-error.log
 .idea
 *.iml
 .nuxt
+electron
 
 static/manifest*.json
 static/sw.js
