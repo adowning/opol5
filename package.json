@@ -32,6 +32,7 @@
     "dev": "nuxt dev",
     "build": "nuxt build",
     "start": "nuxt start",
+    "generate": "nuxt generate",
     "dev-spa": "nuxt dev --spa",
     "build-spa": "nuxt build --spa",
     "start-spa": "nuxt start --spa",
