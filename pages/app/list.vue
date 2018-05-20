@@ -1,5 +1,5 @@
-<template lang="pug">
-  list
+<template >
+<list></list>
 </template>
 
 <script>

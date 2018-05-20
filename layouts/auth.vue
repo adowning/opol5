@@ -1,12 +1,18 @@
-<template lang="pug">
-  v-app.application.application--light
-    main
-      transition(name="fade" mode="out-in")
-          v-card.grey.lighten-5(flat)
-            v-toolbar.primary.elevation-3(dark, extended)
-              v-toolbar-title Opposition APP
-            v-layout(row)
-              nuxt
+<template>
+<v-app class="application application--light">
+    <main>
+        <transition name="fade" mode="out-in">
+            <v-card class="grey lighten-5" flat="flat">
+                <v-toolbar class="primary elevation-3" dark="dark" extended="extended">
+                    <v-toolbar-title>Opposition APP</v-toolbar-title>
+                </v-toolbar>
+                <v-layout row="row">
+                    <nuxt></nuxt>
+                </v-layout>
+            </v-card>
+        </transition>
+    </main>
+</v-app>
 </template>
 
 <script>

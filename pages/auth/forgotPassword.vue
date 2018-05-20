@@ -1,5 +1,5 @@
-<template lang="pug">
-  forgotPassword
+<template>
+<forgotpassword></forgotpassword>
 </template>
 
 <script>

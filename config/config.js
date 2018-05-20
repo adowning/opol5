@@ -1,8 +1,8 @@
 module.exports = {
-  region: 'eu-central-1',
+  region: 'us-east-2',
   cognito: {
-    IdentityPoolId: 'eu-central-1:6669ba24-5ced-4eb4-ae53-663275755c96',
-    UserPoolId: 'eu-central-1_hVIWzbUdJ',
-    ClientId: '2au44cvarsd44v4fd3bad1c3oc'
+    IdentityPoolId: 'us-east-2:d2b920a5-1577-4619-9001-9487fc6dcc67',
+    UserPoolId: 'us-east-2_wsOQcuVY9',
+    ClientId: '32b0nh7l503od4t3bl2rnsv4ld'
   }
 }

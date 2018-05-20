@@ -1,33 +1,50 @@
-<template lang="pug">
-
-  .application.application--light
-    v-app.main(toolbar)
-      v-navigation-drawer(absolute, persistent, light, :mini-variant.sync='mini', v-model='drawer', overflow)
-        v-toolbar.transparent(flat)
-          v-list.pa-0
-            v-list-tile(tag='div')
-              v-list-tile-content.content-username
-                v-list-tile-title.username {{getUsername}}
-              v-list-tile-action
-                v-btn(icon, @click.native.stop='mini = !mini')
-                  v-icon chevron_left
-        v-list.pt-0(dense)
-          v-divider
-          v-list-tile(v-for='item in items', :key='item.title' :to="item.route")
-            v-list-tile-action
-              v-icon {{ item.icon }}
-            v-list-tile-content
-              v-list-tile-title {{ item.title }}
-      v-toolbar.primary.darken-4(fixed, dark)
-        v-toolbar-side-icon(@click.stop='drawer = !drawer')
-        v-toolbar-title Oposition App
-        v-spacer
-        v-btn(icon @click.prevent="logout()")
-          v-icon exit_to_app
-      main
-        v-container(fluid)
-          transition(name="fade" mode="out-in")
-            nuxt
+<template>
+<div class="application application--light">
+    <v-app class="main" toolbar="toolbar">
+        <v-navigation-drawer absolute="absolute" persistent="persistent" light="light" :mini-variant.sync="mini" v-model="drawer" overflow="overflow">
+            <v-toolbar class="transparent" flat="flat">
+                <v-list class="pa-0">
+                    <v-list-tile tag="div">
+                        <v-list-tile-content class="content-username">
+                            <v-list-tile-title class="username">{{getUsername}}</v-list-tile-title>
+                        </v-list-tile-content>
+                        <v-list-tile-action>
+                            <v-btn icon="icon" @click.native.stop="mini = !mini">
+                                <v-icon>chevron_left</v-icon>
+                            </v-btn>
+                        </v-list-tile-action>
+                    </v-list-tile>
+                </v-list>
+            </v-toolbar>
+            <v-list class="pt-0" dense="dense">
+                <v-divider></v-divider>
+                <v-list-tile v-for="item in items" :key="item.title" :to="item.route">
+                    <v-list-tile-action>
+                        <v-icon>{{ item.icon }}</v-icon>
+                    </v-list-tile-action>
+                    <v-list-tile-content>
+                        <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+                    </v-list-tile-content>
+                </v-list-tile>
+            </v-list>
+        </v-navigation-drawer>
+        <v-toolbar class="primary darken-4" fixed="fixed" dark="dark">
+            <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
+            <v-toolbar-title>Oposition App</v-toolbar-title>
+            <v-spacer></v-spacer>
+            <v-btn icon="icon" @click.prevent="logout()">
+                <v-icon>exit_to_app</v-icon>
+            </v-btn>
+        </v-toolbar>
+        <main>
+            <v-container fluid="fluid">
+                <transition name="fade" mode="out-in">
+                    <nuxt></nuxt>
+                </transition>
+            </v-container>
+        </main>
+    </v-app>
+</div>
 </template>
 
 <script>

@@ -1,17 +1,11 @@
 <template lang="pug">
-  v-card
-    v-card-title
-      | English table
-      v-spacer
-      v-text-field(append-icon='search', label='Search', single-line, hide-details, v-model='query')
-    v-data-table.elevation-1(v-bind:headers='headers', v-bind:items='items' v-bind:pagination.sync='pagination', :total-items='totalItems', :loading='loading')
-      template(slot='headerCell', scope='props')
-        span(v-tooltip:bottom="{ 'html': props.header.text }")
-          | {{ props.header.text }}
-      template(slot='items', scope='props')
-        td {{ props.item.posicion }}
-        td.text-xs-right {{ props.item.nombre }}
-
+<v-card>
+    <v-card-title>English table
+        <v-spacer></v-spacer>
+        <v-text-field append-icon="search" label="Search" single-line="single-line" hide-details="hide-details" v-model="query"></v-text-field>
+    </v-card-title>
+    <v-data-table class="elevation-1" v-bind:headers="headers" v-bind:items="items" v-bind:pagination.sync="pagination" :total-items="totalItems" :loading="loading"><template slot="headerCell" slot-scope="props"><span v-tooltip:bottom="{ 'html': props.header.text }">{{ props.header.text }}</span></template><template slot="items" slot-scope="props"><td>{{ props.item.posicion }}</td><td class="text-xs-right">{{ props.item.nombre }}</td></template></v-data-table>
+</v-card>
 </template>
 
 <script>

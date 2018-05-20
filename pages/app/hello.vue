@@ -1,6 +1,4 @@
-<template lang="pug">
-  hello
-</template>
+<template><hello></hello></template>
 
 <script>
 import Hello from '~/components/Hello.vue'
