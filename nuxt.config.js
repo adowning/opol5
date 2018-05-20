@@ -1,7 +1,5 @@
 module.exports = {
-  /*
-  ** Headers of the page
-  */
+  mode: 'spa',
   head: {
     title: 'universaloppositionsapp',
     meta: [
@@ -24,7 +22,6 @@ module.exports = {
   ** Build configuration
   */
   build: {
-    vendor: ['vuetify'],
     extractCSS: true,
     /*
     ** Run ESLINT on save

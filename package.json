@@ -1,11 +1,38 @@
 {
-  "name": "universaloppositionsapp",
-  "version": "1.0.0",
-  "description": "Nuxt.js + Vuetify.js project",
-  "author": "Manuel Navarro Pérez <manuelnavarro1987@gmail.com>",
+  "version": "0.0.6-snapshot",
+  "name": "andrews-admin",
+  "description": "Andrews Admin",
+  "author": "adowning <ashdowning@gmail.com>",
+  "private": false,
+  "license": "MIT",
+  "main": "electron/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:adowning/opol5.git"
+  },
+  "build": {
+    "appId": "com.andrews.app",
+    "directories": {
+      "buildResources": "static"
+    },
+    "win": {
+      "target": "nsis"
+    },
+    "linux": {
+      "target": "AppImage",
+      "category": "Office"
+    },
+    "publish": {
+      "provider": "github",
+      "owner": "adowning",
+      "repo": "opol5"
+    }
+  },
   "scripts": {
-    "dev": "nuxt",
-    "build": "nuxt build",
+    "dist": "npx nuxt generate && electron-builder -lw --publish always",
+    "lintfix": "eslint --fix --ext .js,.vue --ignore-path .gitignore .",
+    "dev": "npx nuxt",
+    "build": "npx nuxt generate && electron-builder -lw",
     "start": "nuxt start",
     "generate": "nuxt generate"
   },
@@ -18,6 +45,8 @@
     "vuex-persistedstate": "^2.0.0"
   },
   "devDependencies": {
+    "electron-logger": "^0.0.3",
+    "electron-updater": "^2.21.10",
     "babel-eslint": "^7.2.3",
     "eslint": "^4.3.0",
     "eslint-config-standard": "^10.2.1",
