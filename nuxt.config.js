@@ -12,56 +12,10 @@ module.exports = {
 	  ]
 
 	},
-	//loading: false, // Disable default loading bar
-	build: {
-		extend (config, { isDev, isClient }) {
-			if (isDev && isClient) {
-				// Run ESLint on save
-				config.module.rules.push({
-					enforce: 'pre',
-					test: /\.(js|vue)$/,
-					loader: 'eslint-loader',
-					exclude: /(node_modules)/
-				})
-			}
-			// Extend only webpack config for client-bundle
-			// if (isClient) { config.target = 'electron-renderer' }
-			console.log(process.env.ELECTRON)
-			// if(isClient && process.env.ELECTRON){
-			// 	config.target = 'electron-renderer'
-			// }
-		}
-	},
-	/*
-   ** Customize the progress bar color
-   */
-	loading: {
-		color: '#3B8070'
-	},
-	// loading: '~/components/loading.vue',
-	loadingIndicator: {
-		name: 'circle',
-		color: '#3B8070',
-		background: 'white'
-	},
-	dev: process.env.NODE_ENV === 'DEV',
-	// css: [
-	// 	'@/assets/css/global.css'
-	// ],
 	css: [{
 		src: '~assets/style/app.styl',
 		lang: 'styl'
 	}],
-	vendor: [
-		'aws-amplify',
-		'js-cookie',
-		'vue-notification'
-	],
-	manifest: {
-		name: 'My Awesome App',
-		lang: 'en',
-		theme_color: 'green',
-	  },
 	modules: [
 		'@nuxtjs/axios',
 		'@nuxtjs/pwa'
@@ -117,12 +71,6 @@ module.exports = {
 	{
 		src: '~plugins/vue-notification'
 	},
-	{
-		src: '@/plugins/vuetify',
-		ssr: false
-	},
-
 	'~/plugins/axios'
-
 	]
 }

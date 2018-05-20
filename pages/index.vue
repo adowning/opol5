@@ -11,8 +11,12 @@ ANDREWS ADMINISTRATION<br>
     <h3>{{version}}</h3>
     <div class="links">
       <!-- <no-ssr><router-link v-if="!authenticated" to="Auth/SignIn" class="button--grey">SignIn</router-link></no-ssr> -->
-      <no-ssr><router-link v-if="authenticated" to="people/Profile" class="button--grey">Continue</router-link></no-ssr>
-      <no-ssr><router-link v-if="authenticated" to="Auth/SignOut" class="button--grey">Log Out</router-link></no-ssr>
+      <router-link v-if="authenticated" to="people/Profile" class="button--grey">Continue</router-link>
+     <router-link v-if="authenticated" to="Auth/SignOut" class="button--grey">Log Out</router-link>
+           <v-btn flat color="primary"  v-on:click="signIn">Sign In</v-btn>
+          <v-btn flat color="primary"  v-on:click="signUp">Sign Up</v-btn>
+          
+
     </div>
 
   </div>
@@ -32,7 +36,15 @@ export default {
 	computed: {
 		authenticated() {return this.$store.getters.isAuthenticated  },
 		version() {return pjson.version}
-	},
+  },
+  methods: {
+    		signIn(err) {
+			this.$router.replace("/Auth/SignIn")
+    },
+    		signUp(err) {
+			this.$router.replace("/Auth/SignUp")
+		},
+  }
 }
 </script>
 

@@ -14,7 +14,7 @@ function getInstallerConfig () {
 	const outPath = path.join(rootPath, 'dist')
 
 	return Promise.resolve({
-		appDirectory: path.join(outPath, 'opol5e/'),
+		appDirectory: path.join(outPath, 'opol5/'),
 		authors: 'Ash Downing',
 		noMsi: true,
 		outputDirectory: path.join(outPath, 'windows-installer'),

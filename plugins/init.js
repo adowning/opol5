@@ -14,6 +14,18 @@
 import { Auth } from "aws-amplify"
 // import AWSExports from "../awsmobilejs/#current-backend-info/aws-exports"
 import awsmobile from "./aws-exports"
+import Vue from "vue"
+import Vuetify from "vuetify"
+
+Vue.use(Vuetify, {
+	theme: {
+		primary: '#3f51b5',
+		secondary: '#b0bec5',
+		accent: '#8c9eff',
+		error: '#b71c1c'
+	}
+})
+
 export default async () => {
 
 	Auth.configure(awsmobile)

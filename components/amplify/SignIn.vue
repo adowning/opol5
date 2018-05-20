@@ -83,12 +83,14 @@ export default {
 		async signIn(event) {
 			this.$nuxt.$loading.start()
 			try {
-				const user = await Auth.signIn(this.username, this.password)
-				const attributes = await Auth.currentUserInfo()
+				const user = 	await this.$store.dispatch('signInUser', {username: this.username, pasword:this.password})
+				// const attributes = 	await this.$store.dispatch('getUserAttributes', this.urlCorrect)
+				// const user = await Auth.signIn(this.username, this.password)
+				// const attributes = await Auth.currentUserInfo()
 				user.attributes = attributes.attributes
 				this.$store.dispatch('setUser', user)
 				this.$nuxt.$loading.finish()
-				this.$router.push('/people/Profile')
+				this.$router.replace('/people/Profile')
 				/* eslint-disable-next-line */
        if (user.challengeNa === 'SMS_MFA') {
 					this.confirmView = true
@@ -110,9 +112,9 @@ export default {
 				const data = await Auth.verifiedContact(user)
 				this.$store.dispatch('setVerification', data)
 				if (!JS.isEmpty(data.verified)) {
-					this.$router.push('/people/Profile')
+					this.$router.replace('/people/Profile')
 				} else {
-					this.$router.push('/Auth/VerifyContact')
+					this.$router.replace('/Auth/VerifyContact')
 				}
 			} catch (err) {
 				console.log(err)
@@ -121,17 +123,17 @@ export default {
 		async confirm() {
 			try {
 				await Auth.confirmSignIn(this.user, this.code)
-				this.$router.push('/people/Profile')
+				this.$router.replace('/people/Profile')
 			} catch (err) {
 				this.setError(err)
 				this.fireAuthNotify(this.error)
 			}
 		},
 		forgot() {
-			this.$router.push('/Auth/forgotPassword')
+			this.$router.replace('/Auth/forgotPassword')
 		},
 		signUp() {
-			this.$router.push('/Auth/SignUp')
+			this.$router.replace('/Auth/SignUp')
 		},
 		setError(err) {
 			this.error = err.message || err

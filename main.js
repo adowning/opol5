@@ -1,4 +1,5 @@
 require('dotenv').config()
+console.log(process.env.GH_TOKEN)
 const autoUpdater = require("electron-updater").autoUpdater
 process.env.ELECTRON_DISABLE_SECURITY_WARNINGS=true
 process.env.ELECTRON_ENABLE_SECURITY_WARNINGS=false
