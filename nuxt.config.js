@@ -18,7 +18,7 @@ export default {
     color: "#59cc93"
   },
   manifest: {
-    name: "Nuxt Hacker News",
+    name: "Andrews Admin",
     description: "HackerNews clone built with Nuxt.js",
     theme_color: "#188269"
   },

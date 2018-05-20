@@ -8,7 +8,7 @@
       <h2 class="subtitle">
         ANDREWS ADMINISTRATION<br>
       </h2>
-      <h3></h3>
+      <h3>{{pjson.version}}</h3>
       <div class="links">
         <!-- <no-ssr><router-link v-if="!authenticated" to="Auth/SignIn" class="button--grey">SignIn</router-link></no-ssr> -->
         <!-- <router-link v-if="authenticated" to="people/Profile" class="button--grey">Continue</router-link>
