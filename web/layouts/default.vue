@@ -5,9 +5,9 @@
         <router-link to="/" exact>
           <img class="logo" src="~assets/logo.png" alt="logo">
         </router-link>
-        <router-link v-for="(list, key) in feeds" :key="key" :to="`/${key}`">
-          {{ list.title }}
-        </router-link>
+        <!-- <router-link v-for="(list, key) in feeds" :key="key" :to="`/${key}`"> -->
+          <!-- {{ list.title }} -->
+        <!-- </router-link> -->
         <a class="github" href="https://github.com/nuxt/hackernews" target="_blank" rel="noopener banner">
           Built with Nuxt.js
         </a>
@@ -18,23 +18,21 @@
 </template>
 
 <script>
-import { feeds } from "~/common/api"
-
 export default {
   head() {
-    const host = process.server
-      ? this.$ssrContext.req.headers.host
-      : window.location.host
+    // const host = process.server
+    //   ? this.$ssrContext.req.headers.host
+    //   : window.location.host
 
     return {
       link: [
         // We use $route.path since we don't use query parameters
-        { rel: "canonical", href: `https://${host}${this.$route.path}` }
+        // { rel: "canonical", href: `https://${host}${this.$route.path}` }
       ]
     }
   },
   computed: {
-    feeds: () => feeds
+    // feeds: () => feeds
   }
 }
 </script>

@@ -1,5 +1,6 @@
 export default {
-  srcDir: "client/",
+  mode: "spa",
+  srcDir: "web/",
   head: {
     titleTemplate: "Nuxt HN | %s",
     meta: [
@@ -21,7 +22,7 @@ export default {
     description: "HackerNews clone built with Nuxt.js",
     theme_color: "#188269"
   },
-  modules: ["@nuxtjs/pwa", "@nuxtjs/component-cache", "@nuxtjs/axios"],
+  modules: ["@nuxtjs/pwa", "@nuxtjs/axios"],
   axios: {
     proxy: true
   },
@@ -40,7 +41,7 @@ export default {
     }
   },
 
-  plugins: ["~/plugins/filters"],
+  // plugins: ["~/plugins/filters"],
   serverMiddleware: ["~/common/cache.js"],
   render: {
     http2: {

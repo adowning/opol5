@@ -1,20 +1,33 @@
 {
-  "name": "nuxt-hn",
-  "description": "Nuxt Hacker News",
-  "version": "1.0.0",
-  "author": "Evan You <yyx990803@gmail.com>",
-  "contributors": [
-    {
-      "name": "Sebastien Chopin (@Atinux)"
+  "version": "0.0.3-alpha",
+  "name": "andrews-admin",
+  "description": "Andrews Admin",
+  "author": "adowning <ashdowning@gmail.com>",
+  "private": false,
+  "license": "MIT",
+  "main": "main.js",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:adowning/opol5.git"
+  },
+  "build": {
+    "appId": "com.andrews.app",
+    "directories": {
+      "buildResources": "static"
     },
-    {
-      "name": "Alexandre Chopin (@alexchopin)"
+    "win": {
+      "target": "nsis"
     },
-    {
-      "name": "Pooya Parsa (@pi0)"
+    "linux": {
+      "target": "AppImage",
+      "category": "Office"
+    },
+    "publish": {
+      "provider": "github",
+      "owner": "adowning",
+      "repo": "opol5"
     }
-  ],
-  "private": true,
+  },
   "scripts": {
     "dev": "nuxt dev",
     "build": "nuxt build",

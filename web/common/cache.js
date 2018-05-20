@@ -9,6 +9,6 @@ app.use(apicache.middleware("15 minutes"))
 // apicache.options({ debug: true })
 
 export default {
-  path: "/api/",
+  path: "/web/api/",
   handler: app
 }
