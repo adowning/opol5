@@ -4,7 +4,7 @@
     <v-layout row wrap justify-center>
       <v-flex xl6 lg10 md10 sm12 xs10>
         <v-card class="pa-2 ml-4 mr-2">
-          <v-layout row justify-center>
+          <v-layout row justify-center v-if="!$_isAuthenticated">
             <v-layout column align-center>
               <transition appear name="fadeout">
                 <img class="aws-logo" style="width:140px;height:140px" src="../../static/logo.png">
@@ -50,8 +50,23 @@
                 </v-card>
               </transition>
             </v-flex>
-          </v-layout>
+          </v-layout >
+					<v-layout>
+						
+				
+					
+		 </v-layout>
         </v-card>
+						  <v-card color="blue-grey darken-2" class="white--text"  v-if="$_isAuthenticated">
+              <v-card-title primary-title>
+                <div class="headline">You are already logged in</div>
+                <!-- <div>Listen to your favorite artists and albums whenever and wherever, online and offline.</div> -->
+              </v-card-title>
+              <v-card-actions>
+          <v-btn flat dark v-on:click="logOut">Log Out</v-btn>
+  				<v-btn flat dark v-on:click="continueOn">Continue</v-btn>
+              </v-card-actions>
+            </v-card>
       </v-flex>
     </v-layout>
   </v-container>
@@ -83,14 +98,13 @@ export default {
 		async signIn(event) {
 			this.$nuxt.$loading.start()
 			try {
-				const user = 	await this.$store.dispatch('signInUser', {username: this.username, pasword:this.password})
-				// const attributes = 	await this.$store.dispatch('getUserAttributes', this.urlCorrect)
-				// const user = await Auth.signIn(this.username, this.password)
-				// const attributes = await Auth.currentUserInfo()
-				user.attributes = attributes.attributes
-				this.$store.dispatch('setUser', user)
+				const user = await Auth.signIn(this.username, this.password)
+				// this.$store.dispatch('AuthStore/setUser', user)
+				console.log(user.attributes)
+				this.$store.dispatch('auth/setUser', user)
 				this.$nuxt.$loading.finish()
-				this.$router.replace('/people/Profile')
+				// this.$router.replace('/people/Profile')
+				this.$router.push('/people/Profile')
 				/* eslint-disable-next-line */
        if (user.challengeNa === 'SMS_MFA') {
 					this.confirmView = true
@@ -114,7 +128,7 @@ export default {
 				if (!JS.isEmpty(data.verified)) {
 					this.$router.replace('/people/Profile')
 				} else {
-					this.$router.replace('/Auth/VerifyContact')
+					this.$router.replace('/AuthStore/VerifyContact')
 				}
 			} catch (err) {
 				console.log(err)
@@ -134,6 +148,12 @@ export default {
 		},
 		signUp() {
 			this.$router.replace('/Auth/SignUp')
+		},
+		        		continueOn(err) {
+			this.$router.replace("/people/Profile")
+		},
+    		logOut(err) {
+			this.$router.replace("/Auth/SignOut")
 		},
 		setError(err) {
 			this.error = err.message || err

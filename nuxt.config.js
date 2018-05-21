@@ -39,6 +39,9 @@ module.exports = {
 		debug: true,
 		proxy: true
 	},
+	workbox: {debug: true,
+		dev: true
+	},
 	proxy: {
 		'/api/assets/': {
 			target: 'http://47.219.112.177:83/api/v1',
@@ -57,20 +60,39 @@ module.exports = {
 		// '/api2': { target: 'http://35.172.138.127:82/', ws: false }
 	},
 	plugins: [{
-		src: '~plugins/init.js',
+		src: 'plugins/init.js',
 		ssr: false
 	},
 	{
-		src: '~plugins/AuthStorePersist.js',
+		src: 'plugins/AuthStorePersist.js',
 		ssr: false
 	},
 	{
-		src: '~plugins/mixins.js',
-		ssr: true
+		src: 'plugins/mixins.js',
+		ssr: false
 	},
 	{
-		src: '~plugins/vue-notification'
+		src: 'plugins/vue-notifications', ssr: false
 	},
-	'~/plugins/axios'
-	]
+	{src: '~/plugins/axios', ssr: false}
+
+	],
+	build: {
+		extend (config, { isClient }) {
+			// Extend only webpack config for client-bundle
+			if (isClient) {
+				config.devtool = 'eval-source-map'
+			}
+		}
+	},
+	render: {
+		static: {
+		  maxAge: '1y',
+		  setHeaders(res, path) {
+				if (path.includes('sw.js')) {
+			  res.setHeader('Cache-Control', 'public, max-age=0')
+				}
+		  }
+		}
+	  },
 }

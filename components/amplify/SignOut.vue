@@ -40,8 +40,10 @@ export default {
 			try {
 				const data = await Auth.signOut()
 				console.log(data)
-				this.$store.dispatch("resetAll", null)
-				this.$router.replace("/Auth/SignIn")
+				this.$store.dispatch("/auth/setUser", null)
+				this.$store.dispatch("/profile/setProfile", null)
+				this.$store.dispatch("/timeclocks/setClocks", null)
+				this.$router.replace("/")
 			} catch (err) {
 				this.setError(err)
 				this.fireAuthNotify(this.error)

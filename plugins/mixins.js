@@ -1,13 +1,13 @@
 import Vue from 'vue'
 import { mapGetters } from 'vuex'
 Vue.mixin({
-	// computed: {
-	//   ...mapGetters({
-	//     $_AuthUsername: 'loggedinusername',
-	//     $_isAuthenticated: 'isAuthenticated',
-	//     $_userVerification: 'userVerification'
-	//   })
-	// },
+	computed: {
+	  ...mapGetters({
+	    $_AuthUsername: 'auth/loggedinusername',
+	    $_isAuthenticated: 'auth/isAuthenticated',
+	    $_userVerification: 'auth/userVerification'
+	  })
+	},
 	methods: {
 		fireAuthNotify (msg) {
 			this.$notify({

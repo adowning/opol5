@@ -15,19 +15,24 @@
   <a-footer
       v-if="authenticated"
       app/>
+   <dev-footer
+      v-if="authenticated"
+      app/>     
 </v-app>
 </template>
 
 <script>
 import Layout from "../components/Layout"
 import AFooter from "../components/AFooter"
+import DevFooter from "../components/DevFooter"
 import ComsPanel from "../components/ComsPanel"
 
 export default {
 	components: {
 		layout: Layout,
 		"a-footer": AFooter,
-		"coms-panel": ComsPanel
+		"coms-panel": ComsPanel,
+		"dev-footer": DevFooter
 	},
 	computed: {
 		authenticated() {

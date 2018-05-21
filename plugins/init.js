@@ -11,7 +11,7 @@
  * and limitations under the License.
  */
 
-import { Auth } from "aws-amplify"
+import { Auth, Storage } from "aws-amplify"
 // import AWSExports from "../awsmobilejs/#current-backend-info/aws-exports"
 import awsmobile from "./aws-exports"
 import Vue from "vue"
@@ -29,5 +29,6 @@ Vue.use(Vuetify, {
 export default async () => {
 
 	Auth.configure(awsmobile)
+	Storage.configure(awsmobile)
 
 }

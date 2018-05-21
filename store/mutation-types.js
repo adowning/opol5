@@ -10,4 +10,5 @@ const createAsyncMutation = (type) => ({
 })
 
 export const SIGN_IN_USER = createAsyncMutation('SIGN_IN_USER')
+export const SIGN_UP_USER = createAsyncMutation('SIGN_UP_USER')
 export const GET_HARDWARE = createAsyncMutation('GET_HARDWARE')

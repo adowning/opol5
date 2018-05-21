@@ -8,14 +8,14 @@
     <h2 class="subtitle">
 ANDREWS ADMINISTRATION<br>
     </h2>
-    <h3>{{version}}</h3>
+    <h3>{{version}}-{{$_isAuthenticated}}</h3>
     <div class="links">
       <!-- <no-ssr><router-link v-if="!authenticated" to="Auth/SignIn" class="button--grey">SignIn</router-link></no-ssr> -->
-      <router-link v-if="authenticated" to="people/Profile" class="button--grey">Continue</router-link>
-     <router-link v-if="authenticated" to="Auth/SignOut" class="button--grey">Log Out</router-link>
-           <v-btn flat color="primary"  v-on:click="signIn">Sign In</v-btn>
-          <v-btn flat color="primary"  v-on:click="signUp">Sign Up</v-btn>
-          
+      <router-link v-if="$_isAuthenticated" to="people/Profile" class="button--grey">Continue</router-link>
+     <router-link v-if="$_isAuthenticated" to="Auth/SignOut" class="button--grey">Log Out</router-link>
+       <router-link v-if="!$_isAuthenticated" to="Auth/SignIn" class="button--grey">Sign In</router-link>
+     <router-link v-if="!$_isAuthenticated" to="Auth/SignUp" class="button--grey">Sign Up</router-link>
+
 
     </div>
 
@@ -29,22 +29,27 @@ var pjson = require('../package.json')
 console.log(pjson.version);
 export default {
 	layout: 'nouser',
-	middleware: 'need_auth',
 	components: {
 		AppLogo
 	},
 	computed: {
-		authenticated() {return this.$store.getters.isAuthenticated  },
+		// authenticated() {return this.$store.getters.AuthSisAuthenticated  },
 		version() {return pjson.version}
-  },
-  methods: {
+	},
+	methods: {
     		signIn(err) {
 			this.$router.replace("/Auth/SignIn")
-    },
+		},
     		signUp(err) {
 			this.$router.replace("/Auth/SignUp")
 		},
-  }
+        		continueOn(err) {
+			this.$router.replace("/people/Profile")
+		},
+    		logOut(err) {
+			this.$router.replace("/Auth/SignOut")
+		},
+	}
 }
 </script>
 

@@ -8,12 +8,13 @@ export default async function ({ redirect, req }) {
 	} else {
 		try {
 			const user = await Auth.currentUserInfo()
+			console.log(user)
 			loggedin = Boolean(user)
 		} catch (e) {
 			console.log(e)
 		}
 	}
 	if (!loggedin) {
-		return redirect('/Auth/SignIn')
+		return redirect('/')
 	}
 }

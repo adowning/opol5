@@ -8,7 +8,7 @@
 import SignIn from '../../components/amplify/SignIn.vue'
 export default {
 	layout: 'nouser',
-	// middleware: 'guest',
+	middleware: 'guest',
 	components: {
 		SignIn
 	},

@@ -90,35 +90,32 @@ export default {
 			this.$nuxt.$loading.start();
 			if (!this.imageName) {
 			}
-			let params = {
-				username: this.username,
-				password: this.password,
-				userId: this.humanityId
-			};
+		
 			this.$nuxt.$loading.start();
 			this.email = "temp@groupandrews.com";
 			// var phone_number = this.phone
 			this.phone_number = "+19035301197"
 			var humanityLogin = this.username + ',' + this.password +','+ this.humanityId
-			console.log('STARTIG')
-			const [cognitoUser, details] = await Promise.all([
-				Auth.signUp({
-					'username': this.username,
-					'password': this.password,
-					'attributes': {
-						'email': this.email,
-						'phone_number': this.phone_number,
-						'custom:humanityLogin': humanityLogin
-					}
-				}).catch((err) =>{
-					console.log(err)
-					this.$nuxt.$loading.finish();   
-					this.fireAuthNotify('Authentication error. Are you sure this username is not taken?');                 
-				}),
-				// this.$axios.$post("/api/users/gethumanitydata", params)
-				this.$store.dispatch("getHumanityData", params)
-			]);
- 
+			const humannityLogin = {username: this.username, password: this.password, userId: this.humanityId}
+		    const user = this.$store.dispatch("signUpUser", humannityLogin)
+			// const [cognitoUser, details] = await Promise.all([
+			// 	Auth.signUp({
+			// 		'username': this.username,
+			// 		'password': this.password,
+			// 		'attributes': {
+			// 			'email': this.email,
+			// 			'phone_number': this.phone_number,
+			// 			'custom:humanityLogin': humanityLogin
+			// 		}
+			// 	}).catch((err) =>{
+			// 		console.log(err)
+			// 		this.$nuxt.$loading.finish();   
+			// 		this.fireAuthNotify('Authentication error. Are you sure this username is not taken?');                 
+			// 	}),
+			// 	// this.$axios.$post("/api/users/gethumanitydata", params)
+			// 	this.$store.dispatch("getHumanityData", params)
+			// ]);
+			return 
 			var moreData = {};
 			// moreData.cognitoUser = cognitoUser;
 			moreData.details = details;  
@@ -127,7 +124,7 @@ export default {
 			moreData.password = this.password
 			moreData.phoneNumber = this.phone_number
 			moreData.humanityId = this.humanityId
-			let user = await this.$store.dispatch("createUser", data)     
+			this.user = await this.$store.dispatch("createUser", data)     
 			//  let user = await this.$axios.$post("/api/users/createuser", moreData);
 			this.$nuxt.$loading.finish();
 			this.result = true;
@@ -165,10 +162,10 @@ export default {
 			await this.checkUser();
 		},
 		async checkUser() {
-			const user = this.user;
-			if (user) return;
+			
+			if (this.user) return;
 			try {
-				const data = await Auth.verifiedContact(user);
+				const data = await Auth.verifiedContact(this.user);
 				this.$store.dispatch("modules/AuthStore/setVerification", data);
 				if (!JS.isEmpty(data.verified)) {
 					this.$router.push("/people/Profile");

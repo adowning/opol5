@@ -1,7 +1,7 @@
 <template>
   <div>
     <nuxt/>
-    <notifications group="auth" />
+    <notifications group="auth" /> 
   </div>
 </template>
 

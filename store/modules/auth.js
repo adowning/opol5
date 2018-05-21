@@ -1,50 +1,82 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-import doAsync from '../async-util'
-import * as types from '../mutation-types'
+import Cookie from 'js-cookie'
+import { getTokenFromUser } from '../../utils/tokens'
 
-Vue.use(Vuex)
-
-const mutationTypes = {
-	SUCCESS: 'SIGN_IN_USER_SUCCESS',
-	FAILURE: 'SIGN_IN_USER_PENDING',
-	PENDING: 'SIGN_IN_USER_FAILURE'
-}
-
-export const state = {
-
-}
-export const mutations = {
-	[types.SIGN_IN_USER.SUCCESS] (state, info) {
-		state[types.SIGN_IN_USER.loadingKey] = false
-		Vue.set(state, [types.SIGN_IN_USER.stateKey], info)
-		Vue.set(state, [types.SIGN_IN_USER.statusCode], '200')		
+export default {
+	namespaced: true,
+	state: {
+		user: null,
+		// userVerification: []
 	},
-
-	[types.SIGN_IN_USER.PENDING] (state) {
-		console.log(types.SIGN_IN_USER.loadingKey)
-		Vue.set(state, types.SIGN_IN_USER.loadingKey, true)
+	mutations: {
+		SET_USER (state, user) {
+			state.user = user
+			let token = getTokenFromUser(user)
+			Cookie.set('tokens', token)
+		},
+		SET_VERIFICATION (state, verification) {
+			state.userVerification.push(verification)
+		}
 	},
-	[types.SIGN_IN_USER.FAILURE] (state, status) {
-		state[types.SIGN_IN_USER.loadingKey] = false
-		Vue.set(state, [types.SIGN_IN_USER.statusCode], status)		
-		Vue.set(state, [types.SIGN_IN_USER.stateKey],  '')
-	}
-}
-export const getTitle = (response) => {
-	return response.data.title
-}
+	actions: {
+		setUser (context, value) {
+			context.commit('SET_USER', value)
+		},
+		setVerification (context, value) {
+			context.commit('SET_VERIFICATION')
+		}
+	},
+	getters: {
+		loggedinUser (state) {
+			return state.user
+		},
+		isAuthenticated (state) {
+			return Boolean(state.user)
+		},
+		loggedinusername (state) {
+			return (state.user) ? state.user.username : ''
+		},
+		userVerification (state) {
+			return state.userVerification
+		}
+	},
+};
 
-export const actions = {
-	getAsync(store, url) {
-		doAsync(store, {
-			url,
-			mutationTypes: types.SIGN_IN_USER
-		})
-	}
-}
-// export default {
-// 	state,
-// 	mutations,
-// 	actions
+// export const state = () => ({
+//   user: null,
+//   userVerification: []
+// })
+
+// export const mutations = {
+//   SET_USER (state, user) {
+//     state.user = user
+//     let token = getTokenFromUser(user)
+//     Cookie.set('tokens', token)
+//   },
+//   SET_VERIFICATION (state, verification) {
+//     state.userVerification.push(verification)
+//   }
+// }
+
+// export const actions = {
+//   setUser (context, value) {
+//     context.commit('SET_USER', value)
+//   },
+//   setVerification (context, value) {
+//     context.commit('SET_VERIFICATION')
+//   }
+// }
+
+// export const getters = {
+//   loggedinUser (state) {
+//     return state.user
+//   },
+//   isAuthenticated (state) {
+//     return Boolean(state.user)
+//   },
+//   loggedinusername (state) {
+//     return (state.user) ? state.user.username : ''
+//   },
+//   userVerification (state) {
+//     return state.userVerification
+//   }
 // }

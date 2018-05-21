@@ -23,6 +23,7 @@ const doAsync = (store, { url, mutationTypes, stateKey }) => {
 				store.commit( mutationTypes.FAILURE, error.response.status)
 			})
 	}, 1500)
+	
 }
 
 export default doAsync
