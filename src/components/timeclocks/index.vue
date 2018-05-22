@@ -1,80 +1,82 @@
 <template>
-  <v-container grid-list-md >
-    <v-layout row wrap>
-      <v-flex xs4 >
-        <v-card  class="px-0">
-          <v-toolbar color="primary" dark>
-            <v-toolbar-title>{{date}}</v-toolbar-title>
-            <v-spacer></v-spacer>
-            <!-- <v-subheader v-if="timeFigured">Total Time: {{totalTime}}</v-subheader> -->
-          </v-toolbar>
-          <template v-if="loading">
-            <!-- <v-progress-circular indeterminate :size="70" :width="7" color="primary"></v-progress-circular> -->
-            <v-progress-linear :indeterminate="true"></v-progress-linear>
-          </template>
-          <template v-if="!loading">
-            <v-list>
-              <template v-if="clockStatus.clockStatus ==='out'">
-                <v-layout row my-4>
-                  <v-flex xs4 offset-xs1>
-                    <v-btn block color="info" dark @click.native="employeeClockIn()">Clock In</v-btn>
-                  </v-flex>
-                </v-layout>
-              </template>
-              <template v-if="clockStatus.clockStatus === 'in'">
-                <v-layout row mt-1>
-                  <v-flex xs7 offset-xs1>
-                    <v-text-field name="input-1" label="Note" id="testing"></v-text-field>
-                  </v-flex>
-                  <v-flex>
-                    <v-btn flat color="info" dark @click.native="addNote()">Add Note</v-btn>
-                  </v-flex>
-                </v-layout>
-                <v-layout row mb-4>
-                  <v-flex xs4 offset-xs1>
-                    <v-btn block color="error" dark @click.native="employeeClockOut()">Clock Out</v-btn>
-                  </v-flex>
-                </v-layout>
-              </template>
-            </v-list>
-          </template>
-        </v-card>
-      </v-flex>
-      <v-flex xs8>
-        <v-card  class="px-0">
-          <v-toolbar color="primary" dark>
-            <v-toolbar-title>Timesheets</v-toolbar-title>
-            <v-spacer>
-            </v-spacer>
-            <v-menu offset-y>
-              <v-btn outline white slot="activator">This Week</v-btn>
-              <v-list>
-                <v-list-tile v-for="week in weeks" :key="week.title" @click="changeWeek(week.amount)">
-                  <v-list-tile-title>{{ week.title }}</v-list-tile-title>
-                </v-list-tile>
-              </v-list>
-            </v-menu>
-          </v-toolbar>
-          <template v-if="loading">
-            <!-- <v-progress-circular indeterminate :size="70" :width="7" color="primary"></v-progress-circular> -->
-            <v-progress-linear :indeterminate="true"></v-progress-linear>
-          </template>
-          <v-data-table v-if="!loading" :headers="headers" :items="timeClocks" hide-actions class="elevation-1">
-            <template slot="items" slot-scope="props">
-              <td  v-if="props.item.out_time.time"> <span v-if="props.item.current_length.hours > 0">{{props.item.current_length.hours}}h, </span>  {{ props.item.length.mins }}m</td>
-              <td  v-else><span v-if="props.item.current_length.hours > 0">{{props.item.current_length.hours}}h,</span> {{props.item.current_length.mins}}m </td>
+	<v-container grid-list-md>
+		<v-layout row wrap>
+			<v-flex xs4>
+				<v-card class="px-0">
+					<v-toolbar color="primary" dark>
+						<v-toolbar-title>{{date}}</v-toolbar-title>
+						<v-spacer></v-spacer>
+						<!-- <v-subheader v-if="timeFigured">Total Time: {{totalTime}}</v-subheader> -->
+					</v-toolbar>
+					<template v-if="loading">
+						<!-- <v-progress-circular indeterminate :size="70" :width="7" color="primary"></v-progress-circular> -->
+						<v-progress-linear :indeterminate="true"></v-progress-linear>
+					</template>
+					<template v-if="!loading">
+						<v-list>
+							<template v-if="clockStatus ==='out'">
+								<v-layout row my-4>
+									<v-flex xs4 offset-xs1>
+										<v-btn block color="info" dark @click.native="employeeClockIn()">Clock In</v-btn>
+									</v-flex>
+								</v-layout>
+							</template>
+							<template v-if="clockStatus === 'in'">
+								<v-layout row mt-1>
+									<v-flex xs7 offset-xs1>
+										<v-text-field name="input-1" label="Note" id="testing"></v-text-field>
+									</v-flex>
+									<v-flex>
+										<v-btn flat color="info" dark @click.native="addNote()">Add Note</v-btn>
+									</v-flex>
+								</v-layout>
+								<v-layout row mb-4>
+									<v-flex xs4 offset-xs1>
+										<v-btn block color="error" dark @click.native="employeeClockOut()">Clock Out</v-btn>
+									</v-flex>
+								</v-layout>
+							</template>
+						</v-list>
+					</template>
+				</v-card>
+			</v-flex>
+			<v-flex xs8>
+				<v-card class="px-0">
+					<v-toolbar color="primary" dark>
+						<v-toolbar-title>Timesheets</v-toolbar-title>
+						<v-spacer>
+						</v-spacer>
+						<v-menu offset-y>
+							<v-btn outline white slot="activator">This Week</v-btn>
+							<v-list>
+								<v-list-tile v-for="week in weeks" :key="week.title" @click="changeWeek(week.amount)">
+									<v-list-tile-title>{{ week.title }}</v-list-tile-title>
+								</v-list-tile>
+							</v-list>
+						</v-menu>
+					</v-toolbar>
+					<template v-if="loading">
+						<!-- <v-progress-circular indeterminate :size="70" :width="7" color="primary"></v-progress-circular> -->
+						<v-progress-linear :indeterminate="true"></v-progress-linear>
+					</template>
+					<v-data-table v-if="!loading" :headers="headers" :items="timeClocks" hide-actions class="elevation-1">
+						<template slot="items" slot-scope="props">
+							<td v-if="props.item.out_time.time">
+								<span v-if="props.item.current_length.hours > 0">{{props.item.current_length.hours}}h, </span> {{ props.item.length.mins }}m</td>
+							<td v-else>
+								<span v-if="props.item.current_length.hours > 0">{{props.item.current_length.hours}}h,</span> {{props.item.current_length.mins}}m </td>
 
-              <td class="text-xs-right" >{{ props.item.in_time.time }}, {{props.item.in_time.day}}</td>
+							<td class="text-xs-right">{{ props.item.in_time.time }}, {{props.item.in_time.day}}</td>
 
-              <td class="text-xs-right" v-if="props.item.out_time.time">{{ props.item.out_time.time }}, {{ props.item.out_time.day }}</td>
-              <td class="text-xs-right" v-else>Current Clock</td>
+							<td class="text-xs-right" v-if="props.item.out_time.time">{{ props.item.out_time.time }}, {{ props.item.out_time.day }}</td>
+							<td class="text-xs-right" v-else>Current Clock</td>
 
-            </template>
-          </v-data-table>
-        </v-card>
-      </v-flex>
-    </v-layout>
-  </v-container>
+						</template>
+					</v-data-table>
+				</v-card>
+			</v-flex>
+		</v-layout>
+	</v-container>
 </template>
 
 <script>
@@ -89,6 +91,7 @@ export default {
 			timeSheetID: null,
 			current_length: {},
 			timeFigured: false,
+			delta: 0,
 			notes: '',
 			st: {},
 			et: {},
@@ -135,10 +138,33 @@ export default {
 			return moment.utc(moment.duration(diff).asMilliseconds()).format('H:mm')
 		},
 		timeClocks: function() {
-			return this.$store.state.modules.TimeClockStore.timeClocks
+			return this.$store.state.timeClocks.timeClocks
 		},
 		clockStatus: function() {
-			return this.$store.state.modules.TimeClockStore.timeClockStatus
+			return this.$store.state.timeClocks.clockStatus
+		},
+		filteredTimes() {
+      return this.last30DayData
+		},
+		thisWeek () {
+			const sofw = 	moment().startOf('week')
+			const currentWeek = momenet.range(sofw, sofw.add(7, 'days'))
+
+		},
+		daysArray(value) {
+			console.log(value)
+				var startOfWeek = moment().startOf('isoWeek').minus(this.delta, 'week')
+				var endOfWeek = moment().endOf('isoWeek').minus(this.delta, 'week')
+
+				var days = [];
+				var day = startOfWeek;
+
+				while (daysArray <= endOfWeek) {
+						days.push(day.toDate());
+						day = day.clone().add(1, 'd');
+				}
+				console.log(daysArray)
+		 return daysArray
 		},
 		startEndDates: function() {
 			return {
@@ -157,15 +183,15 @@ export default {
 		async employeeClockIn() {
 			this.timeFigured = true
 			let params = {
-				userId: this.$store.state.modules.AuthStore.humanity_attributes.humanityUserId,
-				token: this.$store.state.modules.AuthStore.humanity_attributes.currentToken
+				userId: this.$store.state.auth.humanity_attributes.humanityUserId,
+				token: this.$store.state.auth.humanity_attributes.currentToken
 			}
 			let { data } = await axios.post(
 				'/api/users/employeeclockin',
 				params
 			)
 			console.log(data)
-			this.$store.dispatch('modules/TimeClockStore/setEmployeeTimeClockStatus', data)
+			this.$store.dispatch('timeClocks/setTimeClockStatus', data)
 		},
 		async employeeClockOut() {
 			this.timeFigured = true
@@ -179,9 +205,9 @@ export default {
 			)
 			console.log(data)
 			if (data.status === 13) {
-				this.$store.dispatch('modules/TimeClockStore/setEmployeeTimeClockStatus', 'out')
+				this.$store.dispatch('timeClocks/setTimeClockStatus', 'out')
 			} else {
-				this.$store.dispatch('modules/TimeClockStore/setEmployeeTimeClockStatus', data)
+				this.$store.dispatch('timeClocks/setTimeClockStatus', data)
 			}
 		},
 		async getClockStatus() {
@@ -195,7 +221,7 @@ export default {
 				params
 			)
 			console.log(response)
-			this.$store.dispatch('modules/TimeClockStore/setEmployeeTimeClockStatus', response)
+			this.$store.dispatch('timeClocks/setTimeClockStatus', response)
 		},
 		changeWeek(amount) {
 			console.log(this.start_date)

@@ -1,89 +1,92 @@
-import Cookie from 'js-cookie'
-import { getTokenFromUser } from '../../utils/tokens'
-import { Auth, API } from 'aws-amplify'
+import Cookie from "js-cookie"
+import { getTokenFromUser } from "../../utils/tokens"
+import { Auth, API } from "aws-amplify"
 
-
-async function getHumanityToken(value) { 
-	let apiName = 'dev-opol5-employees';
-	let path = '/getHumanityToken';
-	let myInit = { // OPTIONAL
-		body: {username: value.username, password: value.password, userId: value.username}, // replace this with attributes you need
-		// headers: {} // OPTIONAL
-	}
-	console.log(myInit)
-	return await API.post(apiName, path, {"username": value.username, "password": value.password, "userId": value.username});
-
-}
 export default {
 	namespaced: true,
 	state: {
 		user: null,
-		// userVerification: []
+		htoken: null
 	},
 	mutations: {
-		SET_USER (state, user) {
-			state.user = user
-			let token = getTokenFromUser(user)
-			Cookie.set('tokens', token)
+		SET_USER(state, cognitoUser) {
+			state.user = cognitoUser
+			let token = getTokenFromUser(cognitoUser)
+			Cookie.set("tokens", token)
 		},
-		SET_HOTKEN (state, htoken) {
+		SET_HTOKEN(state, htoken) {
 			state.htoken = htoken
+			console.log(state.htoken)
 			// Cookie.set('htoken', htoken)
 		},
-		SET_VERIFICATION (state, verification) {
+		SET_VERIFICATION(state, verification) {
 			state.userVerification.push(verification)
 		}
 	},
 
 	actions: {
-		async logInUser( context, value ){
-			var cognitoUser = null
-			var htoken = null
-			if(value){
-				var username = value.username
-		     	var password = value.password
-				console.log(username + ' ' + password)
-					[cognitoUser, htoken] = await Promise.all([
-					
-						Auth.signIn(
-							username,  password
-						).catch((err) =>{
-							console.log(err)
-							// this.fireAuthNotify('Authentication error.')            
-						}),
-						getHumanityToken(value)
-					// this.$axios.$post("/api/users/getHumanityToken", {username: value.username, password: value.password, userId: value.username})
-					])
-				const attributes = await Auth.currentUserInfo()
-				cognitoUser.attributes = attributes.attributes
-     			context.commit('SET_USER', value)
-     			context.commit('SET_USER', htoken)
-
+		// refreshMessage(context) {
+		// 	return new Promise((resolve) => {
+		// 	  this.$http.get('...').then((response) => {
+		// 		context.commit('updateMessage', response.data.message);
+		// 		resolve();
+		// 	  });
+		// 	});
+		//   },
+		async getHumanityToken(context, value) {
+			const body = {
+				username: value.username,
+				password: value.password,
+				userId: value.username
 			}
+			const htoken = await API.post(
+				"dev-opol5-employees",
+				"/gethumanitytoken",
+				{
+					body
+				}
+			)
+			console.log(htoken)
+			context.commit("SET_HTOKEN", htoken)
+			return htoken
 		},
-	 setUser (context, value) {
-	
-			context.commit('SET_USER', value)
+		async getUser(context, value) {
+			var username = value.username
+			var password = value.password
+			const cognitoUser = await Auth.signIn(username, password).catch(err => {
+				console.log(err)
+			})
+			context.commit("SET_USER", cognitoUser)
+			return cognitoUser
 		},
-		setVerification (context, value) {
-			context.commit('SET_VERIFICATION')
+		setUser(context, value) {
+			context.commit("SET_USER", value)
+		},
+		setHToken(context, value) {
+			context.commit("SET_HTOKEN", value)
+		},
+		setVerification(context, value) {
+			context.commit("SET_VERIFICATION")
 		}
 	},
 	getters: {
-		loggedinUser (state) {
+		loggedinUser(state) {
 			return state.user
 		},
-		isAuthenticated (state) {
+		loggedinUserHToken(state) {
+			return state.htoken
+		},
+		isAuthenticated(state) {
 			return Boolean(state.user)
 		},
-		loggedinusername (state) {
-			return (state.user) ? state.user.username : ''
+		loggedinusername(state) {
+			return state.user ? state.user.username : ""
 		},
-		userVerification (state) {
+		userVerification(state) {
 			return state.userVerification
 		}
-	},
-};
+	}
+}
 
 // export const state = () => ({
 //   user: null,

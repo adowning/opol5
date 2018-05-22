@@ -56,17 +56,17 @@
 				
 					
 		 </v-layout>
-        </v-card>
-						  <v-card color="blue-grey darken-2" class="white--text"  v-show="$_isAuthenticated">
+       </v-card>
+						  <!-- <v-card color="blue-grey darken-2" class="white--text"  v-show="$_isAuthenticated">
               <v-card-title primary-title>
                 <div class="headline">You are already logged in</div>
-                <!-- <div>Listen to your favorite artists and albums whenever and wherever, online and offline.</div> -->
+                <div>Listen to your favorite artists and albums whenever and wherever, online and offline.</div>
               </v-card-title>
               <v-card-actions>
           <v-btn flat dark v-on:click="logOut">Log Out</v-btn>
   				<v-btn flat dark v-on:click="continueOn">Continue</v-btn>
               </v-card-actions>
-            </v-card>
+            </v-card>  -->
       </v-flex>
     </v-layout>
   </v-container>
@@ -102,11 +102,14 @@ export default {
 			const password = this.password
 			this.$nuxt.$loading.start()
 			try {//await Auth.signIn(this.username, this.password)
-				const user = await	this.$store.dispatch('auth/logInUser', {username: username, password: password})
-				if(user){
-					this.$nuxt.$loading.finish()
-					this.$router.push('/people/Profile')
-				}
+				const cognitoUser = await	this.$store.dispatch('auth/getUser', {username: username, password: password})
+				const htoken = await	this.$store.dispatch('auth/getHumanityToken', {username: username, password: password})
+				console.log(cognitoUser)
+				console.log(htoken)
+				// if(user && htoken){
+				this.$nuxt.$loading.finish()
+				this.$router.push('/people/Profile')
+				// }
 				/* eslint-disable-next-line */
        if (user.challengeNa === 'SMS_MFA') {
 					this.confirmView = true

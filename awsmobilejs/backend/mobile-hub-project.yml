@@ -9,7 +9,9 @@ features:
       dev-opol5-employees: !com.amazonaws.mobilehub.v0.API 
         attributes:
           api-arn: 'arn:aws:execute-api:us-east-2:742705829810:edwgsi8nll'
+          disable-aws-auth: false
           name: dev-opol5-employees
+          requires-signin: false
           sdk-generation-stage-name: dev
         paths:
           /createuser: !com.amazonaws.mobilehub.v0.Function {}
@@ -29,77 +31,71 @@ features:
           sdk-generation-stage-name: Development
         paths:
           /humanity: !com.amazonaws.mobilehub.v0.Function 
-            codeFilename: uploads/humanityHandler-20180516062033.zip
             description: 'Handler for calls to resource path : /humanity/{proxy+}'
             environment: {}
             handler: index.handler
-            hashcode: JnNl44LZRYQBP2V2ai/qQX5F2PBrHaYazpbE/9UOlPM=
+            hashcode: 6AIgLgIZxUOpjxEF8jDKh21e1uSpyl6KJ/QuKogOyAk=
             memorySize: '128'
-            modified: '2018-05-16T11:24:38.282+0000'
+            modified: '2018-05-22T14:05:40.126+0000'
             name: humanityHandler
-            runtime: nodejs6.10
+            runtime: nodejs8.10
             timeout: '3'
-            version: 8iQaEt_aTkgEzQ0PAWKd1rKuQjRfzpod
+            version: Z0Hsct.FGqJnpZUzdG2PN6V5FW7jrESM
           '/humanity/{proxy+}': !com.amazonaws.mobilehub.v0.Function 
-            codeFilename: uploads/humanityHandler-20180516062033.zip
             description: 'Handler for calls to resource path : /humanity/{proxy+}'
             environment: {}
             handler: index.handler
-            hashcode: JnNl44LZRYQBP2V2ai/qQX5F2PBrHaYazpbE/9UOlPM=
+            hashcode: 6AIgLgIZxUOpjxEF8jDKh21e1uSpyl6KJ/QuKogOyAk=
             memorySize: '128'
-            modified: '2018-05-16T11:24:38.282+0000'
+            modified: '2018-05-22T14:05:40.126+0000'
             name: humanityHandler
-            runtime: nodejs6.10
+            runtime: nodejs8.10
             timeout: '3'
-            version: 8iQaEt_aTkgEzQ0PAWKd1rKuQjRfzpod
+            version: UKshjHhBjslsmcpfqAqvbnjlRHJ16iT7
           /login: !com.amazonaws.mobilehub.v0.Function 
-            codeFilename: uploads/loginHandler-20180516062033.zip
             description: 'Handler for calls to resource path : /login/{proxy+}'
             environment: {}
             handler: index.handler
-            hashcode: Kv0hQAPXTaGyQjNnlLobK9fPC+HlS8B8Yl0CAANpiHE=
+            hashcode: P9II9SmOvB4c/2gi0ye2IaHs8QjqHhi9lE9uWF37oig=
             memorySize: '128'
-            modified: '2018-05-16T11:24:38.424+0000'
+            modified: '2018-05-22T14:05:40.065+0000'
             name: loginHandler
             runtime: nodejs6.10
             timeout: '3'
-            version: NFHICJMWTCiKGSi0FZ6CiysmwjvNrTxq
+            version: U5tJ8WMuU4MNWM.tUj80phreEiRybDEl
           '/login/{proxy+}': !com.amazonaws.mobilehub.v0.Function 
-            codeFilename: uploads/loginHandler-20180516062033.zip
             description: 'Handler for calls to resource path : /login/{proxy+}'
             environment: {}
             handler: index.handler
-            hashcode: Kv0hQAPXTaGyQjNnlLobK9fPC+HlS8B8Yl0CAANpiHE=
+            hashcode: P9II9SmOvB4c/2gi0ye2IaHs8QjqHhi9lE9uWF37oig=
             memorySize: '128'
-            modified: '2018-05-16T11:24:38.424+0000'
+            modified: '2018-05-22T14:05:40.065+0000'
             name: loginHandler
             runtime: nodejs6.10
             timeout: '3'
-            version: NFHICJMWTCiKGSi0FZ6CiysmwjvNrTxq
+            version: PAzu8ONBvUWCYpe6Fgqteb8oN80164Oc
           /users: !com.amazonaws.mobilehub.v0.Function 
-            codeFilename: uploads/usersHandler-20180516062033.zip
             description: 'Handler for calls to resource path : /users/{proxy+}'
             environment: {}
             handler: index.handler
-            hashcode: Kv0hQAPXTaGyQjNnlLobK9fPC+HlS8B8Yl0CAANpiHE=
+            hashcode: P9II9SmOvB4c/2gi0ye2IaHs8QjqHhi9lE9uWF37oig=
             memorySize: '128'
-            modified: '2018-05-16T11:24:38.340+0000'
+            modified: '2018-05-22T14:05:40.495+0000'
             name: usersHandler
             runtime: nodejs6.10
             timeout: '3'
-            version: 4.sh6zmAOSdzOV_UHmvuuHEYRC.KodtF
+            version: xz1FWHqtMakOj6wayw_BrNKWBj3VBZJO
           '/users/{proxy+}': !com.amazonaws.mobilehub.v0.Function 
-            codeFilename: uploads/usersHandler-20180516062033.zip
             description: 'Handler for calls to resource path : /users/{proxy+}'
             environment: {}
             handler: index.handler
-            hashcode: Kv0hQAPXTaGyQjNnlLobK9fPC+HlS8B8Yl0CAANpiHE=
+            hashcode: P9II9SmOvB4c/2gi0ye2IaHs8QjqHhi9lE9uWF37oig=
             memorySize: '128'
-            modified: '2018-05-16T11:24:38.340+0000'
+            modified: '2018-05-22T14:05:40.495+0000'
             name: usersHandler
             runtime: nodejs6.10
             timeout: '3'
-            version: 4.sh6zmAOSdzOV_UHmvuuHEYRC.KodtF
+            version: 8tHZVYnAXbTa35XUbvOGWEZR6BtDU8wg
   content-delivery: !com.amazonaws.mobilehub.v0.ContentDelivery 
     attributes:
       enabled: true

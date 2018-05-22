@@ -8,6 +8,11 @@
 module.exports = {
 	mode: "spa",
 	srcDir: "src/",
+	env: {
+		env: {
+			GH_TOKEN: '2aacddf596c79bdf482cc5a9c238e0c56fa905ec'
+		}
+	},
 	head: {
 		title: "Nuxt Edge Serverless Template",
 		meta: [
@@ -39,6 +44,12 @@ module.exports = {
 	},
 	build: {
 		vendor: ['vuetify', 'axios'],
+		extend (config, { isClient }) {
+			// Extend only webpack config for client-bundle
+			if (isClient) {
+			  config.devtool = 'sourcemap'
+			}
+		  }
 	},
 	modules: ["@nuxtjs/axios" ],
 	axios: {

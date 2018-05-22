@@ -1,0 +1,27 @@
+﻿AWSTemplateFormatVersion: '2010-09-09'
+Transform: 'AWS::Serverless-2016-10-31'
+Description: An AWS Serverless Specification template describing your function.
+Resources:
+  opol5employeesdevgetHumanityTimeClockStatus:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      Handler: humanity.getHumanityTimeClockStatus
+      Runtime: nodejs8.10
+      CodeUri: template.yaml 
+      Description: ''
+      MemorySize: 1024
+      Timeout: 6
+      Role: 'arn:aws:iam::742705829810:role/opol5-employees-dev-us-east-2-lambdaRole'
+      Events:
+        Api1:
+          Type: Api
+          Properties:
+            Path: /gethumanitytimeclockstatus
+            Method: POST
+      Environment:
+        Variables:
+          DYNAMODB_TABLE: serverless-dev-users
+          atlas_connection_uri: >-
+            mongodb://admin:sugarlips@cluster0-shard-00-00-bc1u7.mongodb.net:27017,cluster0-shard-00-01-bc1u7.mongodb.net:27017,cluster0-shard-00-02-bc1u7.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true
+      Tags:
+        STAGE: dev

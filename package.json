@@ -1,5 +1,5 @@
 {
-  "version": "0.0.2-snapshot",
+  "version": "0.0.3-snapshot",
   "name": "andrews-admin",
   "description": "Andrews Admin",
   "author": "adowning <ashdowning@gmail.com>",
@@ -32,7 +32,7 @@
     "dev:start": "npx nuxt",
     "dev": "./dev_start_web.sh",
     "dev2": "cross-env NODE_ENV=DEV ELECTRON=true  electron .",
-    "build": "nuxt build --spa && electron-builder -l",
+    "build": "nuxt generate && electron-builder -w --publish always",
     "dist": "electron-builder -l --publish always",
     "package": "electron-builder -l",
     "lintfix": "eslint --fix --ext .js,.vue --ignore-path .gitignore .",

@@ -8,6 +8,7 @@ export default async function ({ store, redirect, req }) {
 	} else {
 		try {
 			const user = await Auth.currentUserInfo()
+			store.dispatch('auth/setUser', user)
 			// console.log(user)
 			loggedin = Boolean(user)
 		} catch (e) {

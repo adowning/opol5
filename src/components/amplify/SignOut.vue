@@ -41,6 +41,7 @@ export default {
 				const data = await Auth.signOut()
 				console.log(data)
 				this.$store.dispatch("auth/setUser", null)
+				this.$store.dispatch("auth/setHToken", null)
 				this.$store.dispatch("profile/setProfile", null)
 				this.$store.dispatch("timeclocks/setClocks", null)
 				this.$router.replace("/")
