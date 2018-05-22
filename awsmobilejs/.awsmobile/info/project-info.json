@@ -1,17 +1,18 @@
 {
 	"ProjectName": "opol5e",
 	"ProjectPath": "/home/ash/opol5e",
-	"InitializationTime": "",
-	"LastConfigurationTime": "",
+	"InitializationTime": "2018-05-21-19-31-50",
+	"LastConfigurationTime": "2018-05-21-19-31-18",
 	"LastNPMInstallTime": "",
 	"FrontendLastBuildTime": "",
 	"LastPublishTime": "",
-	"BackendLastSyncTime": "",
+	"BackendLastSyncTime": "2018-05-22-01-37-45",
 	"BackendLastBuildTime": "",
 	"BackendLastPushTime": "",
-	"BackendProjectID": "",
-	"BackendProjectName": "",
-	"BackendProjectConsoleUrl": "",
-	"BackendProjectCreationTime": "",
-	"BackendProjectLastUpdatedTime": ""
+	"BackendProjectID": "55ae24f8-825e-4322-923f-b2758e940383",
+	"BackendProjectName": "Opol5",
+	"BackendProjectConsoleUrl": "https://console.aws.amazon.com/mobilehub/home#/55ae24f8-825e-4322-923f-b2758e940383/build",
+	"BackendProjectCreationTime": "2018-05-12T01:11:14.503Z",
+	"BackendProjectLastUpdatedTime": "2018-05-22T06:28:35.408Z",
+	"BackendLastSyncToDevTime": "2018-05-22-01-37-50"
 }

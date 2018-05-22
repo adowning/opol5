@@ -1,0 +1,172 @@
+--- !com.amazonaws.mobilehub.v0.Project 
+apps:
+  web: !com.amazonaws.mobilehub.v0.AppDO {}
+features:
+  cloudlogic: !com.amazonaws.mobilehub.v0.CloudLogic 
+    attributes:
+      no-lock: true
+    components:
+      dev-opol5-employees: !com.amazonaws.mobilehub.v0.API 
+        attributes:
+          api-arn: 'arn:aws:execute-api:us-east-2:742705829810:edwgsi8nll'
+          name: dev-opol5-employees
+          sdk-generation-stage-name: dev
+        paths:
+          /createuser: !com.amazonaws.mobilehub.v0.Function {}
+          /employeeclockin: !com.amazonaws.mobilehub.v0.Function {}
+          /employeeclockout: !com.amazonaws.mobilehub.v0.Function {}
+          /gatherforcreate: !com.amazonaws.mobilehub.v0.Function {}
+          /gethumanitydata: !com.amazonaws.mobilehub.v0.Function {}
+          /gethumanitytimeclocks: !com.amazonaws.mobilehub.v0.Function {}
+          /gethumanitytimeclockstatus: !com.amazonaws.mobilehub.v0.Function {}
+          /gethumanitytoken: !com.amazonaws.mobilehub.v0.Function {}
+          '/user/{id}': !com.amazonaws.mobilehub.v0.Function {}
+      users: !com.amazonaws.mobilehub.v0.API 
+        attributes:
+          disable-aws-auth: false
+          name: users
+          requires-signin: false
+          sdk-generation-stage-name: Development
+        paths:
+          /humanity: !com.amazonaws.mobilehub.v0.Function 
+            codeFilename: uploads/humanityHandler-20180516062033.zip
+            description: 'Handler for calls to resource path : /humanity/{proxy+}'
+            environment: {}
+            handler: index.handler
+            hashcode: JnNl44LZRYQBP2V2ai/qQX5F2PBrHaYazpbE/9UOlPM=
+            memorySize: '128'
+            modified: '2018-05-16T11:24:38.282+0000'
+            name: humanityHandler
+            runtime: nodejs6.10
+            timeout: '3'
+            version: 8iQaEt_aTkgEzQ0PAWKd1rKuQjRfzpod
+          '/humanity/{proxy+}': !com.amazonaws.mobilehub.v0.Function 
+            codeFilename: uploads/humanityHandler-20180516062033.zip
+            description: 'Handler for calls to resource path : /humanity/{proxy+}'
+            environment: {}
+            handler: index.handler
+            hashcode: JnNl44LZRYQBP2V2ai/qQX5F2PBrHaYazpbE/9UOlPM=
+            memorySize: '128'
+            modified: '2018-05-16T11:24:38.282+0000'
+            name: humanityHandler
+            runtime: nodejs6.10
+            timeout: '3'
+            version: 8iQaEt_aTkgEzQ0PAWKd1rKuQjRfzpod
+          /login: !com.amazonaws.mobilehub.v0.Function 
+            codeFilename: uploads/loginHandler-20180516062033.zip
+            description: 'Handler for calls to resource path : /login/{proxy+}'
+            environment: {}
+            handler: index.handler
+            hashcode: Kv0hQAPXTaGyQjNnlLobK9fPC+HlS8B8Yl0CAANpiHE=
+            memorySize: '128'
+            modified: '2018-05-16T11:24:38.424+0000'
+            name: loginHandler
+            runtime: nodejs6.10
+            timeout: '3'
+            version: NFHICJMWTCiKGSi0FZ6CiysmwjvNrTxq
+          '/login/{proxy+}': !com.amazonaws.mobilehub.v0.Function 
+            codeFilename: uploads/loginHandler-20180516062033.zip
+            description: 'Handler for calls to resource path : /login/{proxy+}'
+            environment: {}
+            handler: index.handler
+            hashcode: Kv0hQAPXTaGyQjNnlLobK9fPC+HlS8B8Yl0CAANpiHE=
+            memorySize: '128'
+            modified: '2018-05-16T11:24:38.424+0000'
+            name: loginHandler
+            runtime: nodejs6.10
+            timeout: '3'
+            version: NFHICJMWTCiKGSi0FZ6CiysmwjvNrTxq
+          /users: !com.amazonaws.mobilehub.v0.Function 
+            codeFilename: uploads/usersHandler-20180516062033.zip
+            description: 'Handler for calls to resource path : /users/{proxy+}'
+            environment: {}
+            handler: index.handler
+            hashcode: Kv0hQAPXTaGyQjNnlLobK9fPC+HlS8B8Yl0CAANpiHE=
+            memorySize: '128'
+            modified: '2018-05-16T11:24:38.340+0000'
+            name: usersHandler
+            runtime: nodejs6.10
+            timeout: '3'
+            version: 4.sh6zmAOSdzOV_UHmvuuHEYRC.KodtF
+          '/users/{proxy+}': !com.amazonaws.mobilehub.v0.Function 
+            codeFilename: uploads/usersHandler-20180516062033.zip
+            description: 'Handler for calls to resource path : /users/{proxy+}'
+            environment: {}
+            handler: index.handler
+            hashcode: Kv0hQAPXTaGyQjNnlLobK9fPC+HlS8B8Yl0CAANpiHE=
+            memorySize: '128'
+            modified: '2018-05-16T11:24:38.340+0000'
+            name: usersHandler
+            runtime: nodejs6.10
+            timeout: '3'
+            version: 4.sh6zmAOSdzOV_UHmvuuHEYRC.KodtF
+  content-delivery: !com.amazonaws.mobilehub.v0.ContentDelivery 
+    attributes:
+      enabled: true
+      visibility: public-global
+    components:
+      release: !com.amazonaws.mobilehub.v0.Bucket {}
+  database: !com.amazonaws.mobilehub.v0.Database 
+    components:
+      database-nosql: !com.amazonaws.mobilehub.v0.NoSQLDatabase 
+        tables:
+          - !com.amazonaws.mobilehub.v0.NoSQLTable 
+            attributes:
+              approved_by: S
+              approved_notes: S
+              break_time: N
+              created: S
+              current_length: M
+              employee: M
+              end_timestamp: S
+              events: M
+              expires: N
+              id: S
+              in_day: S
+              in_gps: S
+              in_hour: S
+              in_location: S
+              in_picture: S
+              in_picuture_url: S
+              in_time: M
+              length: M
+              out_day: S
+              out_gps: S
+              out_hour: S
+              out_location: S
+              out_picture: S
+              out_time: M
+              out_timestamp: S
+              persist_cookie: M
+              screenshots: S
+              start_timestamp: S
+              status: S
+              token: S
+              userId: S
+            hashKeyName: userId
+            hashKeyType: S
+            indexes:
+              - !com.amazonaws.mobilehub.v0.NoSQLIndex 
+                hashKeyName: id
+                hashKeyType: S
+                indexName: id-userId
+                rangeKeyName: userId
+                rangeKeyType: S
+            rangeKeyName: ''
+            rangeKeyType: ''
+            tableName: ___DYNAMIC_PREFIX___-timeclocks
+            tablePrivacy: protected
+  sign-in: !com.amazonaws.mobilehub.v0.SignIn 
+    attributes:
+      enabled: true
+      optional-sign-in: true
+    components:
+      sign-in-user-pools: !com.amazonaws.mobilehub.v0.UserPoolsIdentityProvider 
+        attributes:
+          user-pool-id: us-east-2_wsOQcuVY9
+  user-files: !com.amazonaws.mobilehub.v0.UserFiles 
+    attributes:
+      enabled: true
+      wildcard-cors-policy: true
+name: Opol5
+region: us-east-2
