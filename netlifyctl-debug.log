@@ -1,9 +1,42 @@
-[37mDEBU[0m[23 May 18 21:47 -0500] PreRun                                        [37marguments[0m=[] [37mcommand[0m=init
-[37mDEBU[0m[23 May 18 21:47 -0500] configure debug middleware                   
-[37mDEBU[0m[23 May 18 21:47 -0500] configure logging middleware                 
-[37mDEBU[0m[23 May 18 21:47 -0500] setup logger middleware: panic               
-[37mDEBU[0m[23 May 18 21:47 -0500] configure auth middleware                    
-[37mDEBU[0m[23 May 18 21:47 -0500] setup credentials                             [37mcredentials[0m=0x867070
-[37mDEBU[0m[23 May 18 21:47 -0500] configure client middleware                  
-[37mDEBU[0m[23 May 18 21:47 -0500] setup API endpoint                            [37mendpoint[0m="https://api.netlify.com"
-[31mERRO[0m[23 May 18 21:47 -0500] command failed                                [31merror[0m="remote not found"
+[37mDEBU[0m[23 May 18 21:54 -0500] PreRun                                        [37marguments[0m=[] [37mcommand[0m=init
+[37mDEBU[0m[23 May 18 21:54 -0500] configure debug middleware                   
+[37mDEBU[0m[23 May 18 21:54 -0500] configure logging middleware                 
+[37mDEBU[0m[23 May 18 21:54 -0500] setup logger middleware: panic               
+[37mDEBU[0m[23 May 18 21:54 -0500] configure auth middleware                    
+[37mDEBU[0m[23 May 18 21:54 -0500] setup credentials                             [37mcredentials[0m=0x867070
+[37mDEBU[0m[23 May 18 21:54 -0500] configure client middleware                  
+[37mDEBU[0m[23 May 18 21:54 -0500] setup API endpoint                            [37mendpoint[0m="https://api.netlify.com"
+[37mDEBU[0m[23 May 18 21:54 -0500] GET /api/v1/sites?filter=all&name=brave-allen-929256 HTTP/1.1
+Host: api.netlify.com
+User-Agent: netlifyctl
+Accept: application/json
+Authorization: Bearer b5f4ff37db70b318d08c642aede74b073c505dc6ca5a1a36cb1832ae9e416c21
+Accept-Encoding: gzip
+
+
+ 
+[37mDEBU[0m[23 May 18 21:54 -0500] HTTP/1.1 200 OK
+Transfer-Encoding: chunked
+Alt-Svc: clear
+Cache-Control: max-age=0, private, must-revalidate
+Content-Type: application/json; charset=utf-8
+Date: Thu, 24 May 2018 02:54:39 GMT
+Etag: W/"b1997ee192cf85cfff48fb58320cf202"
+Link: <https://api.netlify.com/api/v1/sites?filter=all&name=brave-allen-929256&page=1>; rel=last
+Total: 1
+Vary: Origin
+Via: 1.1 google
+X-Frame-Options: ALLOWALL
+X-Ratelimit-Limit: 100000000
+X-Ratelimit-Remaining: 99999998
+X-Ratelimit-Reset: 2018-05-24 02:55:38 UTC
+X-Request-Id: 5c3ff83f-95c7-48bb-9d87-66ec7b3cc2f3
+X-Runtime: 0.154869
+
+f86
+[{"id":"155bf739-5133-4fc9-b9aa-003c1a230d0d","site_id":"155bf739-5133-4fc9-b9aa-003c1a230d0d","plan":"nf_team_dev","plan_data":{"title":"Netlify Team Free","asset_acceleration":true,"form_processing":true,"cdn_propagation":"partial","build_gc_exchange":"buildbot-gc","build_node_pool":"buildbot-external-ssd","build_cluster":"ha2","domain_aliases":true,"secure_site":false,"prerendering":true,"proxying":true,"ssl":"custom","rate_cents":0,"yearly_rate_cents":0,"cdn_network":"free_cdn_network","branch_deploy":true,"managed_dns":true,"geo_ip":true,"split_testing":true,"id":"nf_team_dev","functions":{"invocations":{"included":125000,"unit":"requests","used":0},"runtime":{"included":360000,"unit":"seconds","used":0}}},"ssl_plan":null,"premium":false,"claimed":true,"name":"brave-allen-929256","custom_domain":null,"domain_aliases":[],"password":null,"notification_email":null,"url":"http://brave-allen-929256.netlify.com","admin_url":"https://app.netlify.com/sites/brave-allen-929256","deploy_id":"5b062951b13fb142a07dee3c","build_id":"","deploy_url":"http://5b062951b13fb142a07dee3c.brave-allen-929256.netlify.com","state":"current","screenshot_url":"https://353a23c500dde3b2ad58-c49fe7e7355d384845270f4a7a0a7aa1.ssl.cf2.rackcdn.com/5b062951b13fb142a07dee3c/screenshot.png","created_at":"2018-05-24T02:41:53.340Z","updated_at":"2018-05-24T02:54:12.576Z","user_id":"5a10378edf995304939a7083","error_message":null,"ssl":false,"ssl_url":"https://brave-allen-929256.netlify.com","force_ssl":null,"ssl_status":null,"max_domain_aliases":100,"build_settings":null,"processing_settings":{"css":{"bundle":true,"minify":true},"js":{"bundle":true,"minify":true},"images":{"optimize":true},"html":{"pretty_urls":true},"skip":true},"prerender":null,"prerender_headers":null,"deploy_hook":null,"published_deploy":{"id":"5b062951b13fb142a07dee3c","site_id":"155bf739-5133-4fc9-b9aa-003c1a230d0d","build_id":null,"state":"ready","name":"brave-allen-929256","url":"http://brave-allen-929256.netlify.com","ssl_url":"https://brave-allen-929256.netlify.com","admin_url":"https://app.netlify.com/sites/brave-allen-929256","deploy_url":"http://5b062951b13fb142a07dee3c.brave-allen-929256.netlify.com","deploy_ssl_url":"https://5b062951b13fb142a07dee3c--brave-allen-929256.netlify.com","screenshot_url":"https://353a23c500dde3b2ad58-c49fe7e7355d384845270f4a7a0a7aa1.ssl.cf2.rackcdn.com/5b062951b13fb142a07dee3c/screenshot.png","created_at":"2018-05-24T02:54:09.216Z","updated_at":"2018-05-24T02:54:12.574Z","user_id":"5a10378edf995304939a7083","error_message":null,"required":[],"required_functions":[],"commit_ref":null,"review_id":null,"branch":null,"commit_url":null,"skipped":null,"locked":null,"log_access_attributes":{},"title":null,"review_url":null,"published_at":"2018-05-24T02:54:10.805Z","context":"production","deploy_time":1,"available_functions":[{"n":"hello","d":"e8f8413ca18876c2b595fb9ba652bf880022b8897b4bef3bd04e9eefb56e0497","id":"c6cebe3d67c1dd6b1eab39e7427d3fc371b818f17f5a1ee374d5593d8ae023fd","s":4905,"r":"js","c":"2018-05-24T02:41:54.590Z"}]},"managed_dns":true,"jwt_secret":null,"account_slug":"adowning","account_name":"Ash Downing","account_type":"personal","capabilities":{"title":"Netlify Team Free","asset_acceleration":true,"form_processing":true,"cdn_propagation":"partial","build_gc_exchange":"buildbot-gc","build_node_pool":"buildbot-external-ssd","build_cluster":"ha2","domain_aliases":true,"secure_site":false,"prerendering":true,"proxying":true,"ssl":"custom","rate_cents":0,"yearly_rate_cents":0,"cdn_network":"free_cdn_network","branch_deploy":true,"managed_dns":true,"geo_ip":true,"split_testing":true,"id":"nf_team_dev","functions":{"invocations":{"included":125000,"unit":"requests","used":0},"runtime":{"included":360000,"unit":"seconds","used":0}}},"active_subscription_ids":[],"external_contributors_enabled":true,"paid_individual_site_subscription":null,"dns_zone_id":null,"identity_instance_id":null,"use_functions":true,"parent_user_id":null}]
+0
+
+
+ 
+[31mERRO[0m[23 May 18 21:54 -0500] command failed                                [31merror[0m="GET https://api.github.com/repos/adowning/opol5: 401 Bad credentials []"
