@@ -3,17 +3,10 @@
     <v-slide-y-transition mode="out-in">
       <v-layout column align-center>
         <img src="@/assets/logo.png" alt="Vuetify.js" class="mb-5">
-       
-<router-link v-if="!$_isAuthenticated" to="auth/signin" class="button--grey">Sign In</router-link>
-<router-link v-if="!$_isAuthenticated" to="Auth/SignUp" class="button--grey">Sign Up</router-link> 
- 
-        <blockquote>
-          &#8220;First, solve the problem. Then, write the code.&#8221;
-          <footer>
-            <small>
-              <em>&mdash;John Johnson</em>
-            </small>
-          </footer>
+      <h3>404</h3>
+         <blockquote>
+          &#8220;You are lost.&#8221;
+          
         </blockquote>
       </v-layout>
     </v-slide-y-transition>

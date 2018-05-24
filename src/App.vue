@@ -1,26 +1,57 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
-  </div>
+  <v-app>
+    <notifications position="bottom right" group="auth" />
+    <user-layout v-if="$_isAuthenticated"/>
+    <guest-layout v-if="!$_isAuthenticated"/>
+ </v-app>
 </template>
+<script>
+import UserLayout from "./layouts/UserLayout";
+import GuestLayout from "./layouts/GuestLayout";
 
-<style lang="stylus">
-#app
-  font-family 'Avenir', Helvetica, Arial, sans-serif
-  -webkit-font-smoothing antialiased
-  -moz-osx-font-smoothing grayscale
-  text-align center
-  color #2c3e50
+export default {
+  name: "App",
+  components: {
+    "user-layout": UserLayout,
+    "guest-layout": GuestLayout
+  },
+  data() {
+    return {};
+  },
+  mounted() {
+    //  this.fireNotify(this.$_AuthUser.username, 'auth')
+    // this.$notify({
+    //   group: "foo",
+    //   title: "Important message",
+    //   text: "Hello user! This is a notification!"
+    // })
+  }
+};
+</script>
+<style lang="scss">
+.vue-notification {
+  padding: 10px;
+  margin: 0 5px 5px;
+  width: 100%;
+  font-size: 14px;
 
-#nav
-  padding 30px
-  a
-    font-weight bold
-    color #2c3e50
-    &.router-link-exact-active
-      color #42b983
+  color: #ffffff;
+  background: #44a4fc;
+  border-left: 5px solid #187fe7;
+
+  &.warn {
+    background: #ffb648;
+    border-left-color: #f48a06;
+  }
+
+  &.error {
+    background: #e54d42;
+    border-left-color: #b82e24;
+  }
+
+  &.success {
+    background: #68cd86;
+    border-left-color: #42a85f;
+  }
+}
 </style>
