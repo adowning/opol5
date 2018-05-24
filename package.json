@@ -5,9 +5,11 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
-  },
+    "lint": "vue-cli-service lint",
+    "deploy": "./commit_deploy"
+  }, 
   "dependencies": {
+    "axios": "^0.18.0",
     "register-service-worker": "^1.0.0",
     "vue": "^2.5.16",
     "vue-router": "^3.0.1",
@@ -63,5 +65,8 @@
       "vue-cli-service lint",
       "git add"
     ]
+  },
+  "proxy": {
+    "/api": "http://localhost:9000"
   }
 }
