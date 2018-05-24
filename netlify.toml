@@ -1,0 +1,6 @@
+[Settings]
+  ID = "155bf739-5133-4fc9-b9aa-003c1a230d0d"
+
+[Build]
+  Publish = "dist"
+  Functions = "lambda"
