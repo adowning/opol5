@@ -74,6 +74,12 @@
 						</template>
 					</v-data-table>
 				</v-card>
+        <div v-if="clocksRequestIsPending" />
+<ul v-else>
+  <li v-for="clock in clocks" :key="clock.id">
+    <h2> {{ clock.title }} - {{ clock.release_date }} </h2>
+  </li>
+</ul>
 			</v-flex>
 		</v-layout>
 	</v-container>
@@ -81,10 +87,15 @@
 
 <script>
 import moment from "moment";
+import { asyncModuleMixin } from "@liqueflies/vuex-async-module";
 // import { API, Cache } from 'aws-amplify'
 import axios from "axios";
 export default {
-  name: "timeclocks",
+  name: "clocks",
+  mixins: [asyncModuleMixin],
+  beforeMount() {
+    this.getAsyncClocks({ url: "https://ghibliapi.herokuapp.com/films" });
+  },
   data() {
     return {
       loading: false,
@@ -192,13 +203,7 @@ export default {
   methods: {
     async getTimeClocks() {
       // var paramString = this.$store.state.auth.user.attributes[ 'custom:humanityLogin'].split(',')
-      // var start_date = moment()
-      //   .subtract(4, 'w')
-      //   .startOf('week')
-      //   .format('YYYY-MM-DD')
-      // var end_date = moment()
-      //   .endOf('week')
-      //   .format('YYYY-MM-DD')
+
       // var username = paramString[0]
       // var userId = paramString[2]
       // var token = this.$store.state.auth.htoken
@@ -206,7 +211,16 @@ export default {
         !this.$store.state.timeclocks.clocks ||
         !this.$store.state.timeclocks.clockStatus
       ) {
-        this.clocks = this.$store.dispatch("timeclocks/getTimeClocks");
+        var dates = {
+          start_date: moment()
+            .subtract(4, "w")
+            .startOf("week")
+            .format("YYYY-MM-DD"),
+          end_date: moment()
+            .endOf("week")
+            .format("YYYY-MM-DD")
+        };
+        this.clocks = this.$store.dispatch("timeclocks/getTimeClocks", dates);
         // this.clockStatus = this.$store.dispatch('timeclocks/getTimeClockStatus')
       }
       // let { data } = await axios.post(
@@ -285,7 +299,7 @@ export default {
     addNote() {
       this.$http
         // eslint-disable-next-line
-        .get(process.env.LAMBDA_API + '/addNote', {
+        .get(process.env.LAMBDA_API + "/addNote", {
           params: {
             id: this.timeSheetID,
             token: localStorage.getItem("humanityToken")

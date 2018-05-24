@@ -1,7 +1,8 @@
-import { fetchClocks } from "@/api";
+// import { fetchClocks } from "@/api";
 
-const getTimeClocks = async context => {
-  let clocks = await fetchClocks();
+const getTimeClocks = async (context, dates) => {
+  // let clocks = await fetchClocks(dates);
+  let clocks = [dates];
   context.commit("SET_TIMECLOCKS", clocks);
 };
 
