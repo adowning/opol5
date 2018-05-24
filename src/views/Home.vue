@@ -7,8 +7,6 @@
 <router-link v-if="!$_isAuthenticated" to="auth/signin" class="button--grey">Sign In</router-link>
 <router-link v-if="!$_isAuthenticated" to="Auth/SignUp" class="button--grey">Sign Up</router-link> 
 
-     <formio src="http://localhost:8081/form/234234234" url="http://localhost:8081" :submission="submission" :options="options" v-on:submit="submit"></formio>
-
         <blockquote>
           &#8220;First, solve the problem. Then, write the code.&#8221;
           <footer>
