@@ -6,7 +6,7 @@ axios.defaults.headers.post['Content-Type'] = 'application/json'
 
 
 const instance = axios.create({
-  baseURL: 'https://www.humanity.com/api/v1',
+  baseURL: 'https://www.humanity.com/api/v2',
   timeout: 1000,
   headers: {
     'Accpet': 'foobar'
@@ -54,7 +54,7 @@ const getClockStatusID = (requestData, callback) => {
       callback(null, error)
     })
     .then(res => {
-      console.log(res.data)
+      console.log(res)
       res.data.clockStatus = 'in'
       const response = {
         statusCode: 200,
@@ -158,96 +158,51 @@ const startSequence = (action, requestData, callback) => {
 }
 
 
-exports.handler = function (event, context, callback) {
-  const {
-    action,
-    username,
-    password,
-    start_date,
-    id
-  } = JSON.parse(event.body)
-
-  // console.log(action, username, password, start_date, employee)
-  if (!action || !username || !password || !id)
-    return callback(null, {
-      statusCode: 400,
-      body: "Params not supplied"
-    })
-  var requestData = {
-    client_id: '1de720f9636d0f17d61540fbd9c030c30fae3f1f',
-    client_secret: '33c1bfc4f96d5ca7e68b859af8d58fde36867bbd',
-    grant_type: 'password',
-    username: username,
-    password: password,
-    id: id,
-    start_date: start_date
-  }
-  // console.log(event.body)
-  try {
-    startSequence(action, requestData, callback)
-
-  } catch (error) {
-    console.log('return ', error)
-  }
+exports.handler = (event, context, callback) => {
+  let username = event.username
+  // let receiverId = event.receiverId
+  console.log(username)
+  // const message = {
+  //   messageId: uuid(),
+  //   chatId,
+  //   body: event.messageBody,
+  //   senderId,
+  //   sent: Math.floor(new Date().getTime()/1000)
+  // }
 }
+// exports.handler = function (event, context, callback) {
+//   console.log(event)
+// console.log(event.body)
+//   // console.log("Received name: " + event.queryStringParameters.username);
+//   // const response = {
+//   //   statusCode: 200,
+//   //   headers: {
+//   //     'Access-Control-Allow-Origin': '*'
+//   //   },
+//   //   body: JSON.stringify(event.toString())
+//   // }
+//   //   callback(null, response)
 
-// const getClockStatus = (requestData, callback) => {
-//   return new Promise(resolve =>
-//     axios
-//       .get(
-//         `/timeclocks/status/${
-//           requestData.id
-//         }/0?access_token=${requestData.token}`
-//       )
-//       .catch(error => {
-//       // console.log(error)
-//         resolve(error)
-//       })
-//       .then(res => {
-//         console.log(' you are ', res)
-//         if (res.data.data === 'out') {
-//           const response = {
-//             statusCode: 200,
-//             headers: {
-//               'Access-Control-Allow-Origin': '*'
-//             },
-//             body: JSON.stringify(res.data)
-//           }
-//           callback(null, response)
-//         } else {
-//           getClockStatusID(requestData, callback)
-//         }
-//       })
+ 
+//   // if (!action || !username || !password || !id)
+//   //   return callback(null, {
+//   //     statusCode: 400,
+//   //     body: "Params not supplied"
+//   //   })
+//   // var requestData = {
+//   //   client_id: '1de720f9636d0f17d61540fbd9c030c30fae3f1f',
+//   //   client_secret: '33c1bfc4f96d5ca7e68b859af8d58fde36867bbd',
+//   //   grant_type: 'password',
+//   //   username: event.queryStringParameters.username,
+//   //   password:  event.queryStringParameters.password,
+//   //   id:  event.queryStringParameters.id,
+//   //   start_date:  event.queryStringParameters.start_date,
+//   // }
+//   // console.log(requestData)
+//   // try {
+//   //  // startSequence(action, requestData, callback)
 
-//   )
-// }
-
-// const getTimeClocks = (requestData, callback) => {
-//   console.log(requestData.id)
-//   console.log(requestData.start_date)
-//   console.log(requestData.token)
-//   return new Promise(resolve =>
-//     axios
-//       .get(
-//         `/timeclocks?access_token=${requestData.token}`, {
-//           params: requestData
-//         }
-//       )
-//       .catch(error => {
-//         console.log(error)
-//         resolve(error)
-//       })
-//       .then(res => {
-//         // console.log(res.data)
-//         console.log(res.data.data)
-//         const response = {
-//           statusCode: 200,
-//           headers: {
-//             'Access-Control-Allow-Origin': '*'
-//           },
-//           body: JSON.stringify(res.data.data)
-//         }
-//         callback(null, response)
-//       })
-//   )
+//   // } catch (error) {
+//   //   console.log('return ', error)
+//   // }
 // }

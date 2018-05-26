@@ -62,11 +62,7 @@ export default {
       //   }
     };
   },
-  methods: {
-    submit() {
-      console.log("hi");
-    }
-  }
+  methods: {}
 };
 </script>
 

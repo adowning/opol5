@@ -1,5 +1,5 @@
 // import { fetchClocks } from "@/api";
-
+// this.getAsyncClocks({ url: "https://ghibliapi.herokuapp.com/films" });
 const getTimeClocks = async (context, dates) => {
   // let clocks = await fetchClocks(dates);
   let clocks = [dates];

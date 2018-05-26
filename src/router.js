@@ -7,6 +7,7 @@ import SignOut from "./components/SignOut";
 import FourOhFour from "./views/404";
 import Profile from "./views/people/profile";
 import TimeClocks from "./views/people/timeclocks";
+import DevPage from "./DevPage";
 
 import { Auth, Logger } from "aws-amplify";
 const logger = new Logger("Router");
@@ -40,6 +41,11 @@ const router = new Router({
       path: "/timeclocks",
       name: "TimeClocks",
       component: TimeClocks
+    },
+    {
+      path: "/devpage",
+      name: "DevPage",
+      component: DevPage
     },
     {
       path: "*",

@@ -8,7 +8,7 @@
 <script>
 import UserLayout from "./layouts/UserLayout";
 import GuestLayout from "./layouts/GuestLayout";
-
+// import axios from 'axios'
 export default {
   name: "App",
   components: {
@@ -18,14 +18,7 @@ export default {
   data() {
     return {};
   },
-  mounted() {
-    //  this.fireNotify(this.$_AuthUser.username, 'auth')
-    // this.$notify({
-    //   group: "foo",
-    //   title: "Important message",
-    //   text: "Hello user! This is a notification!"
-    // })
-  }
+  async mounted() {}
 };
 </script>
 <style lang="scss">

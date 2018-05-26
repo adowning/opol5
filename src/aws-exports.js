@@ -6,205 +6,55 @@
 
 // AWS Mobile Hub Project Constants
 const awsmobile = {
+  aws_app_analytics: "enable",
   aws_cloud_logic: "enable",
   aws_cloud_logic_custom: [
     {
-      id: "edwgsi8nll",
-      name: "dev-opol5-employees",
-      description: "",
-      endpoint: "https://edwgsi8nll.execute-api.us-east-2.amazonaws.com/dev",
-      region: "us-east-2",
-      paths: [
-        "/createuser",
-        "/employeeclockin",
-        "/employeeclockout",
-        "/gatherforcreate",
-        "/gethumanitydata",
-        "/gethumanitytimeclocks",
-        "/gethumanitytimeclockstatus",
-        "/gethumanitytoken",
-        "/user/{id}"
-      ]
-    },
-    {
-      id: "9lyuawhxh5",
-      name: "users",
+      id: "kk9xi275ec",
+      name: "production-opol5-mqtt",
       description: "",
       endpoint:
-        "https://9lyuawhxh5.execute-api.us-east-2.amazonaws.com/Development",
-      region: "us-east-2",
+        "https://kk9xi275ec.execute-api.us-west-2.amazonaws.com/production",
+      region: "us-west-2",
       paths: [
+        "/dynamotest",
+        "/group-chat",
         "/humanity",
-        "/humanity/123",
-        "/login",
-        "/login/123",
-        "/users",
-        "/users/123"
+        "/invites/accept",
+        "/invites/send",
+        "/test",
+        "/user",
+        "/user/chats",
+        "/user/chats/{userId}",
+        "/user/chats/{userId}/messages",
+        "/user/invites",
+        "/user/last-activity",
+        "/users/online",
+        "/vehicletracking/pub",
+        "/vehicletracking/{tid}/geojson/linestring",
+        "/vehicletracking/{tid}/geojson/points"
       ]
     }
   ],
   aws_cognito_identity_pool_id:
-    "us-east-2:d2b920a5-1577-4619-9001-9487fc6dcc67",
-  aws_cognito_region: "us-east-2",
+    "us-west-2:126e937b-d594-49cb-8687-172ff1e7ea30",
+  aws_cognito_region: "us-west-2",
   aws_content_delivery: "enable",
-  aws_content_delivery_bucket: "opol-hosting-mobilehub-903744597",
-  aws_content_delivery_bucket_region: "us-east-2",
+  aws_content_delivery_bucket: "opol-hosting-mobilehub-88837624",
+  aws_content_delivery_bucket_region: "us-west-2",
   aws_content_delivery_cloudfront: "enable",
-  aws_content_delivery_cloudfront_domain: "d2id0h4smc92yr.cloudfront.net",
-  aws_dynamodb: "enable",
-  aws_dynamodb_all_tables_region: "us-east-2",
-  aws_dynamodb_table_schemas: [
-    {
-      tableName: "opol-mobilehub-903744597-timeclocks",
-      attributes: [
-        {
-          name: "userId",
-          type: "S"
-        },
-        {
-          name: "approved_by",
-          type: "S"
-        },
-        {
-          name: "approved_notes",
-          type: "S"
-        },
-        {
-          name: "break_time",
-          type: "N"
-        },
-        {
-          name: "created",
-          type: "S"
-        },
-        {
-          name: "current_length",
-          type: "M"
-        },
-        {
-          name: "employee",
-          type: "M"
-        },
-        {
-          name: "end_timestamp",
-          type: "S"
-        },
-        {
-          name: "events",
-          type: "M"
-        },
-        {
-          name: "expires",
-          type: "N"
-        },
-        {
-          name: "id",
-          type: "S"
-        },
-        {
-          name: "in_day",
-          type: "S"
-        },
-        {
-          name: "in_gps",
-          type: "S"
-        },
-        {
-          name: "in_hour",
-          type: "S"
-        },
-        {
-          name: "in_location",
-          type: "S"
-        },
-        {
-          name: "in_picture",
-          type: "S"
-        },
-        {
-          name: "in_picuture_url",
-          type: "S"
-        },
-        {
-          name: "in_time",
-          type: "M"
-        },
-        {
-          name: "length",
-          type: "M"
-        },
-        {
-          name: "out_day",
-          type: "S"
-        },
-        {
-          name: "out_gps",
-          type: "S"
-        },
-        {
-          name: "out_hour",
-          type: "S"
-        },
-        {
-          name: "out_location",
-          type: "S"
-        },
-        {
-          name: "out_picture",
-          type: "S"
-        },
-        {
-          name: "out_time",
-          type: "M"
-        },
-        {
-          name: "out_timestamp",
-          type: "S"
-        },
-        {
-          name: "persist_cookie",
-          type: "M"
-        },
-        {
-          name: "screenshots",
-          type: "S"
-        },
-        {
-          name: "start_timestamp",
-          type: "S"
-        },
-        {
-          name: "status",
-          type: "S"
-        },
-        {
-          name: "token",
-          type: "S"
-        }
-      ],
-      indexes: [
-        {
-          indexName: "id-userId",
-          hashKey: "id",
-          rangeKey: "userId"
-        }
-      ],
-      region: "us-east-2",
-      hashKey: "userId"
-    }
-  ],
-  aws_project_id: "55ae24f8-825e-4322-923f-b2758e940383",
-  aws_project_name: "Opol5",
-  aws_project_region: "us-east-2",
-  aws_resource_bucket_name: "opol-deployments-mobilehub-903744597",
-  aws_resource_name_prefix: "opol-mobilehub-903744597",
+  aws_content_delivery_cloudfront_domain: "dxqzdyq18er3w.cloudfront.net",
+  aws_mandatory_sign_in: "enable",
+  aws_mobile_analytics_app_id: "3a4422ed89714fd49bbf5624151bd250",
+  aws_mobile_analytics_app_region: "us-east-1",
+  aws_project_id: "612164e1-6244-4729-8d0a-94844a7d341b",
+  aws_project_name: "opol5",
+  aws_project_region: "us-west-2",
+  aws_resource_name_prefix: "opol-mobilehub-88837624",
   aws_sign_in_enabled: "enable",
-  aws_user_files: "enable",
-  aws_user_files_s3_bucket: "opol-userfiles-mobilehub-903744597",
-  aws_user_files_s3_bucket_region: "us-east-2",
   aws_user_pools: "enable",
-  aws_user_pools_id: "us-east-2_wsOQcuVY9",
-  aws_user_pools_web_client_id: "32b0nh7l503od4t3bl2rnsv4ld"
+  aws_user_pools_id: "us-west-2_ldqokiD7r",
+  aws_user_pools_web_client_id: "58vlnka1pdn3ee0lvae7gesiaf"
 };
 
 export default awsmobile;

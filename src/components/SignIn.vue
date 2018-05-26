@@ -102,6 +102,12 @@ export default {
         })
         .then(user => {
           that.user = user;
+          //       Auth.currentAuthenticatedUser()
+          // .then(user => {
+          //     return Auth.changePassword(user, 'asdfasdf!', 'asdfasdf');
+          // })
+          // .then(data => console.log(data))
+          // .catch(err => console.log(err));
           if (user.challengeName === "SMS_MFA") {
             that.confirmView = true;
             return;
