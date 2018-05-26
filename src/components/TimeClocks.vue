@@ -138,12 +138,16 @@ export default {
     this.timeClocks = clocks;
     const sta = await axios.get(
       `https://www.humanity.com/api/v2/timeclocks?access_token=40d56be4beb96e0d8163707f5b6fd659e6368a13`,
-      { params: { employee: id, start_date: moment()
-          .subtract(4, "w")
-          .startOf("week") } }
+      {
+        params: {
+          employee: id,
+          start_date: moment()
+            .subtract(4, "w")
+            .startOf("week")
+        }
+      }
     );
     this.clockStatus = sta;
-    
   },
   asyncComputed: {
     totalTime: function() {
