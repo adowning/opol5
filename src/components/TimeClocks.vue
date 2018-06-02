@@ -7,7 +7,7 @@
           <v-toolbar color="primary" dark>
             <v-toolbar-title>{{date}}</v-toolbar-title>
             <v-spacer></v-spacer>
-            <!-- <v-subheader v-if="timeFigured">Total Time: {{totalTime}}</v-subheader> -->
+      
           </v-toolbar>
           <template v-if="loading">
             <!-- <v-progress-circular indeterminate :size="70" :width="7" color="primary"></v-progress-circular> -->
@@ -15,14 +15,14 @@
           </template>
           <template v-if="!loading">
             <v-list>
-              <template v-if="clockStatus.clockStatus ==='out'">
+              <template v-if="clockStatus == 'out'">
                 <v-layout row my-4>
                   <v-flex xs4 offset-xs1>
-                    <v-btn block color="info" dark @click.native="employeeClockIn()">Clock In</v-btn>
+                    <v-btn block color="info" dark @click.native="employeeClock()">Clock In</v-btn>
                   </v-flex>
                 </v-layout>
               </template>
-              <template v-if="clockStatus.clockStatus === 'in'">
+              <template v-if="clockStatus == 'in'">
                 <v-layout row mt-1>
                   <v-flex xs7 offset-xs1>
                     <v-text-field name="input-1" label="Note" id="testing"></v-text-field>
@@ -33,7 +33,7 @@
                 </v-layout>
                 <v-layout row mb-4>
                   <v-flex xs4 offset-xs1>
-                    <v-btn block color="error" dark @click.native="employeeClockOut()">Clock Out</v-btn>
+                    <v-btn block color="error" dark @click.native="employeeClock()">Clock Out</v-btn>
                   </v-flex>
                 </v-layout>
               </template>
@@ -60,7 +60,7 @@
             <!-- <v-progress-circular indeterminate :size="70" :width="7" color="primary"></v-progress-circular> -->
             <v-progress-linear :indeterminate="true"></v-progress-linear>
           </template>
-          <v-data-table v-if="!loading" :headers="headers" :items="timeClocks" hide-actions class="elevation-1">
+          <v-data-table v-if="!loading" :headers="headers" :items="clocks" hide-actions class="elevation-1">
             <template slot="items" slot-scope="props">
               <td  v-if="props.item.out_time.time"> <span v-if="props.item.current_length.hours > 0">{{props.item.current_length.hours}}h, </span>  {{ props.item.length.mins }}m</td>
               <td  v-else><span v-if="props.item.current_length.hours > 0">{{props.item.current_length.hours}}h,</span> {{props.item.current_length.mins}}m </td>
@@ -80,20 +80,15 @@
 
 <script>
 import moment from "moment";
-// import { API, Cache } from 'aws-amplify'
-// import Vue from "vue";
 import axios from "axios";
+import Vue from "vue";
 export default {
   name: "timeclocks",
   data() {
     return {
       loading: false,
       clockStatus: "",
-      timeClocks: [],
-      timeFigured: false,
-      notes: "",
-      st: {},
-      et: {},
+      clocks: [],
       weeks: [
         { title: "This Week", amount: 0 },
         { title: "Last Week", amount: 1 },
@@ -120,124 +115,77 @@ export default {
           align: "left",
           value: "out_time"
         }
-        // {
-        //   text: 'Date',
-        //   align: 'left',
-        //   value: 'model'
-        // }
       ],
-      items: []
+      items: [{ in_time: "1", out_time: "2", current_length: "2" }]
     };
-    // this.$store.state.cognitoUser.getUserAttributes
   },
-  async mounted() {
-    const id = "4041624";
-    const clocks = await axios.get(
-      `http://www.humanity.com/api/v2/timeclocks/status/${id}/0?access_token=40d56be4beb96e0d8163707f5b6fd659e6368a13`
-    );
-    this.timeClocks = clocks;
-    const sta = await axios.get(
-      `https://www.humanity.com/api/v2/timeclocks?access_token=40d56be4beb96e0d8163707f5b6fd659e6368a13`,
-      {
-        params: {
-          employee: id,
-          start_date: moment()
-            .subtract(4, "w")
-            .startOf("week")
-        }
-      }
-    );
-    this.clockStatus = sta;
-  },
-  asyncComputed: {
-    totalTime: function() {
-      var diff = moment(this.et) - moment(this.st);
-      return moment.utc(moment.duration(diff).asMilliseconds()).format("H:mm");
-    },
-    startEndDates: function() {
-      return {
-        start_date: moment()
-          .subtract(this.week, "w")
-          .startOf("week")
-          .format("YYYY-MM-DD"), // set to the first day of this week, 12:00 am
-        end_date: moment()
-          .subtract(this.week, "w")
-          .endOf("week")
-          .format("YYYY-MM-DD") // set to the first day of this week, 12:00 am
-      };
-    }
-  },
+  async created() {},
   methods: {
-    async employeeClockIn() {
-      this.timeFigured = true;
-      let params = {
-        userId: this.$store.state.modules.AuthStore.humanity_attributes
-          .humanityUserId,
-        token: this.$store.state.modules.AuthStore.humanity_attributes
-          .currentToken
-      };
-      let { data } = await axios.post(
-        "https://h4d0oqhk00.execute-api.us-east-2.amazonaws.com/dev/employeeclockin",
-        params
-      );
-      console.log(data);
-      this.$store.dispatch(
-        "modules/TimeClockStore/setEmployeeTimeClockStatus",
-        data
-      );
-    },
-    async employeeClockOut() {
-      this.timeFigured = true;
-      let params = {
-        userId: this.$store.state.modules.AuthStore.humanity_attributes
-          .humanityUserId,
-        token: this.$store.state.modules.AuthStore.humanity_attributes
-          .currentToken
-      };
-      let { data } = await axios.post(
-        "https://h4d0oqhk00.execute-api.us-east-2.amazonaws.com/dev/employeeclockout",
-        params
-      );
-      console.log(data);
-      if (data.status === 13) {
-        this.$store.dispatch(
-          "modules/TimeClockStore/setEmployeeTimeClockStatus",
-          "out"
-        );
-      } else {
-        this.$store.dispatch(
-          "modules/TimeClockStore/setEmployeeTimeClockStatus",
-          data
-        );
-      }
-    },
-
-    changeWeek(amount) {
-      console.log(this.start_date);
-      console.log(this.end_date);
-      console.log(amount);
-      this.week = amount;
-      this.items = [];
-      // this.request()
-    },
-    addNote() {
-      this.$http
-        // eslint-disable-next-line
-        .get(process.env.LAMBDA_API + "/addNote", {
+    async getClocks() {
+      var _start_date = moment()
+        .subtract(6, "w")
+        .startOf("week")
+        .format("LLL");
+      const _clocks = await axios.get(
+        `http://localhost:1880/employees/timeclocks`,
+        {
           params: {
-            id: this.timeSheetID,
-            token: localStorage.getItem("humanityToken")
+            username: this.$store.state.auth.user.username,
+            start_date: _start_date
           }
+        }
+      );
+      this.clocks = _clocks.data.data;
+    },
+    async getClockStatus() {
+      const _clockStatus = await Vue.http
+        .get(`http://localhost:1880/employees/clockstatus`, {
+          params: { username: this.$store.state.auth.user.username }
         })
-        .then(response => {
-          console.log(response);
-          // this.clockStatus = response.data.data
-          // this.loading = false
-        })
-        .catch(error => {
-          console.error(error);
+        .then(res => {
+          return res.body;
         });
+      this.clockStatus = _clockStatus.data;
+    },
+    async employeeClock() {
+      const vm = this;
+      this.timeFigured = true;
+      let { data } = await Vue.http
+        .get(`http://localhost:1880/employees/clock`, {
+          params: { username: this.$store.state.auth.user.username }
+        })
+        .then(res => {
+          return res.body;
+        });
+
+      if (!data.end_timestamp) {
+        vm.$set(vm, "clockStatus", "in");
+        console.log(vm.clockStatus);
+      } else {
+        console.log("out");
+        vm.$set(vm, "clockStatus", "out");
+        console.log(vm.clockStatus);
+      }
     }
+    // changeWeek(amount) {
+    //   this.week = amount;
+    //   this.items = [];
+    // },
+    // addNote() {
+    //   this.$http
+    //     // eslint-disable-next-line
+    //     .get(process.env.LAMBDA_API + "/addNote", {
+    //       params: {
+    //         id: this.timeSheetID,
+    //         token: localStorage.getItem("humanityToken")
+    //       }
+    //     })
+    //     .then(response => {
+    //     })
+    //     .catch(error => {
+    //       console.error(error);
+    //     });
+    // }
   }
 };
 </script>

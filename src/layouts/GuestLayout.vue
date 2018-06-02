@@ -4,7 +4,7 @@
       <router-view/>
     </v-content>
     <v-footer :fixed="fixed" app>
-      <span>Guest Layout</span>
+      <span>Guest Layout     {{$_isAuthenticated}}</span>
     </v-footer>
   </v-app>
 </template>

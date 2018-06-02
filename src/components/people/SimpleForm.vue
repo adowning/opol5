@@ -43,7 +43,7 @@
 
 <script>
 import { Storage } from "aws-amplify";
-
+console.log(Storage)
 export default {
   name: "SimpleForm",
   data() {

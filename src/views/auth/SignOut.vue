@@ -1,5 +1,8 @@
 <template>
+<div>
+    <notifications position="bottom right" group="auth" />
   <SignOut></SignOut>
+</div>
 </template>
 <script>
 // eslint-disable-next-line

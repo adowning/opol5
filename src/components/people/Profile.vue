@@ -1,8 +1,9 @@
 <template>
 	<v-container grid-list-md text-xs-center>
+    asfdsdfd
 		<v-layout row wrap>
 			<v-flex xs3>
-				<a-photo-picker :defSrc="'/static/avatar.png'" :path="'avatars/' + userId" v-if="userId" />
+				<!-- <a-photo-picker :defSrc="'/static/avatar.png'" :path="'avatars/' + userId" v-if="userId" /> -->
 			</v-flex>
 			<v-flex xs9>
 				<a-simple-form :path="'profiles/' + userId" :fields="fields" v-if="userId" />
@@ -13,13 +14,13 @@
 
 <script>
 import SimpleForm from "./SimpleForm";
-import PhotoPicker from "./PhotoPicker";
+// import PhotoPicker from "./PhotoPicker";
 
 export default {
   name: "Profile",
   components: {
     "a-simple-form": SimpleForm,
-    "a-photo-picker": PhotoPicker
+    // "a-photo-picker": PhotoPicker
   },
   data() {
     return {

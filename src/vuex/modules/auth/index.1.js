@@ -3,7 +3,7 @@ import getters from "./getters";
 import mutations from "./mutations";
 
 const state = {
-  user: null
+   user: null
 };
 
 export default {
@@ -13,3 +13,4 @@ export default {
   getters,
   mutations
 };
+s

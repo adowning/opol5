@@ -4,30 +4,30 @@
     dense
     app>
 
-    <v-toolbar
+    <!-- <v-toolbar
       color="primary"
-      style="max-height: 40px;"
+      style="max-height: 24px;"
       dense
-      dark >
+      dark > -->
       <v-spacer/>
-      <v-badge
+      <!-- <v-badge
         color="red"
         overlap>
         <i class="material-icons orange600">dialpad</i>
 
-      </v-badge>
+      </v-badge> -->
       <v-spacer/>
       <!-- <v-tooltip bottom>s -->
 
       <!-- <v-btn slot="activator" icon @click.stop="rightDrawer = !rightDrawer"> -->
-      <v-btn  
+      <!-- <v-btn  
           icon class="pr-4">
         <v-badge
           overlap>
           <span v-if="chatMessages" slot="badge"></span>
           <i class="material-icons orange600">chat</i>
         </v-badge>
-      </v-btn>
+      </v-btn> -->
       <!-- </v-btn> -->
       <!-- <span>2 unread notifications</span> -->
       <!-- </v-tooltip> -->
@@ -80,7 +80,7 @@
           </v-list-tile>
         </v-list>
       </v-menu>
-    </v-toolbar>
+    <!-- </v-toolbar> -->
   </v-footer>
 
 </template>
@@ -103,11 +103,12 @@ export default {
       try {
         const data = await Auth.signOut();
         console.log(data);
-        this.$store.dispatch("auth/setUser", null);
-        this.$store.dispatch("auth/setUserId", null);
+        this.$store.dispatch("auth/end", null);
+        // this.$store.dispatch("auth/setUser", null);
+        // this.$store.dispatch("auth/setUserId", null);
         // this.$store.dispatch("profile/setProfile", null)
         // this.$store.dispatch('timeclocks/setClocks', null)
-        this.$router.replace("/");
+        this.$router.replace("/auth/signIn");
       } catch (err) {
         this.setError(err);
         console.log(err);
@@ -141,11 +142,13 @@ export default {
 };
 </script>
 <style>
-.v-footer {
-  max-height: 20px;
-}
-.material-icons.orange600 {
-  /* color: #424242; */
-  font-size: 38px; /* Preferred icon size */
+.footer {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 1rem;
+  background-color: #efefef;
+  text-align: center;
 }
 </style>

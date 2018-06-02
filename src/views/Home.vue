@@ -6,7 +6,6 @@
        
 <router-link v-if="!$_isAuthenticated" to="auth/signin" class="button--grey">Sign In</router-link>
 <router-link v-if="!$_isAuthenticated" to="Auth/SignUp" class="button--grey">Sign Up</router-link> 
-
         <blockquote>
           &#8220;First, solve the problem. Then, write the code.&#8221;
           <footer>
@@ -15,12 +14,17 @@
             </small>
           </footer>
         </blockquote>
+          <formio src="https://kjzdduvppatlaap.form.io/profile" v-on:submit="onSubmitMethod" />
+
       </v-layout>
     </v-slide-y-transition>
   </v-container>
 </template>
 <script>
 import { Form } from "vue-formio";
+import { Auth } from 'aws-amplify';
+import Vue from 'vue'
+
 export default {
   name: "Home",
   components: { formio: Form },
@@ -29,41 +33,21 @@ export default {
     return {
       options: { readOnly: false },
 
-      submission: {
-        data: {
-          firstName: "Joe",
-          lastName: "Smith",
-          email: "joe@example.com"
-        }
-      }
-      //   myForm: {
-      //       components: [
-      //   {
-      //     type: 'textfield',
-      //     key: 'UserName',
-      //     label: 'First Name',
-      //     placeholder: 'Enter your first name.',
-      //     input: true
-      //   },
-      //   {
-      //     type: 'textfield',
-      //     key: 'lastName',
-      //     label: 'Last Name',
-      //     placeholder: 'Enter your last name',
-      //     input: true
-      //   },
-      //   {
-      //     type: 'button',
-      //     action: 'submit',
-      //     label: 'Submit',
-      //     theme: 'primary'
-      //   }
-      // ]
-      //   }
-    };
+   
+    }
   },
-  methods: {}
-};
+  methods: {
+    onSubmitMethod: function(submission) {
+      console.log(submission);
+    },
+    onChangeMethod: function(change) {
+      console.log(change);
+    }
+
+},
+created() {
+}
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

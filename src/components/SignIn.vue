@@ -3,7 +3,7 @@
     <v-layout row wrap justify-center>
       <v-flex xl6 lg10 md10 sm12 xs10>
         <v-card class="pa-2 ml-4 mr-2">
-          <v-layout row justify-center v-if="!$_isAuthenticated">
+          <v-layout row justify-center >
 
             <v-layout column align-center>
               <transition appear name="fadeout">
@@ -23,12 +23,12 @@
     </div>
                   <v-card-text>
                     <v-progress-circular v-if="loading" :size="90" :width="9" indeterminate color="primary"></v-progress-circular>
-                    <div v-if="!confirmView && !loading">
+                    <div v-if="!confirmView && !loading && !newPasswordView">
 
                       <v-text-field v-model="username" label="Username" required/>
                       <v-text-field v-model="password" :append-icon="hidepw ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (hidepw = !hidepw)"
                         :type="hidepw ? 'password' : 'text'" label="Password" hint="At least 6 characters" required/>
-                      <v-btn color="#9c27b0" v-on:click="signIn">
+                      <v-btn color="#9c27b0" v-on:click="triggerSignIn">
                         Sign In
                       </v-btn>
                     </div>
@@ -41,14 +41,19 @@
                         <button :style="theme.action" v-on:click="confirm" :disabled="!code">Confirm</button>
                       </div>
                     </div>
+                    <div v-if="newPasswordView">
+                      
+                      <div :style="theme.inputRow">
+                            
+                            <v-text-field v-model="newpass" :append-icon="hidepw ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (hidepw = !hidepw)"
+                        :type="hidepw ? 'newpass' : 'text'" label="New Password" hint="At least 6 characters" required/>
+                      </div>
+                      <div :style="theme.actionRow">
+                        <button :style="theme.action" v-on:click="newPassword" :disabled="!newpass">Confirm</button>
+                      </div>
+                    </div>
                     <div :style="theme.footer">
-                      <!-- <span :style="theme.footerLeft">
-                        <a :style="theme.link" v-on:click="forgot">Forgot Password</a>
-                      </span> -->
-                      <br>
-                      <!-- <span :style="theme.footerLeft">
-                        <a :style="theme.link" v-on:click="signUp">Sign Up</a>
-                      </span> -->
+              
                     </div>
                   </v-card-text>
                 </v-card>
@@ -66,61 +71,86 @@
 <script>
 import { Auth, JS, Logger } from "aws-amplify";
 import AmplifyTheme from "./AmplifyTheme";
+  import { mapActions } from 'vuex'
+
 var pjson = require("../../package.json");
-const logger = new Logger("Router");
 
 export default {
   name: "SignIn",
   computed: {
     version() {
       return pjson.version;
-    }
+    },
+
   },
   data() {
     return {
-      username: "testgroupandrews.com",
-      password: "testgroupandrews.com",
+      username: "",
+      password: "asdfasdf",
       // showerr: false,
       hidepw: true,
+      newpass: null,
+       newPasswordView: false,
       error: "",
       loading: false,
       user: null,
+      ap: null,
       confirmView: false,
       code: "",
       theme: AmplifyTheme
     };
   },
+  
   methods: {
-    async signIn() {
-      this.loading = true;
-      const that = this;
-      Auth.signIn(this.username, this.password)
-        .then(user => {
-          logger.debug("sign in success", user);
-          this.$store.dispatch("auth/setUser", user);
-          return user;
+
+       triggerSignIn() {
+        this.signIn({username: this.username, pass: "asdfasdf"}).then(() => {
+          console.log('going to home now')
+          this.$router.push({name: 'Home'})
+        }, () => {
+          console.log('there was an error')
+          alert('there was an error')
         })
-        .then(user => {
-          that.user = user;
-          //       Auth.currentAuthenticatedUser()
-          // .then(user => {
-          //     return Auth.changePassword(user, 'asdfasdf!', 'asdfasdf');
-          // })
-          // .then(data => console.log(data))
-          // .catch(err => console.log(err));
-          if (user.challengeName === "SMS_MFA") {
-            that.confirmView = true;
-            return;
-          }
-          this.checkUser();
-          this.loading = false;
-          this.$router.push("/Profile");
-        })
-        .catch(err => {
-          this.loading = false;
-          this.setError(err);
-        });
-    },
+      },
+      
+      ...mapActions('cognito', {
+        signIn: 'signIn'
+      }),
+//     async signIn () {
+//        var authenticationData = {
+//             username:  'ash',
+//             password: this.password
+//     };
+//        const user = await Auth.signIn(this.username, this.password).catch(err =>{
+//        console.log(err)   
+//        this.fireNotify(err, 'auth')})
+//       try{
+//        if (user.challengeName === 'NEW_PASSWORD_REQUIRED' || user.challengeName === 'PASSWORD_VERIFIER') {
+//          Auth.completeNewPassword(user, this.password).then(user => {
+//         // this.$store.dispatch('auth/setUser', user)
+//         // this.$store.dispatch('cognito/signIn', authenticationData.username, authenticationData.password)
+
+//             // this.$router.push('/')
+//             return
+//          })
+//        }else{
+//           // this.$store.dispatch('auth/setUser', user)
+//         // this.$store.dispatch('cognito/signIn', authenticationData.username, authenticationData.password)
+//   this.signIn({username: this.usernameC, pass: this.pass}).then(() => {
+//           console.log('going to home now')
+//           this.$router.push({name: 'Home'})
+//         }, () => {
+//           console.log('there was an error')
+//           alert('there was an error')
+//         })
+// this.$router.push('/')
+//        }
+//       }catch(err){
+//        this.fireNotify(err, 'auth')
+
+//       }
+//     },
+
     async checkUser() {
       const user = this.user;
       if (user) return;

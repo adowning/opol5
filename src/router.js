@@ -3,29 +3,66 @@ import Router from "vue-router";
 import Home from "./views/Home.vue";
 import store from "./vuex/store";
 import SignIn from "./components/SignIn";
+import SignUp from "./components/SignUp";
+import Confirm from "./components/Confirm";
 import SignOut from "./components/SignOut";
+import NewPass from "./components/PasswordConfirm";
 import FourOhFour from "./views/404";
 import Profile from "./views/people/profile";
+import Hardware from "./views/assets/hardware";
 import TimeClocks from "./views/people/timeclocks";
 import DevPage from "./DevPage";
 
-import { Auth, Logger } from "aws-amplify";
+import {
+  Auth,
+  Logger
+} from "aws-amplify";
 const logger = new Logger("Router");
 
 Vue.use(Router);
 
+function loadHardware(to, from, next) {
+  console.log('dispatching loadHardwares event')
+  store.dispatch('assets/loadHardwares').then(() => {
+    next()
+  })
+}
 const router = new Router({
   // mode: 'history',
-  routes: [
-    {
+  routes: [{
       path: "/",
       name: "Home",
-      component: Home
+      component: Home,
+      meta: {
+        loadUser: true
+      }
     },
     {
       path: "/auth/signin",
       name: "SignIn",
       component: SignIn
+    },
+    {
+      path: "/assets/hardware",
+      name: "Hardware",
+      component: Hardware,
+      beforeEnter: loadHardware,
+      meta: {
+        loadUser: true
+      }
+    },
+    {
+      path: "/auth/signup",
+      name: "SignUp",
+      component: SignUp
+    },
+    {
+      path: "/confirm",
+      name: "Confirm",
+      component: Confirm,
+      props: (route) => ({
+        username: route.query.username
+      })
     },
     {
       path: "/auth/signout",
@@ -35,17 +72,31 @@ const router = new Router({
     {
       path: "/profile",
       name: "Profile",
-      component: Profile
+      component: Profile,
+      meta: {
+        loadUser: true
+      }
     },
     {
       path: "/timeclocks",
       name: "TimeClocks",
-      component: TimeClocks
+      component: TimeClocks,
+      meta: {
+        loadUser: true
+      }
     },
     {
       path: "/devpage",
       name: "DevPage",
       component: DevPage
+    },
+    {
+      path: "/newpassword",
+      name: "NewPass",
+      component: NewPass,
+      meta: {
+        loadUser: true
+      }
     },
     {
       path: "*",
@@ -55,32 +106,35 @@ const router = new Router({
   ]
 });
 
-const AuthFilter = (to, from, next) => {
-  logger.info("before routing ", to, from);
-  Auth.currentAuthenticatedUser()
-    .then(user => {
-      logger.debug("...has user", user);
-      // store.commit('setUser', user)
-      store.dispatch("auth/setUser", user);
-      Auth.currentCredentials()
-        .then(credentials => {
-          store.dispatch("auth/setUserId", credentials.identityId);
-        })
-        .catch(err => logger.warn("get current credentials err", err));
-      next();
-    })
-    .catch(err => {
-      logger.warn("...no user", err);
-      // store.commit('setUser', null)
-      store.dispatch("auth/setUser", null);
-      if (!to.path.startsWith("/auth")) {
-        next("/auth/signIn");
-      } else {
-        next();
-      }
-    });
-};
+// const AuthFilter = (to, from, next) => {
+//   logger.info("before routing ", to, from);
+//   Auth.currentAuthenticatedUser()
+//     .then(user => {
+//       logger.debug("...has user", user);
+//       // store.commit('setUser', user)
+//       store.dispatch("auth/setUser", user);
+//       Auth.currentCredentials()
+//         .then(credentials => {
+//          store.dispatch("auth/setUserId", credentials.identityId);
+//           store.dispatch('auth/loadUser').then(() => {
+//             // store.dispatch('mqtt/startClient')
+//           })
+//         })
+//         .catch(err => logger.warn("get current credentials err", err));
+//       next();
+//     })
+//     .catch(err => {
+//       logger.warn("...no user", err);
+//       // store.commit('setUser', null)
+//       store.dispatch("auth/setUser", null);
+//       if (!to.path.startsWith("/auth")) {
+//         next("/auth/signIn");
+//       } else {
+//         next();
+//       }
+//     });
+// };
 
-router.beforeEach(AuthFilter);
+// router.beforeEach(AuthFilter);
 
 export default router;

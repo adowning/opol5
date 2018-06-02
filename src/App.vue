@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <notifications position="bottom right" group="auth" />
+    <notifications position="bottom right" group="all" />
     <user-layout v-if="$_isAuthenticated"/>
     <guest-layout v-if="!$_isAuthenticated"/>
  </v-app>
@@ -16,9 +16,12 @@ export default {
     "guest-layout": GuestLayout
   },
   data() {
-    return {};
+    return {
+    };
   },
-  async mounted() {}
+ async mounted() {
+   console.log(this.$_isAuthenticated)
+ }
 };
 </script>
 <style lang="scss">

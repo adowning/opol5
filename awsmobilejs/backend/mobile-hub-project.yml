@@ -1,14 +1,23 @@
 --- !com.amazonaws.mobilehub.v0.Project 
+apps:
+  web: !com.amazonaws.mobilehub.v0.AppDO {}
 features:
+  bots: !com.amazonaws.mobilehub.v0.Bots 
+    components:
+      MakeAppointment: !com.amazonaws.mobilehub.v0.Bot 
+        attributes:
+          childDirected: true
+          description: Bot to book a dentist appointment.
+          existing: false
+          template: bot-appointments
+  cloudlogic: !com.amazonaws.mobilehub.v0.CloudLogic {}
   content-delivery: !com.amazonaws.mobilehub.v0.ContentDelivery 
     attributes:
       enabled: true
       visibility: public-global
     components:
       release: !com.amazonaws.mobilehub.v0.Bucket {}
-  mobile-analytics: !com.amazonaws.mobilehub.v0.Pinpoint 
-    components:
-      analytics: !com.amazonaws.mobilehub.v0.PinpointAnalytics {}
+  mobile-analytics: !com.amazonaws.mobilehub.v0.Pinpoint {}
   sign-in: !com.amazonaws.mobilehub.v0.SignIn {}
 name: opol5
 region: us-west-2

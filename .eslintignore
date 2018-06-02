@@ -1,1 +1,7 @@
-awsmobilejs/**
+awsmobilejs
+dist
+serverless-mqtt
+lambda
+public
+node_modules
+backup
