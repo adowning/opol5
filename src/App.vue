@@ -19,9 +19,6 @@ export default {
     return {
     };
   },
- async mounted() {
-   console.log(this.$_isAuthenticated)
- }
 };
 </script>
 <style lang="scss">

@@ -48,7 +48,8 @@ const mutations = {
     state.users = null,
     state.invites = [],
     state.invitesSent = [],
-    state.updateUserActivity = null
+    state.updateUserActivity = null,
+    localStorage.clear();
   },
   setInvitesSent: (state, invites) => {
     state.invitesSent = invites

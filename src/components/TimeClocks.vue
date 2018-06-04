@@ -119,9 +119,13 @@ export default {
       items: [{ in_time: "1", out_time: "2", current_length: "2" }]
     };
   },
-  async created() {},
+  async created() {
+    this.getClockStatus()
+
+  },
   methods: {
     async getClocks() {
+      console.log('getting clocks')
       var _start_date = moment()
         .subtract(6, "w")
         .startOf("week")
@@ -138,10 +142,12 @@ export default {
       this.clocks = _clocks.data.data;
     },
     async getClockStatus() {
+      console.log('getting sttaus')
+      console.log(this.$_AuthUser.username)
       const _clockStatus = await Vue.http
-        .get(`http://localhost:1880/employees/clockstatus`, {
-          params: { username: this.$store.state.auth.user.username }
-        })
+        .post(`http://localhost:1880/employees/clockstatus`, 
+       { username: this.$_AuthUser.username }
+        )
         .then(res => {
           return res.body;
         });
